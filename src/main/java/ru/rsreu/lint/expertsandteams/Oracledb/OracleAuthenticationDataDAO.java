@@ -2,6 +2,7 @@ package ru.rsreu.lint.expertsandteams.Oracledb;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDataDTO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AuthenticationDataDAO;
+import ru.rsreu.lint.expertsandteams.Enums.AccountsStatusesEnum;
 import ru.rsreu.lint.expertsandteams.Resource.SQLQueryManager;
 
 import java.sql.Connection;
@@ -32,7 +33,8 @@ public class OracleAuthenticationDataDAO implements AuthenticationDataDAO {
 	@Override
 	public void setOnlineStatusByUserId(int userId) throws SQLException {
 		PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AuthenticationDataDAO.SET_ONLINE_STATUS_BY_USER_ID.SQL.QUERY"));
-		preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
+		preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), AccountsStatusesEnum.ONLINE.getAccountStatusId());
+		preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userId);
 		preparedStatement.execute();
 	}
 
