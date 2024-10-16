@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
-    <link href="styles/styles.css" rel="stylesheet" type="text/css">
+    <link href="styles/registration/registration-error-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">
 </head>
 <body>
