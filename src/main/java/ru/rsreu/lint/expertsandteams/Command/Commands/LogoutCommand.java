@@ -21,6 +21,6 @@ public class LogoutCommand implements ActionCommand {
             LogoutLogic.setOfflineStatusByUserId(userId);
             session.invalidate();
         }
-        return new Page(ConfigurationManager.getProperty("REGISTRATION.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGOUT);
+        return new Page(ConfigurationManager.getProperty("REGISTRATION.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGOUT);
     }
 }

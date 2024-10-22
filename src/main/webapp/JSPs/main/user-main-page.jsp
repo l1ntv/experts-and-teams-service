@@ -11,13 +11,13 @@
 </head>
 <body>
     <div class="header">
-        <form action="controller" method="POST">
+        <form action="controller?command=main" method="GET">
             <input type="hidden" name="command" value="main">
             <button type="submit" class="button login-button rounded-button">Cписок команд</button>
         </form>
         <a href="my-team">Моя команда</a>
         <a href="profile">Профиль</a>
-        <form action="controller" method="POST">
+        <form action="controller?command=logout" method="GET">
             <input type="hidden" name="command" value="logout">
             <button type="submit" class="button login-button rounded-button">Выйти</button>
         </form>

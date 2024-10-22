@@ -30,7 +30,7 @@
 <% } %>
 <div class="container">
     <p class="centered title">Веб-сервис "Эксперты и команды"</p>
-    <form action="controller" method="POST">
+    <form action="controller?command=registration" method="GET">
         <div class="form-group">
             <label for="login" class="form-label">Логин:</label>
             <div class="form-input-wrapper">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </form>
-    <form action="controller" method="POST">
+    <form action="controller?command=registration_to_login" method="GET">
         <div class="button-new-group">
             <p>
                 <input type="hidden" name="command" value="registration-to-login">

@@ -37,7 +37,8 @@ public class FrontController extends HttpServlet {
         Page page = command.execute(request);
         if (page != null) {
             if (page.getDirectTypes().equals(DirectTypesEnum.REDIRECT)) {
-                response.sendRedirect(page.getUrl());
+                String url = request.getContextPath() + page.getUrl();
+                response.sendRedirect(request.getContextPath() + page.getUrl());
 
             } else {
                 RequestDispatcher dispatcher =

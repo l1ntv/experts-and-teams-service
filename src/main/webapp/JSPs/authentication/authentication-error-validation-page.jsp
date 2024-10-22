@@ -26,7 +26,7 @@
         <% } %>
         <div class="container">
             <p class="centered title">Веб-сервис "Эксперты и команды"</p>
-            <form action="controller" method="POST">
+            <form action="controller?command=login" method="GET">
                 <div class="form-group">
                   <label for="login" class="form-label">Логин:</label>
                   <div class="form-input-wrapper">

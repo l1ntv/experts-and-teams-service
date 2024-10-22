@@ -34,7 +34,7 @@ public class LoginCommand implements ActionCommand {
                 session.setAttribute("isCaptain", isCaptain);
                 session.setAttribute("command", CommandEnum.MAIN);
                 String jsp = LoginLogic.defineCorrectJspPageByGroupTypeId(groupTypeId);
-                return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
+                return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }
             return new Page(ConfigurationManager.getProperty("AUTHENTICATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
         }

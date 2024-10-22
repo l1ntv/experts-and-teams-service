@@ -30,6 +30,4 @@ public class PasswordMapper {
         String calculatedHash = mapPassword(originalPassword);
         return calculatedHash.equals(hashedPassword);
     }
-	
-	
 }
