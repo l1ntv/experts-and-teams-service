@@ -32,7 +32,6 @@ public class RegistrationCommand implements ActionCommand {
                 session.setAttribute("userId", userId);
                 session.setAttribute("groupTypeId", groupTypeId);
                 session.setAttribute("isCaptain", isCaptain);
-                session.setAttribute("command", CommandEnum.MAIN);
                 return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }
             return new Page(ConfigurationManager.getProperty("REGISTRATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.REGISTRATION);
