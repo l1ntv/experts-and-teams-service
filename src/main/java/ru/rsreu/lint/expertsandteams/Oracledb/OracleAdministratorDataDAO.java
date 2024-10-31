@@ -22,4 +22,18 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
         ResultSet resultSet = statement.executeQuery(SQLQueryManager.getProperty("AdministratorDataDAO.GET_AUTH_USERS_LIST"));
         return resultSet;
     }
+
+    @Override
+    public ResultSet getTeamsStatisticsList() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(SQLQueryManager.getProperty("AdministratorDataDAO.GET_TEAMS_STATISTICS_LIST"));
+        return resultSet;
+    }
+
+    @Override
+    public ResultSet getExpertsStatisticsList() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(SQLQueryManager.getProperty("AdministratorDataDAO.GET_EXPERTS_STATISTICS_LIST"));
+        return resultSet;
+    }
 }

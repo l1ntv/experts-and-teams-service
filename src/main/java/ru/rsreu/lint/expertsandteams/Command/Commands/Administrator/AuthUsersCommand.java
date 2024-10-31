@@ -2,7 +2,7 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.Administrator;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.AuthUserDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.AuthUserDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Logic.Administrator.AuthUsersLogic;
@@ -22,6 +22,6 @@ public class AuthUsersCommand implements ActionCommand {
             request.setAttribute("authUsers", list);
             return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.AUTH.USERS.PAGE"), ConfigurationManager.getProperty("ADMINISTRATOR.AUTH.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.AUTH_USERS);
         }
-        return null;
+        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
     }
 }

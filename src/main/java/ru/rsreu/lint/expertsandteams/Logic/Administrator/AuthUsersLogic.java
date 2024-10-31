@@ -3,7 +3,7 @@ package ru.rsreu.lint.expertsandteams.Logic.Administrator;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.AuthUserDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.AuthUserDTO;
 import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 
 import java.sql.ResultSet;

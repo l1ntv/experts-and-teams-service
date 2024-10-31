@@ -3,6 +3,8 @@ package ru.rsreu.lint.expertsandteams.Enums;
 import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.AuthUsersCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.ExpertsStatisticsCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.TeamsStatisticsCommand;
 
 public enum CommandEnum {
     REGISTRATION {
@@ -28,6 +30,16 @@ public enum CommandEnum {
     AUTH_USERS {
         {
             this.command = new AuthUsersCommand();
+        }
+    },
+    TEAMS_STATISTICS {
+        {
+            this.command = new TeamsStatisticsCommand();
+        }
+    },
+    EXPERTS_STATISTICS {
+        {
+            this.command = new ExpertsStatisticsCommand();
         }
     },
     LOGOUT {
