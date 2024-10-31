@@ -1,0 +1,31 @@
+.title {
+    text-align: center; /* Центрируем текст заголовка */
+    margin-top: 20px; /* Отступ сверху от шапки */
+    font-size: 24px; /* Размер шрифта для заголовка */
+}
+
+.table-container {
+    max-height: 750px; /* Максимальная высота контейнера */
+    overflow-y: auto; /* Прокрутка по вертикали */
+    margin: 0 auto; /* Центрируем контейнер по горизонтали */
+    width: 80%; /* Ограничиваем ширину контейнера */
+}
+
+table {
+    width: 100%; /* Устанавливаем ширину таблицы в 100% относительно контейнера */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+

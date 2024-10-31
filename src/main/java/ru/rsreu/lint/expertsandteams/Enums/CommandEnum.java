@@ -2,6 +2,7 @@ package ru.rsreu.lint.expertsandteams.Enums;
 
 import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.*;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.AuthUsersCommand;
 
 public enum CommandEnum {
     REGISTRATION {
@@ -22,6 +23,11 @@ public enum CommandEnum {
     MAIN {
         {
             this.command = new MainCommand();
+        }
+    },
+    AUTH_USERS {
+        {
+            this.command = new AuthUsersCommand();
         }
     },
     LOGOUT {

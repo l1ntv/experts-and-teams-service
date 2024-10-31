@@ -5,6 +5,7 @@ import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Logic.RegistrationLogic;
+import ru.rsreu.lint.expertsandteams.Logic.ViewContentDefiner;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 import ru.rsreu.lint.expertsandteams.Validation.LoginAndPasswordValidator;
 import ru.rsreu.lint.expertsandteams.Validation.ValidationData;
@@ -25,14 +26,15 @@ public class RegistrationCommand implements ActionCommand {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);
                 int userId = RegistrationLogic.getUserIdByLogin(login);
-                int groupTypeId = 0;
+                int groupTypeId = 3;
                 boolean isCaptain = false;
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);
                 session.setAttribute("userId", userId);
                 session.setAttribute("groupTypeId", groupTypeId);
                 session.setAttribute("isCaptain", isCaptain);
-                return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+                String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
+                return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }
             return new Page(ConfigurationManager.getProperty("REGISTRATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.REGISTRATION);
         }

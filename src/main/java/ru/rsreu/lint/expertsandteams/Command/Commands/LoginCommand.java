@@ -5,6 +5,7 @@ import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Logic.LoginLogic;
+import ru.rsreu.lint.expertsandteams.Logic.ViewContentDefiner;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 import ru.rsreu.lint.expertsandteams.Validation.LoginAndPasswordValidator;
 import ru.rsreu.lint.expertsandteams.Validation.ValidationData;
@@ -32,7 +33,7 @@ public class LoginCommand implements ActionCommand {
                 session.setAttribute("userId", userId);
                 session.setAttribute("groupTypeId", groupTypeId);
                 session.setAttribute("isCaptain", isCaptain);
-                String jsp = LoginLogic.defineCorrectJspPageByGroupTypeId(groupTypeId);
+                String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
                 return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }
             return new Page(ConfigurationManager.getProperty("AUTHENTICATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);

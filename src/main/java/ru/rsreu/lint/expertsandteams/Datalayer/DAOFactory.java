@@ -1,9 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Datalayer;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AuthenticationDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.LogoutDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.MainDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.*;
 
 public abstract class DAOFactory {
 	public static DAOFactory getInstance(DBType dbType) {
@@ -15,5 +12,6 @@ public abstract class DAOFactory {
 	public abstract LogoutDataDAO getLogoutDataDAO();
 	public abstract RegistrationDataDAO getRegistrationDataDAO();
 	public abstract MainDataDAO getMainDataDAO();
+	public abstract AdministratorDataDAO getAdministratorDataDAO();
 
 }

@@ -40,25 +40,4 @@ public class LoginLogic {
         AuthenticationDataDAO authenticationDataDAO = factory.getAuthenticationDataDAO();
         authenticationDataDAO.setOnlineStatusByUserId(userId);
     }
-
-    public static String defineCorrectJspPageByGroupTypeId(int groupTypeId) {
-        String jsp = new String();
-        switch (groupTypeId) {
-            case 0:
-                jsp = ConfigurationManager.getProperty("USER.MAIN.PAGE");
-                break;
-            case 1:
-                jsp = ConfigurationManager.getProperty("EXPERT.MAIN.PAGE");
-                break;
-            case 2:
-                jsp = ConfigurationManager.getProperty("MODERATOR.MAIN.PAGE");
-                break;
-            case 3:
-                jsp = ConfigurationManager.getProperty("ADMINISTRATION.MAIN.PAGE");
-                break;
-            default:
-                // TO DO error handle
-        }
-        return jsp;
-    }
 }

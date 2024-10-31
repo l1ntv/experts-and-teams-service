@@ -1,10 +1,7 @@
 package ru.rsreu.lint.expertsandteams.Oracledb;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.*;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AuthenticationDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.LogoutDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.MainDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -53,5 +50,12 @@ public class OracleDBDAOFactory extends DAOFactory {
     }
 
     @Override
-    public MainDataDAO getMainDataDAO() { return new OracleMainDataDAO(connection); }
+    public MainDataDAO getMainDataDAO() {
+        return new OracleMainDataDAO(connection);
+    }
+
+    @Override
+    public AdministratorDataDAO getAdministratorDataDAO() {
+        return new OracleAdministratorDataDAO(connection);
+    }
 }
