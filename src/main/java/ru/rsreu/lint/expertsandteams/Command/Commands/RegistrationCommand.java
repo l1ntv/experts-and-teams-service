@@ -7,7 +7,7 @@ import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Logic.RegistrationLogic;
 import ru.rsreu.lint.expertsandteams.Logic.ViewContentDefiner;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
-import ru.rsreu.lint.expertsandteams.Validation.LoginAndPasswordValidator;
+import ru.rsreu.lint.expertsandteams.Validation.DataValidator;
 import ru.rsreu.lint.expertsandteams.Validation.ValidationData;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +20,7 @@ public class RegistrationCommand implements ActionCommand {
     public Page execute(HttpServletRequest request) throws SQLException {
         String login = request.getParameter(ConfigurationManager.getProperty("LOGIN.PROPERTY.CONST"));
         String password = request.getParameter(ConfigurationManager.getProperty("PASSWORD.PROPERTY.CONST"));
-        LoginAndPasswordValidator validator = new LoginAndPasswordValidator();
-        ValidationData validationData = validator.validateAuthenticationData(login, password);
+        ValidationData validationData = DataValidator.validateAuthenticationData(login, password);
         if (validationData.getIsCorrectData()) {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);

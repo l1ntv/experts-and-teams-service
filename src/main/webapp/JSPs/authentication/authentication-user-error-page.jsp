@@ -29,9 +29,20 @@
                 <input type="password" id="password" name="password" required class="form-input rounded">
             </div>
         </div>
-        <input type="hidden" name="command" value="login">
-        <div class="button-group">
-            <p><button type="submit" class="button login-button rounded-button">Войти</button></p>
+        <div class="form-group">
+            <div class="button-group">
+                <input type="hidden" name="command" value="login">
+                <button type="submit" class="button register-button rounded-button">Авторизация</button>
+            </div>
+        </div>
+    </form>
+    <form action="controller?command=login_to_registration" method="GET">
+        <div class="button-new-group">
+            <p>
+                <input type="hidden" name="command" value="login_to_registration">
+                <button type="submit" class="button login-button rounded-button">Регистрация</button>
+                <label>Нет учётной записи?</label>
+            </p>
         </div>
     </form>
 </div>

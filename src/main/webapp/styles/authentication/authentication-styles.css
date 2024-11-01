@@ -62,6 +62,14 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.button-new-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-left: 177px;
+    width: 100px;
+}
+
 .button-group {
     display: flex;
     justify-content: center;

@@ -34,21 +34,21 @@
     </div>
     <div class="container">
         <p class="centered title">Действия с пользователями:</p>
-
-
-        <form action="controller?command=create-user" method="GET">
-            <p class="centered title">Действия с пользователями:</p>
             <div class="form-group">
                 <label for="login" class="form-label">Логин:</label>
                 <div class="form-input-wrapper">
                     <input type="text" id="login" name="login" required class="form-input rounded">
                 </div>
             </div>
-            <input type="hidden" name="command" value="create-user">
+            <input type="hidden" name="command" value="create_user">
             <div class="button-group">
                 <button type="submit" class="button login-button rounded-button">Создать</button>
             </div>
-        </form>
+            <input type="hidden" name="command" value="delete_user">
+            <div class="button-group">
+                <button type="submit" class="button login-button rounded-button">Удалить</button>
+            </div>
+
     </div>
 </body>
 </html>

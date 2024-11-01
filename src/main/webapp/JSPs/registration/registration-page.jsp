@@ -32,14 +32,14 @@
         </div>
       </form>
       <form action="controller?command=registration_to_login" method="GET">
-        <div class="button-new-group">
-          <p>
-            <input type="hidden" name="command" value="registration_to_login">
-            <button type="submit" class="button login-button rounded-button">Авторизация</button>
-            <label>Уже зарегистрированы?</label>
-          </p>
-        </div>
-      </form>
+      <div class="button-new-group">
+        <p>
+          <input type="hidden" name="command" value="registration_to_login">
+          <button type="submit" class="button login-button rounded-button">Авторизация</button>
+          <label>Уже зарегистрированы?</label>
+        </p>
+      </div>
+    </form>
     </div>
   </body>
 </html>

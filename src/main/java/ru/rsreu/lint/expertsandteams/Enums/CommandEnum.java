@@ -17,6 +17,11 @@ public enum CommandEnum {
             this.command = new RegistrationToLoginCommand();
         }
     },
+    LOGIN_TO_REGISTRATION {
+        {
+            this.command = new LoginToRegistrationCommand();
+        }
+    },
     LOGIN {
         {
             this.command = new LoginCommand();
