@@ -22,6 +22,6 @@ public class TeamsStatisticsCommand implements ActionCommand {
             request.setAttribute("teamsStatistics", list);
             return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.TEAMS.STATISTICS.PAGE"), ConfigurationManager.getProperty("ADMINISTRATOR.TEAMS.STATISTICS.URL"), DirectTypesEnum.FORWARD, CommandEnum.TEAMS_STATISTICS);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
     }
 }

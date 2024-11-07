@@ -24,6 +24,6 @@ public class ExpertsStatisticsCommand implements ActionCommand {
             request.setAttribute("expertsStatistics", list);
             return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.EXPERTS.STATISTICS.PAGE"), ConfigurationManager.getProperty("ADMINISTRATOR.EXPERTS.STATISTICS.URL"), DirectTypesEnum.FORWARD, CommandEnum.EXPERTS_STATISTICS);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
     }
 }

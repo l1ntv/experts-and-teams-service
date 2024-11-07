@@ -50,13 +50,12 @@
             </div>
         </div>
     </form>
-    <form action="controller?command=registration_to_login" method="GET">
-        <div class="button-new-group">
-            <p>
-                <input type="hidden" name="command" value="registration-to-login">
-                <button type="submit" class="button login-button rounded-button">Авторизация</button>
-                <label>Уже зарегистрированы?</label>
-            </p>
+    <form action="controller?command=redirect_to_login" method="GET">
+        <div class="form-group">
+            <div class="button-group">
+                <input type="hidden" name="command" value="redirect_to_login">
+                <button type="submit" class="button register-button rounded-button">Авторизация</button>
+            </div>
         </div>
     </form>
 </div>

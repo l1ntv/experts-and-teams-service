@@ -2,7 +2,7 @@ package ru.rsreu.lint.expertsandteams.Command.Factory;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
-import ru.rsreu.lint.expertsandteams.Command.Commands.EmptyCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Common.EmptyCommand;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -2,9 +2,9 @@ package ru.rsreu.lint.expertsandteams.Enums;
 
 import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.*;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.AuthUsersCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.ExpertsStatisticsCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.TeamsStatisticsCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.*;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Common.*;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Service.SearchUserCommand;
 
 public enum CommandEnum {
     REGISTRATION {
@@ -12,14 +12,14 @@ public enum CommandEnum {
             this.command = new RegistrationCommand();
         }
     },
-    REGISTRATION_TO_LOGIN {
+    REDIRECT_TO_LOGIN {
         {
-            this.command = new RegistrationToLoginCommand();
+            this.command = new RedirectToLoginCommand();
         }
     },
-    LOGIN_TO_REGISTRATION {
+    REDIRECT_TO_REGISTRATION {
         {
-            this.command = new LoginToRegistrationCommand();
+            this.command = new RedirectToRegistrationCommand();
         }
     },
     LOGIN {
@@ -35,6 +35,21 @@ public enum CommandEnum {
     AUTH_USERS {
         {
             this.command = new AuthUsersCommand();
+        }
+    },
+    SEARCH_USER {
+        {
+            this.command = new SearchUserCommand();
+        }
+    },
+    CREATE_USER {
+        {
+            this.command = new CreateUserCommand();
+        }
+    },
+    DELETE_USER {
+        {
+            this.command = new DeleteUserCommand();
         }
     },
     TEAMS_STATISTICS {

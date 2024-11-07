@@ -7,10 +7,9 @@ body {
 
 .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    justify-content: space-between; /* Размещаем секции по краям */
+    align-items: flex-start; /* Выравниваем по верхнему краю */
+    padding: 20px; /* Добавляем отступы */
 }
 
 .title {
@@ -32,7 +31,7 @@ body {
 
 .form-group {
     margin-bottom: 20px;
-    width: 300px;
+    width: 300px; /* Ширина секции с формами */
 }
 
 .form-label {
@@ -42,7 +41,8 @@ body {
 }
 
 .form-input-wrapper {
-    position: relative;
+    display: flex; /* Используем flexbox для кнопки и поля ввода */
+    align-items: center; /* Выравниваем по центру по вертикали */
 }
 
 .form-input.rounded {
@@ -52,30 +52,39 @@ body {
 .button {
     background-color: #4CAF50;
     color: white;
-    padding: 12px 60px;
+    padding: 12px 20px; /* Изменяем ширину кнопки */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    margin: 0 10px;
-    margin-right: 10px;
+    margin-left: 10px; /* Отступ слева от кнопки */
     transition: background-color 0.3s ease;
-}
-
-.button-new-group {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    margin-left: 177px;
-    width: 100px;
 }
 
 .button-group {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: flex-start; /* Выравниваем кнопки по левому краю */
+    margin-top: 10px; /* Уменьшаем отступ сверху */
 }
 
-.rounded-button {
-    border-radius: 20px;
+.table-section {
+    flex-basis: 55%; /* Ширина секции с таблицей */
 }
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Отступ сверху для таблицы */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+

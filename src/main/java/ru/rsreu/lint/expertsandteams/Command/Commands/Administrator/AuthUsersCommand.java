@@ -22,6 +22,6 @@ public class AuthUsersCommand implements ActionCommand {
             request.setAttribute("authUsers", list);
             return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.AUTH.USERS.PAGE"), ConfigurationManager.getProperty("ADMINISTRATOR.AUTH.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.AUTH_USERS);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
     }
 }

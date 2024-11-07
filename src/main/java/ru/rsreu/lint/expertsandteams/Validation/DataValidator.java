@@ -22,7 +22,16 @@ public class DataValidator {
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }
 
-    public static boolean validateUserLogin(String login) {
+    public static ValidationData validateCreationUserData(String login) {
+        boolean isValid;
+        StringBuilder errorMessage = new StringBuilder("");
+        if (!DataValidator.validateLogin(login)) {
+            errorMessage.append("логина. ");
+        }
+        return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
+    }
+
+    private static boolean validateUserLogin(String login) {
         return DataValidator.validateLogin(login);
     }
 

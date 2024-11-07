@@ -132,11 +132,7 @@
     </form>
     <form action="controller?command=teams_statistics" method="GET">
         <input type="hidden" name="command" value="teams_statistics">
-        <button type="submit" class="button login-button rounded-button">Статистика команд</button>
-    </form>
-    <form action="controller?command=experts_statistics" method="GET">
-        <input type="hidden" name="command" value="experts_statistics">
-        <button type="submit" class="button login-button rounded-button">Статистика экспертов</button>
+        <button type="submit" class="button login-button rounded-button">Заблокированные пользователи</button>
     </form>
     <form action="controller?command=logout" method="GET">
         <input type="hidden" name="command" value="logout">
@@ -156,34 +152,18 @@
     </div>
 </form>
 
-<div class="new-form-group">
-    <label for="role-select" class="form-label">Новая роль:</label>
-    <select id="role-select" name="role" class="form-input rounded">
-        <option value="">Выберите роль</option>
-        <option value="user">Пользователь</option>
-        <option value="expert">Эксперт</option>
-        <option value="moderator">Модератор</option>
-        <option value="administrator">Администратор</option>
-    </select>
-    <div class="new-button-group">
-        <input type="hidden" name="login" id="hidden-login-role">
-        <input type="hidden" name="command" value="change_role">
-        <button type="submit" class="button login-button rounded-button">Изменить роль</button>
-    </div>
-</div>
-
 <div class="new-form-group new-button-group">
     <form action="controller?command=create_user" method="GET">
         <!-- Скрытое поле для передачи логина -->
         <input type="hidden" name="login" id="hidden-login-create">
         <input type="hidden" name="command" value="create_user">
-        <button type="submit" class="button login-button rounded-button">Создать</button>
+        <button type="submit" class="button login-button rounded-button">Заблокировать</button>
     </form>
     <form action="controller?command=delete_user" method="GET">
         <!-- Скрытое поле для передачи логина -->
         <input type="hidden" name="login" id="hidden-login-delete">
         <input type="hidden" name="command" value="delete_user">
-        <button type="submit" class="button login-button rounded-button">Удалить</button>
+        <button type="submit" class="button login-button rounded-button">Разблокировать</button>
     </form>
 </div>
 <div class="table-container">

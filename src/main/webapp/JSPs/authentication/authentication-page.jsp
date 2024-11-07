@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Авторизация</title>
     <link href="styles/registration/registration-styles.css" rel="stylesheet" type="text/css">
-    <link rel="icon" href="styles/icon.png" type="image/png">
+    <link rel="icon" href="D:\tournament.png" type="image/png">
 </head>
 <body>
 <div class="container">
@@ -29,13 +31,12 @@
             </div>
         </div>
     </form>
-    <form action="controller?command=login_to_registration" method="GET">
-        <div class="button-new-group">
-            <p>
-                <input type="hidden" name="command" value="login_to_registration">
-                <button type="submit" class="button login-button rounded-button">Регистрация</button>
-                <label>Нет учётной записи?</label>
-            </p>
+    <form action="controller?command=redirect_to_registration" method="GET">
+        <div class="form-group">
+            <div class="button-group">
+                <input type="hidden" name="command" value="redirect_to_registration">
+                <button type="submit" class="button register-button rounded-button">Регистрация</button>
+            </div>
         </div>
     </form>
 </div>
