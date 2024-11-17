@@ -126,12 +126,16 @@
         <input type="hidden" name="command" value="main">
         <button type="submit" class="button login-button rounded-button">Действия с пользователем</button>
     </form>
-    <form action="controller?command=auth_users" method="GET">
-        <input type="hidden" name="command" value="auth_users">
+    <form action="controller?command=messages_users" method="GET">
+        <input type="hidden" name="command" value="messages_users">
+        <button type="submit" class="button login-button rounded-button">Просмотр сообщений пользователей</button>
+    </form>
+    <form action="controller?command=auth_users_moderator" method="GET">
+        <input type="hidden" name="command" value="auth_users_moderator">
         <button type="submit" class="button login-button rounded-button">Авторизованные пользователи</button>
     </form>
-    <form action="controller?command=teams_statistics" method="GET">
-        <input type="hidden" name="command" value="teams_statistics">
+    <form action="controller?command=banned_users" method="GET">
+        <input type="hidden" name="command" value="banned_users">
         <button type="submit" class="button login-button rounded-button">Заблокированные пользователи</button>
     </form>
     <form action="controller?command=logout" method="GET">

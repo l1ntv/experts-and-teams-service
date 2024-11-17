@@ -2,6 +2,7 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.Administrator;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
+import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Logic.Administrator.DeleteUserLogic;
@@ -19,10 +20,35 @@ public class DeleteUserCommand implements ActionCommand {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userId") != null) {
             String login = request.getParameter(ConfigurationManager.getProperty("LOGIN.PROPERTY.CONST"));
+            String adminLogin = (String) session.getAttribute("userLogin");
             ValidationData validationData = DataValidator.validateCreationUserData(login);
             if (validationData.getIsCorrectData()) {
-                if (DeleteUserLogic.isUserExistsByLogin(login)) {
-
+                if (DeleteUserLogic.isUserExistsByLogin(login) && !adminLogin.equals(login)) {
+                    AccountsTypesEnum accountsTypesEnum = DeleteUserLogic.searchDeletedUserRoleByLogin(login);
+                    switch (accountsTypesEnum) {
+                        case USER:
+                            if (DeleteUserLogic.isUserJoinedInTeamByLogin(login)) {
+                                if (DeleteUserLogic.isUserCaptainInTeamByLogin(login)) {
+                                    //
+                                } else {
+                                    DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
+                                    DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                                }
+                            } else {
+                                DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                            }
+                            break;
+                        case EXPERT:
+                            DeleteUserLogic.deleteExpertDataByLogin(login);
+                            DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                            break;
+                        case MODERATOR:
+                            DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                            break;
+                        case ADMINISTRATOR:
+                            DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                            break;
+                    }
                 }
                 request.setAttribute("isExists", Boolean.TRUE);
                 return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);

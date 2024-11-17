@@ -1,13 +1,11 @@
 package ru.rsreu.lint.expertsandteams.Oracledb;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.SearchedUserDTO;
 import ru.rsreu.lint.expertsandteams.Enums.AccountsStatusesEnum;
 import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 import ru.rsreu.lint.expertsandteams.Mapper.PasswordMapper;
 import ru.rsreu.lint.expertsandteams.Resource.SQLQueryManager;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class OracleAdministratorDataDAO implements AdministratorDataDAO {
@@ -69,9 +67,9 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
     }
 
     @Override
-    public boolean isUserJoinedInTeamByLogin(String login) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.IS_USER_JOINED_IN_TEAM_BY_LOGIN.SQL.QUERY"));
-        preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
+    public boolean isUserJoinedInTeamByUserId(int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.IS_USER_JOINED_IN_TEAM_BY_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
@@ -79,10 +77,49 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
         return false;
     }
 
+    public int findUserIdByLogin(String login) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.FIND_USER_ID_BY_LOGIN.SQL.QUERY"));
+        preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.getInt("USER_ID");
+    }
+
     @Override
-    public boolean deleteUserFromUserDataTableByLogin(String login) throws SQLException {
+    public void deleteAdministratorUserByLogin(String login) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DELETE_USER_FROM_USER_DATA_TABLE_BY_LOGIN.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
-        return preparedStatement.execute();
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void deleteExpertUserFromExpertsTableById(int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DELETE_EXPERT_FROM_EXPERTS_TABLE_BY_EXPERT_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void deleteExpertUserFromConsultationsTableById(int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DELETE_EXPERT_FROM_CONSULTATIONS_TABLE_BY_EXPERT_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
+        preparedStatement.execute();
+    }
+
+    @Override
+    public void deleteUserFromTeamMembersTableById(int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DELETE_USER_FROM_TEAM_MEMBERS_TABLE_BY_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
+        preparedStatement.execute();
+    }
+
+    @Override
+    public boolean isUserCaptainInTeamByUserId(int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.IS_USER_CAPTAIN_IN_TEAM_BY_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+        }
+        return false;
     }
 }

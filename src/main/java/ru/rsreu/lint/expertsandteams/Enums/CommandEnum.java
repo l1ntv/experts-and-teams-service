@@ -4,6 +4,9 @@ import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Common.*;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.AuthUsersModeratorCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.BannedUsersCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.MessagesUsersCommand;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Service.SearchUserCommand;
 
 public enum CommandEnum {
@@ -60,6 +63,21 @@ public enum CommandEnum {
     EXPERTS_STATISTICS {
         {
             this.command = new ExpertsStatisticsCommand();
+        }
+    },
+    MESSAGES_USERS {
+        {
+            this.command = new MessagesUsersCommand();
+        }
+    },
+    AUTH_USERS_MODERATOR {
+        {
+            this.command = new AuthUsersModeratorCommand();
+        }
+    },
+    BANNED_USERS {
+        {
+            this.command = new BannedUsersCommand();
         }
     },
     LOGOUT {

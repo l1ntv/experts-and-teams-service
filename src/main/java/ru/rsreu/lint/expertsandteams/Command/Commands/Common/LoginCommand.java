@@ -31,6 +31,7 @@ public class LoginCommand implements ActionCommand {
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);
                 session.setAttribute("userId", userId);
+                session.setAttribute("userLogin", login);
                 session.setAttribute("groupTypeId", groupTypeId);
                 session.setAttribute("isCaptain", isCaptain);
                 String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);

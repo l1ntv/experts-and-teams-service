@@ -25,11 +25,12 @@ public class RegistrationCommand implements ActionCommand {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);
                 int userId = RegistrationLogic.getUserIdByLogin(login);
-                int groupTypeId = 3;
+                int groupTypeId = 2;
                 boolean isCaptain = false;
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);
                 session.setAttribute("userId", userId);
+                session.setAttribute("userLogin", login);
                 session.setAttribute("groupTypeId", groupTypeId);
                 session.setAttribute("isCaptain", isCaptain);
                 String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);

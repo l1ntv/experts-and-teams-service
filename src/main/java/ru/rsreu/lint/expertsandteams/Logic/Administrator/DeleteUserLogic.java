@@ -3,9 +3,11 @@ package ru.rsreu.lint.expertsandteams.Logic.Administrator;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
+import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteUserLogic {
@@ -15,27 +17,54 @@ public class DeleteUserLogic {
         return administratorDataDAO.isUserExistsByLogin(login);
     }
 
-    public static boolean deleteUserByLogin(HttpServletRequest request, String login) throws SQLException {
+    public static AccountsTypesEnum searchDeletedUserRoleByLogin(String login) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
-        HttpSession session = request.getSession(false);
-        int groupTypeId = (int) session.getAttribute("groupTypeId");
-        if (groupTypeId == 0) {
-            boolean isCaptain = (boolean) session.getAttribute("isCaptain");
-            boolean isJoinedInTeam = administratorDataDAO.isUserJoinedInTeamByLogin(login);
-            if (!isJoinedInTeam) {
-
-            } else {
-
-            }
-        }
-        return true;
-        // если пользователь просто юзер => проверить состоит ли в команде
-        // если не состоит, то просто удалить из user_data
-        // если состоит в команде => проверить является ли он капитаном
-            // если не капитан, то удалить его из teams_members
-            // если капитан, то проверить если ли кто-то еще в команде
-                // если в команде кто-то есть, то передать права капитана другому участнику команды
-                // если в команде никого нет, то удалить полностью команду (в том числе и консультации, если они есть)
+        ResultSet resultSet = administratorDataDAO.searchUserRoleByLogin(login);
+        return DeleteUserLogic.convertResultSetToAccountType(resultSet);
     }
+
+    public static void deleteUserFromUserDataByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        administratorDataDAO.deleteAdministratorUserByLogin(login);
+    }
+
+    public static void deleteUserFromTeamMembersByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int id = administratorDataDAO.findUserIdByLogin(login);
+        administratorDataDAO.deleteUserFromTeamMembersTableById(id);
+    }
+
+    public static void deleteExpertDataByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int expertId = administratorDataDAO.findUserIdByLogin(login);
+        administratorDataDAO.deleteExpertUserFromConsultationsTableById(expertId);
+        administratorDataDAO.deleteExpertUserFromExpertsTableById(expertId);
+    }
+
+    public static boolean isUserJoinedInTeamByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int id = administratorDataDAO.findUserIdByLogin(login);
+        return administratorDataDAO.isUserJoinedInTeamByUserId(id);
+    }
+
+    public static boolean isUserCaptainInTeamByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int id = administratorDataDAO.findUserIdByLogin(login);
+        return administratorDataDAO.isUserCaptainInTeamByUserId(id);
+    }
+
+    private static AccountsTypesEnum convertResultSetToAccountType(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) { // Перемещаем курсор на первую строку
+            return AccountsTypesEnum.valueOf(resultSet.getString("ROLE_NAME").toUpperCase());
+        } else {
+            throw new SQLException("ResultSet is empty");
+        }
+    }
+
 }

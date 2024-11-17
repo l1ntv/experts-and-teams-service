@@ -13,7 +13,12 @@ public interface AdministratorDataDAO {
     boolean isUserExistsByLogin(String login) throws SQLException;
     boolean createUserByLogin(String login) throws SQLException;
     ResultSet searchUserRoleByLogin(String login) throws SQLException;
-    boolean isUserJoinedInTeamByLogin(String login) throws SQLException;
-    boolean deleteUserFromUserDataTableByLogin(String login) throws SQLException;
+    boolean isUserJoinedInTeamByUserId(int id) throws SQLException;
+    int findUserIdByLogin(String login) throws SQLException;
+    void deleteAdministratorUserByLogin(String login) throws SQLException;
+    void deleteExpertUserFromExpertsTableById(int id) throws SQLException;
+    void deleteExpertUserFromConsultationsTableById(int id) throws SQLException;
+    void deleteUserFromTeamMembersTableById(int id) throws SQLException;
+    boolean isUserCaptainInTeamByUserId(int id) throws SQLException;
 
 }
