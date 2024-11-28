@@ -1,6 +1,6 @@
 <%@ page import="ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.ExpertsStatisticsCommand" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ru">

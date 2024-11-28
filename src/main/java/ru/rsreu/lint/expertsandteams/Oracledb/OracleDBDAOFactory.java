@@ -30,7 +30,7 @@ public class OracleDBDAOFactory extends DAOFactory {
         Locale.setDefault(Locale.ENGLISH);
         String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
         String username = "lint";
-        String password = "123";
+        String password = "16042004";
         connection = DriverManager.getConnection(url, username, password);
     }
 
@@ -58,4 +58,37 @@ public class OracleDBDAOFactory extends DAOFactory {
     public AdministratorDataDAO getAdministratorDataDAO() {
         return new OracleAdministratorDataDAO(connection);
     }
+
+    @Override
+    public MyTeamDataDAO getMyTeamDataDAO() {
+        return new OracleMyTeamDataDAO(connection);
+    }
+
+    @Override
+    public CreateTeamDataDAO getCreateTeamDataDAO() {
+        return new OracleCreateTeamDataDAO(connection);
+    }
+
+    @Override
+    public LeaveTeamDataDAO getLeaveTeamDataDAO() {
+        return new OracleLeaveTeamDataDAO(connection);
+    }
+
+    @Override
+    public JoinTeamDataDAO getJoinTeamDataDAO() { return new OracleJoinTeamDataDAO(connection); }
+
+    @Override
+    public ConsultationsDataDAO getConsultationsDataDAO() {return new OracleConsultationsDataDAO(connection); }
+
+    @Override
+    public RequestConsultationDataDAO getRequestConsultationDataDAO() { return new OracleRequestConsultationDataDAO(connection); }
+
+    @Override
+    public ConsultationsRequestsDataDAO getConsultationsRequestsDataDAO() { return new OracleConsultationsRequestsDataDAO(connection); }
+
+    @Override
+    public AcceptTeamDataDAO getAcceptTeamDataDAO() { return new OracleAcceptTeamDataDAO(connection); }
+
+    @Override
+    public CancelConsultationDataDAO getCancelConsultationDataDAO() { return new OracleCancelConsultationDataDAO(connection); }
 }

@@ -4,8 +4,8 @@ import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Command.Page;
-import ru.rsreu.lint.expertsandteams.Logic.RegistrationLogic;
-import ru.rsreu.lint.expertsandteams.Logic.ViewContentDefiner;
+import ru.rsreu.lint.expertsandteams.Logic.Common.RegistrationLogic;
+import ru.rsreu.lint.expertsandteams.Logic.Common.ViewContentDefiner;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 import ru.rsreu.lint.expertsandteams.Validation.DataValidator;
 import ru.rsreu.lint.expertsandteams.Validation.ValidationData;
@@ -25,7 +25,7 @@ public class RegistrationCommand implements ActionCommand {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);
                 int userId = RegistrationLogic.getUserIdByLogin(login);
-                int groupTypeId = 2;
+                int groupTypeId = 1;
                 boolean isCaptain = false;
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);

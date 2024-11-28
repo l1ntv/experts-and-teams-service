@@ -1,4 +1,4 @@
-package ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator;
+package ru.rsreu.lint.expertsandteams.Datalayer.DTO;
 
 public class ExpertsStatisticsDTO {
     private String login;

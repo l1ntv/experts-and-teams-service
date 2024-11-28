@@ -1,4 +1,4 @@
-package ru.rsreu.lint.expertsandteams.Logic;
+package ru.rsreu.lint.expertsandteams.Logic.Common;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;

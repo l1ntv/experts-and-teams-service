@@ -3,8 +3,7 @@ package ru.rsreu.lint.expertsandteams.Logic.Administrator;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.TeamsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
