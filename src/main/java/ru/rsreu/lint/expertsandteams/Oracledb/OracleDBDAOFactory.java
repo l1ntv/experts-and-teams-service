@@ -75,20 +75,47 @@ public class OracleDBDAOFactory extends DAOFactory {
     }
 
     @Override
-    public JoinTeamDataDAO getJoinTeamDataDAO() { return new OracleJoinTeamDataDAO(connection); }
+    public JoinTeamDataDAO getJoinTeamDataDAO() {
+        return new OracleJoinTeamDataDAO(connection);
+    }
 
     @Override
-    public ConsultationsDataDAO getConsultationsDataDAO() {return new OracleConsultationsDataDAO(connection); }
+    public ConsultationsDataDAO getConsultationsDataDAO() {
+        return new OracleConsultationsDataDAO(connection);
+    }
 
     @Override
-    public RequestConsultationDataDAO getRequestConsultationDataDAO() { return new OracleRequestConsultationDataDAO(connection); }
+    public RequestConsultationDataDAO getRequestConsultationDataDAO() {
+        return new OracleRequestConsultationDataDAO(connection);
+    }
 
     @Override
-    public ConsultationsRequestsDataDAO getConsultationsRequestsDataDAO() { return new OracleConsultationsRequestsDataDAO(connection); }
+    public ConsultationsRequestsDataDAO getConsultationsRequestsDataDAO() {
+        return new OracleConsultationsRequestsDataDAO(connection);
+    }
 
     @Override
-    public AcceptTeamDataDAO getAcceptTeamDataDAO() { return new OracleAcceptTeamDataDAO(connection); }
+    public AcceptTeamDataDAO getAcceptTeamDataDAO() {
+        return new OracleAcceptTeamDataDAO(connection);
+    }
 
     @Override
-    public CancelConsultationDataDAO getCancelConsultationDataDAO() { return new OracleCancelConsultationDataDAO(connection); }
+    public CancelConsultationDataDAO getCancelConsultationDataDAO() {
+        return new OracleCancelConsultationDataDAO(connection);
+    }
+
+    @Override
+    public AskQuestionTeamDataDAO getAskQuestionTeamDataDAO() {
+        return new OracleAskQuestionTeamDataDAO(connection);
+    }
+
+    @Override
+    public AnswerToQuestionDataDAO getAnswerToQuestionDataDAO() {
+        return new OracleAnswerToQuestionDataDAO(connection);
+    }
+
+    @Override
+    public BannedUsersDataDAO getBannedUsersDataDAO() {
+        return new OracleBannedUsersDataDAO(connection);
+    }
 }

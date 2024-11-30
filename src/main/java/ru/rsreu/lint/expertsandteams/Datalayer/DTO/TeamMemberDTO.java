@@ -7,6 +7,12 @@ public class TeamMemberDTO {
     private boolean isOnline;
     private TeamRoleEnum role;
 
+    public TeamMemberDTO(String login, boolean isOnline, TeamRoleEnum role) {
+        this.login = login;
+        this.isOnline = isOnline;
+        this.role = role;
+    }
+
     public String getLogin() {
         return login;
     }

@@ -17,9 +17,7 @@ public class MainLogic {
     public static List<TeamDTO> getListTeams() throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         MainDataDAO oracleMainDataDAO = factory.getMainDataDAO();
-        ResultSet resultSet = oracleMainDataDAO.getListTeams();
-        List<TeamData> list = new ArrayList<>();
-        list = MainLogic.convertTeamResultListToArrayList(resultSet, list);
+        List<TeamData> list = oracleMainDataDAO.getListTeams();
         List<TeamDTO> listDTO = new ArrayList<>();
         return MainLogic.convertTeamListToTeamDTOList(list, listDTO);
     }
@@ -47,7 +45,7 @@ public class MainLogic {
             if (list.get(i).getTeamName().equals(name)) {
                 TeamDTO team = list.get(i);
                 list.remove(i);
-                list.add(0, team);//Vadim123_Lint1234
+                list.add(0, team);
                 return list;
             }
         }
@@ -58,19 +56,6 @@ public class MainLogic {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         MainDataDAO oracleMainDataDAO = factory.getMainDataDAO();
         return oracleMainDataDAO.findListConsultingTeamsDTOByExpertId(expertId);
-    }
-
-    private static List<TeamData> convertTeamResultListToArrayList(ResultSet resultSet, List<TeamData> list) throws SQLException {
-        while (resultSet.next()) {
-            TeamData team = new TeamData(); // classNotFound
-            team.setId(resultSet.getInt("TEAM_ID"));
-            team.setName(resultSet.getString("NAME"));
-            team.setCaptainId(resultSet.getInt("CAPTAIN_ID"));
-            team.setCountMembers(resultSet.getInt("COUNT_MEMBERS"));
-            team.setMaxCountMembers(resultSet.getInt("MAX_COUNT_MEMBERS"));
-            list.add(team);
-        }
-        return list;
     }
 
     private static List<TeamDTO> convertTeamListToTeamDTOList(List<TeamData> teamList, List<TeamDTO> teamDTOList) throws SQLException {
@@ -87,5 +72,4 @@ public class MainLogic {
         }
         return teamDTOList;
     }
-
 }

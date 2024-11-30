@@ -145,12 +145,12 @@
 </div>
 <% SearchedUserDTO searchedUserDTO = (SearchedUserDTO) request.getAttribute("searchedUser"); %>
 <div class="title">Работа с пользователями</div>
-<form action="controller?command=search_user" method="GET">
+<form action="controller?command=search_user_by_moderator" method="GET">
     <div class="new-form-group">
         <label for="login" class="form-label">Логин:</label>
         <div class="form-input-wrapper">
             <input type="text" id="login" name="login" required class="form-input rounded">
-            <input type="hidden" name="command" value="search_user">
+            <input type="hidden" name="command" value="search_user_by_moderator">
             <button type="submit" class="button login-button rounded-button">Найти</button>
         </div>
     </div>

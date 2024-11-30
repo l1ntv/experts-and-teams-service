@@ -5,7 +5,12 @@ public class TeamsStatisticsDTO {
     private String captainLogin;
     private int memberCount;
     private int maxMemberCount;
-    public TeamsStatisticsDTO() {}
+    public TeamsStatisticsDTO(String name, String captainLogin, int membersCount, int maxMembersCount) {
+        this.name = name;
+        this.captainLogin = captainLogin;
+        this.memberCount = membersCount;
+        this.maxMemberCount = maxMembersCount;
+    }
 
     public String getName() {
         return name;

@@ -4,6 +4,7 @@ import ru.rsreu.lint.expertsandteams.Datalayer.DAO.ConsultationsDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -43,5 +44,11 @@ public class ConsultationsLogic {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         ConsultationsDataDAO consultationsDataDAO = factory.getConsultationsDataDAO();
         return consultationsDataDAO.findListAvailableExperts();
+    }
+
+    public static List<QuestionAnswerDTO> findQuestionsAndAnswersByConsultationId(int consultationId) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        ConsultationsDataDAO consultationsDataDAO = factory.getConsultationsDataDAO();
+        return consultationsDataDAO.findQuestionsAndAnswersByConsultationId(consultationId);
     }
 }

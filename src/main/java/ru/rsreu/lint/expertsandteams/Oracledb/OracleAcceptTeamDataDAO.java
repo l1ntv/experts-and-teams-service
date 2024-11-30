@@ -34,10 +34,9 @@ public class OracleAcceptTeamDataDAO implements AcceptTeamDataDAO {
 
     @Override
     public void increaseCountTeamsForExpertByExpertId(int expertId) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AcceptTeamDataDAO._INCREASE_COUNT_TEAMS_BY_EXPERT_ID.SQL.QUERY"));
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AcceptTeamDataDAO.INCREASE_COUNT_TEAMS_BY_EXPERT_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), expertId);
         preparedStatement.execute();
         preparedStatement.close();
     }
-
 }

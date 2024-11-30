@@ -1,5 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Datalayer;
 
+import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.*;
 
 public abstract class DAOFactory {
@@ -22,4 +23,7 @@ public abstract class DAOFactory {
 	public abstract ConsultationsRequestsDataDAO getConsultationsRequestsDataDAO();
 	public abstract AcceptTeamDataDAO getAcceptTeamDataDAO();
 	public abstract CancelConsultationDataDAO getCancelConsultationDataDAO();
+	public abstract AskQuestionTeamDataDAO getAskQuestionTeamDataDAO();
+	public abstract AnswerToQuestionDataDAO getAnswerToQuestionDataDAO();
+	public abstract BannedUsersDataDAO getBannedUsersDataDAO();
 }

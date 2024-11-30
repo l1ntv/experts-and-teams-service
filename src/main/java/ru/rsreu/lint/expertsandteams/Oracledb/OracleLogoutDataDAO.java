@@ -21,5 +21,6 @@ public class OracleLogoutDataDAO implements LogoutDataDAO {
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), AccountsStatusesEnum.OFFLINE.getAccountStatusId());
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }

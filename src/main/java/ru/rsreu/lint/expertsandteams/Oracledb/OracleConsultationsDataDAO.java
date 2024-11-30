@@ -2,6 +2,7 @@ package ru.rsreu.lint.expertsandteams.Oracledb;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.ConsultationsDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO;
 import ru.rsreu.lint.expertsandteams.Resource.SQLQueryManager;
 
 import java.sql.*;
@@ -20,12 +21,13 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.IS_USER_JOINED_IN_TEAM_BY_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         while (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        preparedStatement.close();
         resultSet.close();
-        return false;
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -33,10 +35,13 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.FIND_TEAM_ID_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
         while (resultSet.next()) {
-            return resultSet.getInt("TEAM_ID");
+            result = resultSet.getInt("TEAM_ID");
         }
-        return -1;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -44,12 +49,13 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.IS_USER_CAPTAIN_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         while (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        preparedStatement.close();
         resultSet.close();
-        return false;
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -57,12 +63,13 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.IS_TEAM_HAS_EXPERT_BY_TEAM_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         while (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        preparedStatement.close();
         resultSet.close();
-        return false;
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -70,12 +77,17 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.FIND_TEAM_EXPERT_BY_TEAM_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        ExpertsStatisticsDTO expertsStatisticsDTO = new ExpertsStatisticsDTO();
+        String login = "";
+        int countTeams = -1;
+        int maxCountTeams = -1;
         while (resultSet.next()) {
-            expertsStatisticsDTO.setLogin(resultSet.getString("login"));
-            expertsStatisticsDTO.setTeamCount(resultSet.getInt("COUNT_TEAMS"));
-            expertsStatisticsDTO.setMaxTeamCount(resultSet.getInt("MAX_COUNT_TEAMS"));
+            login = resultSet.getString("login");
+            countTeams = resultSet.getInt("COUNT_TEAMS");
+            maxCountTeams = resultSet.getInt("MAX_COUNT_TEAMS");
         }
+        ExpertsStatisticsDTO expertsStatisticsDTO = new ExpertsStatisticsDTO(login, countTeams, maxCountTeams);
+        resultSet.close();
+        preparedStatement.close();
         return expertsStatisticsDTO;
     }
 
@@ -85,12 +97,34 @@ public class OracleConsultationsDataDAO implements ConsultationsDataDAO {
         ResultSet resultSet = statement.executeQuery(SQLQueryManager.getProperty("ConsultationsDataDAO.FIND_LIST_AVAILABLE_EXPERTS.SQL.QUERY"));
         List<ExpertsStatisticsDTO> list = new ArrayList<>();
         while (resultSet.next()) {
-            ExpertsStatisticsDTO expertsStatisticsDTO = new ExpertsStatisticsDTO();
-            expertsStatisticsDTO.setLogin(resultSet.getString("login"));
-            expertsStatisticsDTO.setTeamCount(resultSet.getInt("COUNT_TEAMS"));
-            expertsStatisticsDTO.setMaxTeamCount(resultSet.getInt("MAX_COUNT_TEAMS"));
+            String login = resultSet.getString("login");
+            int countTeams = resultSet.getInt("COUNT_TEAMS");
+            int maxCountTeams = resultSet.getInt("MAX_COUNT_TEAMS");
+            ExpertsStatisticsDTO expertsStatisticsDTO = new ExpertsStatisticsDTO(login, countTeams, maxCountTeams);
             list.add(expertsStatisticsDTO);
         }
+        resultSet.close();
+        statement.close();
+        return list;
+    }
+
+    @Override
+    public List<QuestionAnswerDTO> findQuestionsAndAnswersByConsultationId(int consultationId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("ConsultationsDataDAO.FIND_QUESTIONS_AND_ANSWERS_BY_CONSULTATION_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), consultationId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        int consId = consultationId;
+        String question = "";
+        String answer = "";
+        List<QuestionAnswerDTO> list = new ArrayList<>();
+        while (resultSet.next()) {
+            question = resultSet.getString("QUESTION");
+            answer = resultSet.getString("ANSWER");
+            QuestionAnswerDTO questionAnswerDTO = new QuestionAnswerDTO(consId, question, answer);
+            list.add(questionAnswerDTO);
+        }
+        resultSet.close();
+        preparedStatement.close();
         return list;
     }
 }

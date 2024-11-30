@@ -4,6 +4,7 @@
 <%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -142,6 +143,20 @@
 <% }
 } %>
 
+<% if (session.getAttribute("isQuestionAsked") != null) {
+    boolean isQuestionAsked = (boolean) session.getAttribute("isQuestionAsked");
+    if (isQuestionAsked) { %>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Информация</h3>
+        <p>Ваш вопрос успешно отправлен</p>
+        <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
+    </div>
+</div>
+<% session.setAttribute("isQuestionAsked", false); %>
+<% }
+} %>
+
 <%boolean myTeam = (boolean) request.getAttribute("myTeam");%>
 <div class="new-title">Консультации</div>
 <% if (myTeam) { %>
@@ -162,18 +177,19 @@
                 Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
             </div>
             <div class="textarea-container">
-                <textarea placeholder="Введите ваш вопрос..."></textarea>
+                <textarea id="questionInput" placeholder="Введите ваш вопрос..."></textarea>
             </div>
             <div class="button-container">
                 <div class="form-input-wrapper">
-                    <form action="controller?command=main" method="GET">
-                        <input type="hidden" name="command" value="main">
-                        <button type="submit" class="button login-button rounded-button">Задать вопрос</button>
+                    <form id="questionForm" action="controller?command=ask_question" method="GET">
+                        <input type="hidden" name="command" value="ask_question">
+                        <input type="hidden" name="question" id="hiddenQuestion" value="">
+                        <button type="submit" class="button login-button rounded-button" id="submit">Задать вопрос</button>
                     </form>
                 </div>
                 <div class="form-input-wrapper">
-                    <form action="controller?command=create_team" method="GET">
-                        <input type="hidden" name="command" value="create_team">
+                    <form action="controller?command=user_cancel_consultation" method="GET">
+                        <input type="hidden" name="command" value="user_cancel_consultation">
                         <button type="submit" class="button login-button rounded-button">Отказаться от эксперта</button>
                     </form>
                 </div>
@@ -186,6 +202,17 @@
                         <th>Ответ эксперта</th>
                     </tr>
                     </thead>
+                    <% if (request.getAttribute("questionsAnswers") != null) { %>
+                        <tbody>
+                        <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
+                        <% for (int i = 0; i < list.size(); i++) { %>
+                            <tr>
+                                <td><%= list.get(i).getQuestion() %></td>
+                                <td><%= list.get(i).getAnswer() %></td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    <% } %>
                 </table>
             </div>
             <% } %>
@@ -244,6 +271,17 @@
                         <th>Ответ эксперта</th>
                     </tr>
                     </thead>
+                    <% if (request.getAttribute("questionsAnswers") != null) { %>
+                    <tbody>
+                    <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
+                    <% for (int i = 0; i < list.size(); i++) { %>
+                    <tr>
+                        <td><%= list.get(i).getQuestion() %></td>
+                        <td><%= list.get(i).getAnswer() %></td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                    <% } %>
                 </table>
             </div>
             <% } %>
@@ -273,6 +311,14 @@
         var modal = document.querySelector(".modal");
         modal.style.display = "none";
     }
+    document.getElementById("questionForm").addEventListener("submit", function(event) {
+        var question = document.getElementById("questionInput").value;
+        document.getElementById("hiddenQuestion").value = question;
+        if (!question) {
+            event.preventDefault();
+            alert("Пожалуйста, введите вопрос.");
+        }
+    });
 </script>
 </body>
 </html>

@@ -20,10 +20,13 @@ public class OracleJoinTeamDataDAO implements JoinTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("JoinTeamDataDAO.FIND_TEAM_ID_BY_TEAM_NAME.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamName);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
         while (resultSet.next()) {
-            return resultSet.getInt("TEAM_ID");
+            result = resultSet.getInt("TEAM_ID");
         }
-        return -1;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -31,10 +34,13 @@ public class OracleJoinTeamDataDAO implements JoinTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("JoinTeamDataDAO.IS_USER_JOINED_IN_TEAM_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         if (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        return false;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -43,6 +49,7 @@ public class OracleJoinTeamDataDAO implements JoinTeamDataDAO {
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -52,6 +59,7 @@ public class OracleJoinTeamDataDAO implements JoinTeamDataDAO {
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.THIRD_COLUMN_INDEX.SQL.CONST")), 0);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -59,5 +67,6 @@ public class OracleJoinTeamDataDAO implements JoinTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("JoinTeamDataDAO.UPDATE_COUNT_MEMBERS_IN_TEAMS_TABLE_BY_TEAM_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }

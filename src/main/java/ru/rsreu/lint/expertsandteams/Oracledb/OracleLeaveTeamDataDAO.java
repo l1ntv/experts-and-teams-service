@@ -21,10 +21,13 @@ public class OracleLeaveTeamDataDAO implements LeaveTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("LeaveTeamDataDAO.IS_USER_CAPTAIN_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         if (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        return false;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -32,6 +35,7 @@ public class OracleLeaveTeamDataDAO implements LeaveTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("LeaveTeamDataDAO.DELETE_USER_FROM_TEAM_MEMBERS_TABLE_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -39,10 +43,13 @@ public class OracleLeaveTeamDataDAO implements LeaveTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("LeaveTeamDataDAO.FIND_TEAM_ID_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
         while (resultSet.next()) {
-            return resultSet.getInt("TEAM_ID");
+            result = resultSet.getInt("TEAM_ID");
         }
-        return -1;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -50,6 +57,7 @@ public class OracleLeaveTeamDataDAO implements LeaveTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("LeaveTeamDataDAO.DECREASE_COUNT_MEMBERS_FROM_TEAMS_TABLE_BY_TEAM_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -57,5 +65,6 @@ public class OracleLeaveTeamDataDAO implements LeaveTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("LeaveTeamDataDAO.UPDATE_TEAM_ID_FROM_USER_DATA_TABLE_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }

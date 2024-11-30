@@ -1,4 +1,4 @@
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.AuthUserDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@
         <button type="submit" class="button login-button rounded-button">Выйти</button>
     </form>
 </div>
-<% ArrayList<AuthUserDTO> list = (ArrayList) request.getAttribute("authUsers"); %>
+<% ArrayList<UserDTO> list = (ArrayList) request.getAttribute("authUsers"); %>
 <div class="title">Список авторизованных пользователей</div>
 <div class="table-container">
     <table>

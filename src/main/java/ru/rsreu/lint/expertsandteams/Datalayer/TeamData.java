@@ -6,7 +6,14 @@ public class TeamData {
     private int captainId;
     private int countMembers;
     private int maxCountMembers;
-    public TeamData() {};
+
+    public TeamData(int id, String name, int captainId, int countMembers, int maxCountMembers) {
+        this.id = id;
+        this.name = name;
+        this.captainId = captainId;
+        this.countMembers = countMembers;
+        this.maxCountMembers = maxCountMembers;
+    }
 
     public int getId() {
         return id;

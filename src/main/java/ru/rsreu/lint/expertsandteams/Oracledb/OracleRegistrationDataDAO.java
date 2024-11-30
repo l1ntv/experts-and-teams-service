@@ -25,10 +25,13 @@ public class OracleRegistrationDataDAO implements RegistrationDataDAO {
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userDataDTO.getLogin());
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userDataDTO.getPassword());
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         if (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        return false;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -38,8 +41,9 @@ public class OracleRegistrationDataDAO implements RegistrationDataDAO {
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userDataDTO.getPassword());
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.THIRD_COLUMN_INDEX.SQL.CONST")), Integer.parseInt(SQLQueryManager.getProperty("RegistrationDataDAO.EMPTY_TEAM_ID.SQL.CONST")));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FOURTH_COLUMN_INDEX.SQL.CONST")), AccountsStatusesEnum.ONLINE.getAccountStatusId());
-        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIFTH_COLUMN_INDEX.SQL.CONST")), AccountsTypesEnum.EXPERT.getAccountTypeId());
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIFTH_COLUMN_INDEX.SQL.CONST")), AccountsTypesEnum.USER.getAccountTypeId());
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -47,9 +51,12 @@ public class OracleRegistrationDataDAO implements RegistrationDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("RegistrationDataDAO.FIND_USER_ID_BY_LOGIN.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = Integer.parseInt(SQLQueryManager.getProperty("RegistrationDataDAO.NOT_FOUND_USER_ID.SQL.CONST"));
         if (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")));
         }
-        return Integer.parseInt(SQLQueryManager.getProperty("RegistrationDataDAO.NOT_FOUND_USER_ID.SQL.CONST"));
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 }

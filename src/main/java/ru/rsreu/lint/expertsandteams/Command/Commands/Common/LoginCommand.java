@@ -15,12 +15,10 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 public class LoginCommand implements ActionCommand {
-
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         String login = request.getParameter(ConfigurationManager.getProperty("LOGIN.PROPERTY.CONST"));
         String password = request.getParameter(ConfigurationManager.getProperty("PASSWORD.PROPERTY.CONST"));
-
         ValidationData validationData = DataValidator.validateAuthenticationData(login, password);
         if (validationData.getIsCorrectData()) {
             if (LoginLogic.isCorrectUserData(login, password)) {

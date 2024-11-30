@@ -1,15 +1,17 @@
 package ru.rsreu.lint.expertsandteams.Datalayer.DAO;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.SearchedUserDTO;
-import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.TeamsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface AdministratorDataDAO {
-    ResultSet getAuthUsersList() throws SQLException;
-    ResultSet getTeamsStatisticsList() throws SQLException;
-    ResultSet getExpertsStatisticsList() throws SQLException;
+    List<UserDTO> getAuthUsersList() throws SQLException;
+    List<TeamsStatisticsDTO> getTeamsStatisticsList() throws SQLException;
+    List<ExpertsStatisticsDTO> getExpertsStatisticsList() throws SQLException;
     boolean isUserExistsByLogin(String login) throws SQLException;
     boolean createUserByLogin(String login) throws SQLException;
     ResultSet searchUserRoleByLogin(String login) throws SQLException;

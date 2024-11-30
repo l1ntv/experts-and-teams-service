@@ -1,4 +1,4 @@
-package ru.rsreu.lint.expertsandteams.Command.Commands.Service;
+package ru.rsreu.lint.expertsandteams.Command.Commands.Administrator;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
-public class SearchUserCommand implements ActionCommand {
+public class SearchUserByAdminCommand implements ActionCommand {
 
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {

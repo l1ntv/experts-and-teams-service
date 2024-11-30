@@ -25,7 +25,7 @@ public class RegistrationCommand implements ActionCommand {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);
                 int userId = RegistrationLogic.getUserIdByLogin(login);
-                int groupTypeId = 1;
+                int groupTypeId = 0;
                 boolean isCaptain = false;
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);

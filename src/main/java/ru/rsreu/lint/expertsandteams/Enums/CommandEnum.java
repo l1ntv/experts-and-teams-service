@@ -3,13 +3,12 @@ package ru.rsreu.lint.expertsandteams.Enums;
 import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Common.*;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Expert.AcceptTeamCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Expert.ConsultationsRequestsCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Expert.DoConsultationCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Expert.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.AuthUsersModeratorCommand;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.BannedUsersCommand;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.MessagesUsersCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Service.SearchUserCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.SearchUserByAdminCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.SearchUserByModeratorCommand;
 import ru.rsreu.lint.expertsandteams.Command.Commands.User.*;
 
 public enum CommandEnum {
@@ -45,7 +44,7 @@ public enum CommandEnum {
     },
     SEARCH_USER {
         {
-            this.command = new SearchUserCommand();
+            this.command = new SearchUserByAdminCommand();
         }
     },
     CREATE_USER {
@@ -136,6 +135,31 @@ public enum CommandEnum {
     ACCEPT_CONSULTATION {
         {
             this.command = new AcceptTeamCommand();
+        }
+    },
+    CANCEL_CONSULTATION {
+        {
+            this.command = new CancelConsultationCommand();
+        }
+    },
+    USER_CANCEL_CONSULTATION {
+        {
+            this.command = new CancelConsultationByUserCommand();
+        }
+    },
+    ASK_QUESTION {
+        {
+            this.command = new AskQuestionCommand();
+        }
+    },
+    ANSWER_TO_QUESTION {
+        {
+            this.command = new AnswerToQuestionCommand();
+        }
+    },
+    SEARCH_USER_BY_MODERATOR {
+        {
+            this.command = new SearchUserByModeratorCommand();
         }
     },
     LOGOUT {

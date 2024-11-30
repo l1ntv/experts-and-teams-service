@@ -2,7 +2,7 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.Moderator;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.AuthUserDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Logic.Administrator.AuthUsersLogic;
@@ -18,7 +18,7 @@ public class AuthUsersModeratorCommand implements ActionCommand {
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userId") != null) {
-            List<AuthUserDTO> list = AuthUsersLogic.getAuthUsersList();
+            List<UserDTO> list = AuthUsersLogic.getAuthUsersList();
             request.setAttribute("authUsers", list);
             return new Page(ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.PAGE"), ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.AUTH_USERS);
         }

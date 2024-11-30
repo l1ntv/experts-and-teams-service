@@ -1,12 +1,15 @@
-package ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator;
+package ru.rsreu.lint.expertsandteams.Datalayer.DTO;
 
 import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 
-public class AuthUserDTO {
+public class UserDTO {
     private String login;
     private AccountsTypesEnum accountType;
 
-    public AuthUserDTO() {};
+    public UserDTO(String login, AccountsTypesEnum accountType) {
+        this.login = login;
+        this.accountType = accountType;
+    }
 
     public String getLogin() {
         return login;

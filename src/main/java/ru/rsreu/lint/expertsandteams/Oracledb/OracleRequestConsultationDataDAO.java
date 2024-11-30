@@ -20,10 +20,13 @@ public class OracleRequestConsultationDataDAO implements RequestConsultationData
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("RequestConsultationDataDAO.FIND_EXPERT_ID_BY_LOGIN.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
         while (resultSet.next()) {
-            return resultSet.getInt("USER_ID");
+            result = resultSet.getInt("USER_ID");
         }
-        return -1;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -31,10 +34,13 @@ public class OracleRequestConsultationDataDAO implements RequestConsultationData
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("RequestConsultationDataDAO.FIND_TEAM_ID_BY_USER_ID.SQL.QUERY"));
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
         while (resultSet.next()) {
-            return resultSet.getInt("TEAM_ID");
+            result = resultSet.getInt("TEAM_ID");
         }
-        return -1;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -43,12 +49,13 @@ public class OracleRequestConsultationDataDAO implements RequestConsultationData
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), expertId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         while (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        preparedStatement.close();
         resultSet.close();
-        return false;
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -57,5 +64,6 @@ public class OracleRequestConsultationDataDAO implements RequestConsultationData
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), expertId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }

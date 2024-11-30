@@ -3,8 +3,10 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.User;
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
+import ru.rsreu.lint.expertsandteams.Logic.User.AskQuestionLogic;
 import ru.rsreu.lint.expertsandteams.Logic.User.ConsultationsLogic;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
@@ -31,6 +33,9 @@ public class ConsultationsCommand implements ActionCommand {
                     if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
                         isTeamHasExpert = true;
                         ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
+                        int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
+                        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+                        request.setAttribute("questionsAnswers", list);
                         request.setAttribute("expertsStatisticsDTO", expertsStatisticsDTO);
                     } else {
                         List<ExpertsStatisticsDTO> list = new ArrayList<>();
@@ -41,6 +46,9 @@ public class ConsultationsCommand implements ActionCommand {
                     if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
                         isTeamHasExpert = true;
                         ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
+                        int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
+                        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+                        request.setAttribute("questionsAnswers", list);
                         request.setAttribute("expertsStatisticsDTO", expertsStatisticsDTO);
                     }
                 }

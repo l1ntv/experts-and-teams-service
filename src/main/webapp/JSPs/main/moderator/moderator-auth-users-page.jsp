@@ -1,5 +1,6 @@
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.AuthUserDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -45,6 +46,17 @@
       <th>Тип аккаунта</th>
     </tr>
     </thead>
+    <tbody>
+      <% if (request.getAttribute("authUsers") != null) { %>
+        <% List<UserDTO> list = (ArrayList) request.getAttribute("authUsers");%>
+        <% for (int i = 0; i < list.size(); i++) { %>
+          <tr>
+            <td><%= list.get(i).getLogin() %></td>
+            <td><%= list.get(i).getAccountType().toString() %></td>
+          </tr>
+        <% } %>
+      <% } %>
+    </tbody>
   </table>
 </div>
 </body>

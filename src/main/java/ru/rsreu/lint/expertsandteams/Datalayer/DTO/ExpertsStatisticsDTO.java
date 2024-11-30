@@ -4,7 +4,12 @@ public class ExpertsStatisticsDTO {
     private String login;
     private int teamCount;
     private int maxTeamCount;
-    public ExpertsStatisticsDTO() {};
+
+    public ExpertsStatisticsDTO(String login, int teamCount, int maxTeamCount) {
+        this.login = login;
+        this.teamCount = teamCount;
+        this.maxTeamCount = maxTeamCount;
+    }
 
     public String getLogin() {
         return login;

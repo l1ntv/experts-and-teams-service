@@ -20,22 +20,8 @@ public class MyTeamLogic {
         String name = MainLogic.findTeamNameByTeamId(teamId);
         int countMembers = myTeamDataDAO.findCountMembersByTeamId(teamId);
         int maxCountMembers = myTeamDataDAO.findMaxCountMembersByTeamId(teamId);
-        ResultSet resultSet = myTeamDataDAO.findTeamMemberDTOListByTeamId(teamId);
-        List<TeamMemberDTO> list = MyTeamLogic.convertResultSetToTeamMemberDTO(resultSet);
+        List<TeamMemberDTO> list = myTeamDataDAO.findTeamMemberDTOListByTeamId(teamId);
         MyTeamDTO myTeamDTO = new MyTeamDTO(name, countMembers, maxCountMembers, list);
         return myTeamDTO;
     }
-
-    private static List<TeamMemberDTO> convertResultSetToTeamMemberDTO(ResultSet resultSet) throws SQLException {
-        List<TeamMemberDTO> list = new ArrayList<>();
-        while (resultSet.next()) {
-            TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
-            teamMemberDTO.setLogin(resultSet.getString("LOGIN"));
-            teamMemberDTO.setRole((resultSet.getInt("TEAM_ROLE_ID") == 0 ? TeamRoleEnum.MEMBER : TeamRoleEnum.CAPTAIN));
-            teamMemberDTO.setOnline((resultSet.getInt("STATUS_ID") == 0 ? false : true));
-            list.add(teamMemberDTO);
-        }
-        return list;
-    }
-
 }

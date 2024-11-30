@@ -55,10 +55,13 @@ public class OracleCreateTeamDataDAO implements CreateTeamDataDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("CreateTeamDataDAO.IS_TEAM_EXISTS_BY_NAME.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamName);
         ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
         if (resultSet.next()) {
-            return resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
         }
-        return false;
+        resultSet.close();
+        preparedStatement.close();
+        return result;
     }
 
     @Override
@@ -67,5 +70,6 @@ public class OracleCreateTeamDataDAO implements CreateTeamDataDAO {
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
         preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.SECOND_COLUMN_INDEX.SQL.CONST")), userId);
         preparedStatement.execute();
+        preparedStatement.close();
     }
 }
