@@ -2,7 +2,7 @@ package ru.rsreu.lint.expertsandteams.Logic.Common;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.LogoutDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.LogoutDataDAO;
 
 import java.sql.SQLException;
 
@@ -12,5 +12,4 @@ public class LogoutLogic {
         LogoutDataDAO logoutDataDAO = factory.getLogoutDataDAO();
         logoutDataDAO.setOfflineStatusByUserId(userId);
     }
-
 }

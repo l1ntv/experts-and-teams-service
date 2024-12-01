@@ -1,6 +1,7 @@
 package ru.rsreu.lint.expertsandteams.Command.Commands.Common;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
+import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Command.Page;
@@ -25,20 +26,20 @@ public class RegistrationCommand implements ActionCommand {
             if (!RegistrationLogic.isExistsUserData(login, password)) {
                 RegistrationLogic.createUser(login, password);
                 int userId = RegistrationLogic.getUserIdByLogin(login);
-                int groupTypeId = 0;
+                int groupTypeId = AccountsTypesEnum.USER.getAccountTypeId();
                 boolean isCaptain = false;
                 HttpSession session = request.getSession(true);
                 session.setMaxInactiveInterval(600);
-                session.setAttribute("userId", userId);
-                session.setAttribute("userLogin", login);
-                session.setAttribute("groupTypeId", groupTypeId);
-                session.setAttribute("isCaptain", isCaptain);
+                session.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), userId);
+                session.setAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"), login);
+                session.setAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"), groupTypeId);
+                session.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_FLAG.CONST"), isCaptain);
                 String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
                 return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }
             return new Page(ConfigurationManager.getProperty("REGISTRATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.REGISTRATION);
         }
-        request.setAttribute("errorMessage", validationData.getErrorMessage());
+        request.setAttribute(ConfigurationManager.getProperty("ERROR_MESSAGE.CONST"), validationData.getErrorMessage());
         return new Page(ConfigurationManager.getProperty("REGISTRATION.ERROR.VALIDATION"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.REGISTRATION);
-     }
+    }
 }

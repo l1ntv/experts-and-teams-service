@@ -1,16 +1,17 @@
 package ru.rsreu.lint.expertsandteams.Mapper;
 
+import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class PasswordMapper {
-	
-	public static String mapPassword(String password) {
+
+    public static String mapPassword(String password) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance(ConfigurationManager.getProperty("SHA-256.CONST"));
             byte[] hash = digest.digest(password.getBytes());
             StringBuilder hexString = new StringBuilder();
-
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) {
@@ -18,16 +19,10 @@ public class PasswordMapper {
                 }
                 hexString.append(hex);
             }
-
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
         }
-    }
-	
-	public static boolean verifyPassword(String originalPassword, String hashedPassword) {
-        String calculatedHash = mapPassword(originalPassword);
-        return calculatedHash.equals(hashedPassword);
     }
 }

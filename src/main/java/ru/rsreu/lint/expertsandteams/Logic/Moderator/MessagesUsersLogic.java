@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.Moderator;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.MessagesUsersDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.MessagesUsersDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Moderator.ConsultationMessageDTO;
@@ -26,5 +26,4 @@ public class MessagesUsersLogic {
         MessagesUsersDataDAO messagesUsersDataDAO = factory.getMessagesUsersDataDAO();
         messagesUsersDataDAO.hideMessage(consultationId, message);
     }
-
 }

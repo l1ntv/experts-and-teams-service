@@ -6,19 +6,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataValidator {
-    private DataValidator() {};
+    private DataValidator() {
+    }
+
     public static ValidationData validateAuthenticationData(String login, String password) {
         boolean isValid;
         StringBuilder errorMessage = new StringBuilder("");
-
         if (!DataValidator.validateLogin(login)) {
-            errorMessage.append("логина. ");
+            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_LOGIN.CONST"));
         }
-
         if (!DataValidator.validatePassword(password)) {
-            errorMessage.append("пароля. ");
+            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_PASSWORD.CONST"));
         }
-
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }
 
@@ -26,7 +25,7 @@ public class DataValidator {
         boolean isValid;
         StringBuilder errorMessage = new StringBuilder("");
         if (!DataValidator.validateLogin(login)) {
-            errorMessage.append("логина. ");
+            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_LOGIN.CONST"));
         }
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }

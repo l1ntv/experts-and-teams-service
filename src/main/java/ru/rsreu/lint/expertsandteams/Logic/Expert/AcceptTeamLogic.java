@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.Expert;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AcceptTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AcceptTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 

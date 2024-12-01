@@ -17,7 +17,6 @@ public class FrontController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            request.setCharacterEncoding("UTF-8");
             this.processRequest(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -26,7 +25,6 @@ public class FrontController extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            request.setCharacterEncoding("UTF-8");
             this.processRequest(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,7 +32,6 @@ public class FrontController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
-        request.setCharacterEncoding("UTF-8");
         ActionFactory client = new ActionFactory();
         ActionCommand command = client.defineCommand(request);
         Page page = command.execute(request);
@@ -47,8 +44,6 @@ public class FrontController extends HttpServlet {
                         request.getServletContext().getRequestDispatcher(page.getJsp());
                 dispatcher.forward(request, response);
             }
-        } else {
-            // TO DO: redirect to error page with destroy session
         }
     }
 }

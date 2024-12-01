@@ -29,20 +29,20 @@ public class LoginCommand implements ActionCommand {
                     LoginLogic.setOnlineStatusByUserId(userId);
                     HttpSession session = request.getSession(true);
                     session.setMaxInactiveInterval(600);
-                    session.setAttribute("userId", userId);
-                    session.setAttribute("userLogin", login);
-                    session.setAttribute("groupTypeId", groupTypeId);
-                    session.setAttribute("isCaptain", isCaptain);
+                    session.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), userId);
+                    session.setAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"), login);
+                    session.setAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"), groupTypeId);
+                    session.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_FLAG.CONST"), isCaptain);
                     String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
                     return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
                 } else {
-                    request.setAttribute("isBanned", true);
+                    request.setAttribute(ConfigurationManager.getProperty("IS_BANNED_FLAG.CONST"), true);
                     return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
                 }
             }
             return new Page(ConfigurationManager.getProperty("AUTHENTICATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
         }
-        request.setAttribute("errorMessage", validationData.getErrorMessage());
+        request.setAttribute(ConfigurationManager.getProperty("ERROR_MESSAGE.CONST"), validationData.getErrorMessage());
         return new Page(ConfigurationManager.getProperty("AUTHENTICATION.ERROR.VALIDATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
     }
 }

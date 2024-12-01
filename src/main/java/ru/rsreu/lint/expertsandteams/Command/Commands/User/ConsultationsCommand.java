@@ -2,8 +2,8 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.User;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.QuestionAnswerDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Logic.User.AskQuestionLogic;

@@ -1,7 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.CreateTeamDataDAO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.LeaveTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.CreateTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 
@@ -38,5 +37,4 @@ public class CreateTeamLogic {
         CreateTeamDataDAO createTeamDataDAO = factory.getCreateTeamDataDAO();
         createTeamDataDAO.updateTeamIdFromUserDataTableByUserIdAndTeamId(teamId, userId);
     }
-
 }

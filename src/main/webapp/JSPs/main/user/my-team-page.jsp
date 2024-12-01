@@ -1,6 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.TeamDTO" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.MyTeamDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>

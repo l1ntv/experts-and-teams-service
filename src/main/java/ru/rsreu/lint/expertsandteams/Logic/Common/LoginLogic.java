@@ -1,11 +1,10 @@
 package ru.rsreu.lint.expertsandteams.Logic.Common;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDataDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AuthenticationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Common.UserDataDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.AuthenticationDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Mapper.PasswordMapper;
-import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
 import java.sql.SQLException;
 
@@ -16,7 +15,6 @@ public class LoginLogic {
         AuthenticationDataDAO authenticationDataDAO = factory.getAuthenticationDataDAO();
         return authenticationDataDAO.isBannedUser(login);
     }
-
 
     public static boolean isCorrectUserData(String login, String password) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);

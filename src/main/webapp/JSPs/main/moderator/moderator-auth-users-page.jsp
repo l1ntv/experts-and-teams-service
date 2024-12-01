@@ -1,4 +1,4 @@
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.UserDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

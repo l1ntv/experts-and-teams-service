@@ -1,10 +1,10 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.ConsultationsDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.ConsultationsDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.QuestionAnswerDTO;
 
 import java.sql.SQLException;
 import java.util.List;

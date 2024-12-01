@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.JoinTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.JoinTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 
@@ -12,6 +12,7 @@ public class JoinTeamLogic {
         JoinTeamDataDAO joinTeamDataDAO = factory.getJoinTeamDataDAO();
         return joinTeamDataDAO.findTeamIdByTeamName(teamName);
     }
+
     public static boolean isUserJoinedInTeamByUserId(int id) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         JoinTeamDataDAO joinTeamDataDAO = factory.getJoinTeamDataDAO();

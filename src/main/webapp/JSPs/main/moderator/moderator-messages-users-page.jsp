@@ -1,4 +1,4 @@
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.UserDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Moderator.ConsultationMessageDTO" %>
@@ -54,7 +54,7 @@
       <% if (request.getAttribute("messagesByExperts") != null) { %>
         <% List<ConsultationMessageDTO> messagesByExperts = (ArrayList) request.getAttribute("messagesByExperts");%>
         <% for (int i = 0; i < messagesByExperts.size(); i++) { %>
-          <% if (!messagesByExperts.get(i).getMessage().equals(" ") && !messagesByExperts.get(i).getMessage().equals("<hidden by moderator>")) {%>
+          <% if (!messagesByExperts.get(i).getMessage().equals(" ") && !messagesByExperts.get(i).getMessage().equals("hidden by moderator")) {%>
             <tr>
               <td><%= messagesByExperts.get(i).getAuthorLogin() %></td>
                 <td><%= messagesByExperts.get(i).getMessage() %></td>
@@ -78,7 +78,7 @@
       <% if (request.getAttribute("messagesByUsers") != null) { %>
         <% List<ConsultationMessageDTO> messagesByUsers = (ArrayList) request.getAttribute("messagesByUsers");%>
         <% for (int i = 0; i < messagesByUsers.size(); i++) { %>
-            <% if (!messagesByUsers.get(i).getMessage().trim().equals(" ") && !messagesByUsers.get(i).getMessage().equals("<hidden by moderator>")) { %>
+            <% if (!messagesByUsers.get(i).getMessage().trim().equals(" ") && !messagesByUsers.get(i).getMessage().equals("hidden by moderator")) { %>
               <tr>
                 <td><%= messagesByUsers.get(i).getAuthorLogin() %></td>
                 <td><%= messagesByUsers.get(i).getMessage() %></td>

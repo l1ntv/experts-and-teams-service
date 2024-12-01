@@ -2,7 +2,7 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.Common;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.ConsultingTeamDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.TeamDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
 import ru.rsreu.lint.expertsandteams.Command.Page;
@@ -18,16 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainCommand implements ActionCommand {
-
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int groupTypeId = (int) session.getAttribute("groupTypeId");
+        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
+            int groupTypeId = (int) session.getAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"));
             String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
             switch (groupTypeId) {
                 case 0:
-                    int userId = (int) session.getAttribute("userId");
+                    int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
                     List<TeamDTO> list = MainLogic.getListTeams();
                     boolean teamFlag = false;
                     if (MainLogic.isJoinedInTeamByUserId(userId)) {
@@ -36,23 +35,22 @@ public class MainCommand implements ActionCommand {
                         list = MainLogic.swapTeamsInList(list, name);
                         teamFlag = true;
                     }
-                    request.setAttribute("teamFlag", teamFlag);
-                    request.setAttribute("teams", list);
+                    request.setAttribute(ConfigurationManager.getProperty("TEAM_FLAG.CONST"), teamFlag);
+                    request.setAttribute(ConfigurationManager.getProperty("TEAMS.CONST"), list);
                     break;
                 case 1:
-                    int expertId = (int) session.getAttribute("userId");
+                    int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
                     List<ConsultingTeamDTO> listExpert = new ArrayList<>();
                     listExpert = MainLogic.findListConsultingTeamsDTOByExpertId(expertId);
-                    request.setAttribute("listExpert", listExpert);
+                    request.setAttribute(ConfigurationManager.getProperty("LIST_EXPERT.CONST"), listExpert);
                     int countTeams = ConsultationsRequestsLogic.findCountTeamsByExpertId(expertId);
                     int maxCountTeams = ConsultationsRequestsLogic.findMaxCountTeamsByExpertId(expertId);
-                    request.setAttribute("countTeams", countTeams);
-                    request.setAttribute("maxCountTeams", maxCountTeams);
+                    request.setAttribute(ConfigurationManager.getProperty("COUNT_TEAMS.CONST"), countTeams);
+                    request.setAttribute(ConfigurationManager.getProperty("MAX_COUNT_TEAMS.CONST"), maxCountTeams);
                     break;
             }
             return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
-        }
-        else
+        } else
             return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
     }
 }

@@ -12,5 +12,4 @@ public class SQLQueryManager {
     public static String getProperty(String key) {
         return resourceBundle.getString(key);
     }
-
 }

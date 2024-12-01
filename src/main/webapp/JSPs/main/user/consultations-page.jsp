@@ -1,10 +1,10 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.TeamDTO" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.MyTeamDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.QuestionAnswerDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.QuestionAnswerDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>

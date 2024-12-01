@@ -20,9 +20,9 @@ public class AcceptTeamCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int expertId = (int) session.getAttribute("userId");
-            int teamId = Integer.parseInt(request.getParameter("acceptTeam"));
+        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
+            int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+            int teamId = Integer.parseInt(request.getParameter(ConfigurationManager.getProperty("ACCEPT_TEAM.CONST")));
             AcceptTeamLogic.deleteRequestFromTableByExpertIdAndTeamId(expertId, teamId);
             AcceptTeamLogic.createConsultationInTableByExpertIdAndTeamId(expertId, teamId);
             AcceptTeamLogic.increaseCountTeamsForExpertByExpertId(expertId);
@@ -30,9 +30,9 @@ public class AcceptTeamCommand implements ActionCommand {
             list = ConsultationsRequestsLogic.findConsultationsRequestsFromTeams(expertId);
             int countTeams = ConsultationsRequestsLogic.findCountTeamsByExpertId(expertId);
             int maxCountTeams = ConsultationsRequestsLogic.findMaxCountTeamsByExpertId(expertId);
-            request.setAttribute("consultationsRequests", list);
-            request.setAttribute("countTeams", countTeams);
-            request.setAttribute("maxCountTeams", maxCountTeams);
+            request.setAttribute(ConfigurationManager.getProperty("CONSULTATION_REQUESTS.CONST"), list);
+            request.setAttribute(ConfigurationManager.getProperty("COUNT_TEAMS.CONST"), countTeams);
+            request.setAttribute(ConfigurationManager.getProperty("MAX_COUNT_TEAMS.CONST"), maxCountTeams);
             return new Page(ConfigurationManager.getProperty("EXPERT.CONSULTATIONS.REQUESTS.PAGE"), ConfigurationManager.getProperty("EXPERT.CONSULTATIONS.REQUESTS.URL"), DirectTypesEnum.FORWARD, CommandEnum.CONSULTATIONS_REQUESTS);
         }
         return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);

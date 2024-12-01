@@ -4,7 +4,7 @@ import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
-import ru.rsreu.lint.expertsandteams.Logic.CancelConsultationLogic;
+import ru.rsreu.lint.expertsandteams.Logic.Expert.CancelConsultationLogic;
 import ru.rsreu.lint.expertsandteams.Logic.User.AskQuestionLogic;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 

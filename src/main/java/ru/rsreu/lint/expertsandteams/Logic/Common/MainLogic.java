@@ -1,13 +1,12 @@
 package ru.rsreu.lint.expertsandteams.Logic.Common;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.MainDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.MainDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.ConsultingTeamDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.TeamDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.TeamData;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDataDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class MainLogic {
     public static List<TeamDTO> getListTeams() throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         MainDataDAO oracleMainDataDAO = factory.getMainDataDAO();
-        List<TeamData> list = oracleMainDataDAO.getListTeams();
+        List<TeamDataDTO> list = oracleMainDataDAO.getListTeams();
         List<TeamDTO> listDTO = new ArrayList<>();
         return MainLogic.convertTeamListToTeamDTOList(list, listDTO);
     }
@@ -58,7 +57,7 @@ public class MainLogic {
         return oracleMainDataDAO.findListConsultingTeamsDTOByExpertId(expertId);
     }
 
-    private static List<TeamDTO> convertTeamListToTeamDTOList(List<TeamData> teamList, List<TeamDTO> teamDTOList) throws SQLException {
+    private static List<TeamDTO> convertTeamListToTeamDTOList(List<TeamDataDTO> teamList, List<TeamDTO> teamDTOList) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         MainDataDAO oracleMainDataDAO = factory.getMainDataDAO();
         for (int i = 0; i < teamList.size(); i++) {

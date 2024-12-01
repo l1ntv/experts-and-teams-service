@@ -1,16 +1,13 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.MyTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.MyTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.MyTeamDTO;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.TeamMemberDTO;
-import ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.TeamMemberDTO;
 import ru.rsreu.lint.expertsandteams.Logic.Common.MainLogic;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyTeamLogic {

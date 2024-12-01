@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AskQuestionTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.AskQuestionTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 

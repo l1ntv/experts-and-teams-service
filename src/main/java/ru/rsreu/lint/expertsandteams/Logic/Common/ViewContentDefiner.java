@@ -19,7 +19,7 @@ public class ViewContentDefiner {
                 jsp = ConfigurationManager.getProperty("ADMINISTRATOR.MAIN.PAGE");
                 break;
             default:
-                // TO DO error handle
+                break;
         }
         return jsp;
     }

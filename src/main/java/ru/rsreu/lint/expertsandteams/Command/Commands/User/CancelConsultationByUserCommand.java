@@ -2,10 +2,10 @@ package ru.rsreu.lint.expertsandteams.Command.Commands.User;
 
 import ru.rsreu.lint.expertsandteams.Command.ActionCommand;
 import ru.rsreu.lint.expertsandteams.Command.Page;
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.ExpertsStatisticsDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO;
 import ru.rsreu.lint.expertsandteams.Enums.CommandEnum;
 import ru.rsreu.lint.expertsandteams.Enums.DirectTypesEnum;
-import ru.rsreu.lint.expertsandteams.Logic.CancelConsultationLogic;
+import ru.rsreu.lint.expertsandteams.Logic.Expert.CancelConsultationLogic;
 import ru.rsreu.lint.expertsandteams.Logic.User.ConsultationsLogic;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 

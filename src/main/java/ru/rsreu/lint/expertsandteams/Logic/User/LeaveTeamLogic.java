@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.User;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.LeaveTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.LeaveTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 

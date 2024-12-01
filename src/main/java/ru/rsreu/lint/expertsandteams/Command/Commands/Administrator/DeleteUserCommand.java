@@ -18,9 +18,9 @@ public class DeleteUserCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
+        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
             String login = request.getParameter(ConfigurationManager.getProperty("LOGIN.PROPERTY.CONST"));
-            String adminLogin = (String) session.getAttribute("userLogin");
+            String adminLogin = (String) session.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"));
             ValidationData validationData = DataValidator.validateCreationUserData(login);
             if (validationData.getIsCorrectData()) {
                 if (DeleteUserLogic.isUserExistsByLogin(login) && !adminLogin.equals(login)) {
@@ -34,13 +34,10 @@ public class DeleteUserCommand implements ActionCommand {
                                     DeleteUserLogic.deleteCaptainDataByLogin(login);
                                     DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
                                     DeleteUserLogic.deleteUserFromUserDataByLogin(login);
-                                    // ДОБАВИТЬ ЛОГИКУ УДАЛЕНИЯ ИЗ TEAM_MEMBERS других участников
-
                                 } else {
                                     DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
                                     DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                                 }
-
                             } else {
                                 DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                             }
@@ -57,10 +54,10 @@ public class DeleteUserCommand implements ActionCommand {
                             break;
                     }
                 }
-                request.setAttribute("isExists", Boolean.FALSE);
+                request.setAttribute(ConfigurationManager.getProperty("IS_EXISTS_FLAG.CONST"), false);
                 return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
             }
-            request.setAttribute("errorMessage", validationData.getErrorMessage());
+            request.setAttribute(ConfigurationManager.getProperty("ERROR_MESSAGE.CONST"), validationData.getErrorMessage());
             return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
         }
         return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);

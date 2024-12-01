@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.Administrator;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Administrator.AdministratorDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 

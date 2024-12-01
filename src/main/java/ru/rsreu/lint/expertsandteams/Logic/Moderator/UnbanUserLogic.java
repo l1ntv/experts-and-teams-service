@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.Moderator;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.UnbanUserDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.UnbanUserDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 

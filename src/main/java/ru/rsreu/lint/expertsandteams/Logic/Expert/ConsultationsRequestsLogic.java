@@ -1,6 +1,6 @@
 package ru.rsreu.lint.expertsandteams.Logic.Expert;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.ConsultationsRequestsDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.ConsultationsRequestsDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamConsultationRequestDTO;
@@ -28,5 +28,4 @@ public class ConsultationsRequestsLogic {
         List<TeamConsultationRequestDTO> list = consultationsRequestsDataDAO.findConsultationsRequestsFromTeams(expertId);
         return list;
     }
-
 }

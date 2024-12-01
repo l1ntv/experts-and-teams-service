@@ -1,12 +1,11 @@
 package ru.rsreu.lint.expertsandteams.Logic.Administrator;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.AdministratorDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Administrator.AdministratorDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
 import ru.rsreu.lint.expertsandteams.Enums.AccountsTypesEnum;
+import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,11 +26,13 @@ public class DeleteUserLogic {
         int teamId = administratorDataDAO.findTeamIdByCaptainId(userId);
         administratorDataDAO.deleteTeamForOtherMembers(teamId);
     }
+
     public static int findConsultationIdByExpertId(int expertId) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
         return administratorDataDAO.findConsultationIdByExpertId(expertId);
     }
+
     public static boolean isUserExistsByLogin(String login) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
@@ -81,10 +82,6 @@ public class DeleteUserLogic {
         administratorDataDAO.deleteTeamFromTeamsTableByTeamId(teamId);
     }
 
-    public static void deleteOthersMembersFromDeletedTeam(int teamId) {
-        // 1. Получить список user_id тех кто в команде
-    }
-
     public static boolean isUserJoinedInTeamByLogin(String login) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
@@ -99,18 +96,11 @@ public class DeleteUserLogic {
         return administratorDataDAO.isUserCaptainInTeamByUserId(id);
     }
 
-    public static int findUserIdByLogin(String login) throws SQLException {
-        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
-        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
-        return administratorDataDAO.findUserIdByLogin(login);
-    }
-
     private static AccountsTypesEnum convertResultSetToAccountType(ResultSet resultSet) throws SQLException {
-        if (resultSet.next()) { // Перемещаем курсор на первую строку
-            return AccountsTypesEnum.valueOf(resultSet.getString("ROLE_NAME").toUpperCase());
+        if (resultSet.next()) {
+            return AccountsTypesEnum.valueOf(resultSet.getString(ConfigurationManager.getProperty("ROLE_NAME.CONST")).toUpperCase());
         } else {
-            throw new SQLException("ResultSet is empty");
+            throw new SQLException(ConfigurationManager.getProperty("RESULTSET_IS_EMPTY.CONST"));
         }
     }
-
 }

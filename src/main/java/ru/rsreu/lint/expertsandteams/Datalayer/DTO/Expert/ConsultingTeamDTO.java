@@ -7,7 +7,8 @@ public class ConsultingTeamDTO {
     private int countMembers;
     private int maxCountMembers;
 
-    public ConsultingTeamDTO() {}
+    public ConsultingTeamDTO() {
+    }
 
     public ConsultingTeamDTO(long teamId, String teamName, String captainLogin, int countMembers, int maxCountMembers) {
         this.teamId = teamId;

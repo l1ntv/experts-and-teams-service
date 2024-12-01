@@ -1,7 +1,33 @@
 package ru.rsreu.lint.expertsandteams.Oracledb;
 
 import ru.rsreu.lint.expertsandteams.Datalayer.*;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.*;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Administrator.AdministratorDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.AuthenticationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.LogoutDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AcceptTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AnswerToQuestionDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.CancelConsultationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.ConsultationsRequestsDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.BanUserDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.BannedUsersDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.MessagesUsersDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Moderator.UnbanUserDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.User.*;
+import ru.rsreu.lint.expertsandteams.Oracledb.Administrator.OracleAdministratorDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleAuthenticationDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleLogoutDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleRegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleAcceptTeamDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleAnswerToQuestionDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleCancelConsultationDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleConsultationsRequestsDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Moderator.OracleBanUserDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Moderator.OracleBannedUsersDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Moderator.OracleMessagesUsersDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Moderator.OracleUnbanUserDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.User.*;
+import ru.rsreu.lint.expertsandteams.Resource.SQLQueryManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,9 +54,9 @@ public class OracleDBDAOFactory extends DAOFactory {
 
     private void connected() throws ClassNotFoundException, SQLException {
         Locale.setDefault(Locale.ENGLISH);
-        String url = "jdbc:oracle:thin:@localhost:1521/xepdb1?useUnicode=true&characterEncoding=utf8";
-        String username = "lint";
-        String password = "16042004";
+        String url = SQLQueryManager.getProperty("ORACLE.SQL.URL");
+        String username = SQLQueryManager.getProperty("ORACLE.SQL.USERNAME");
+        String password = SQLQueryManager.getProperty("ORACLE.SQL.PASSWORD");
         connection = DriverManager.getConnection(url, username, password);
     }
 
@@ -113,6 +139,7 @@ public class OracleDBDAOFactory extends DAOFactory {
     public AnswerToQuestionDataDAO getAnswerToQuestionDataDAO() {
         return new OracleAnswerToQuestionDataDAO(connection);
     }
+
     @Override
     public BannedUsersDataDAO getBannedUsersDataDAO() {
         return new OracleBannedUsersDataDAO(connection);
@@ -124,8 +151,12 @@ public class OracleDBDAOFactory extends DAOFactory {
     }
 
     @Override
-    public BanUserDataDAO getBanUserDataDAO() { return new OracleBanUserDataDAO(connection); }
+    public BanUserDataDAO getBanUserDataDAO() {
+        return new OracleBanUserDataDAO(connection);
+    }
 
     @Override
-    public UnbanUserDataDAO getUnbanUserDataDAO() {return new OracleUnbanUserDataDAO(connection); }
+    public UnbanUserDataDAO getUnbanUserDataDAO() {
+        return new OracleUnbanUserDataDAO(connection);
+    }
 }

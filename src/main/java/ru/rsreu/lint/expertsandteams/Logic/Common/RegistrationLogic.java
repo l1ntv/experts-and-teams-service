@@ -1,11 +1,10 @@
 package ru.rsreu.lint.expertsandteams.Logic.Common;
 
-import ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDataDTO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DTO.Common.UserDataDTO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAOFactory;
 import ru.rsreu.lint.expertsandteams.Datalayer.DBType;
-import ru.rsreu.lint.expertsandteams.Datalayer.DAO.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.RegistrationDataDAO;
 import ru.rsreu.lint.expertsandteams.Mapper.PasswordMapper;
-import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
 import java.sql.SQLException;
 
