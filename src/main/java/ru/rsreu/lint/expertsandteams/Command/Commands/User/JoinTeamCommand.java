@@ -16,21 +16,18 @@ public class JoinTeamCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int userId = (int) session.getAttribute("userId");
-            boolean isUserInTeam = false;
-            if (JoinTeamLogic.isUserJoinedInTeamByUserId(userId)) {
-                isUserInTeam = true;
-            } else {
-                String teamName = (String) request.getParameter("teamName");
-                int teamId = JoinTeamLogic.findTeamIdByTeamName(teamName);
-                JoinTeamLogic.changeTeamIdInUserDataTableByUserId(teamId, userId);
-                JoinTeamLogic.addNewMemberInTeamMembersTable(userId, teamId);
-                JoinTeamLogic.increaseCountMembersInTeamTableByTeamId(teamId);
-            }
-            session.setAttribute("isUserInTeam", isUserInTeam);
-            return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        boolean isUserInTeam = false;
+        if (JoinTeamLogic.isUserJoinedInTeamByUserId(userId)) {
+            isUserInTeam = true;
+        } else {
+            String teamName = (String) request.getParameter(ConfigurationManager.getProperty("TEAM_NAME.CONST"));
+            int teamId = JoinTeamLogic.findTeamIdByTeamName(teamName);
+            JoinTeamLogic.changeTeamIdInUserDataTableByUserId(teamId, userId);
+            JoinTeamLogic.addNewMemberInTeamMembersTable(userId, teamId);
+            JoinTeamLogic.increaseCountMembersInTeamTableByTeamId(teamId);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        session.setAttribute(ConfigurationManager.getProperty("IS_USER_IN_TEAM_FLAG.CONST"), isUserInTeam);
+        return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
     }
 }

@@ -20,44 +20,41 @@ public class ConsultationsCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int userId = (int) session.getAttribute("userId");
-            boolean myTeam = false;
-            boolean isCaptain = false;
-            boolean isTeamHasExpert = false;
-            if (ConsultationsLogic.isJoinedInTeamByUserId(userId)) {
-                myTeam = true;
-                int teamId = ConsultationsLogic.findTeamIdByUserId(userId);
-                if (ConsultationsLogic.isUserCaptainByUserId(userId)) {
-                    isCaptain = true;
-                    if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
-                        isTeamHasExpert = true;
-                        ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
-                        int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
-                        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
-                        request.setAttribute("questionsAnswers", list);
-                        request.setAttribute("expertsStatisticsDTO", expertsStatisticsDTO);
-                    } else {
-                        List<ExpertsStatisticsDTO> list = new ArrayList<>();
-                        list = ConsultationsLogic.findListAvailableExperts();
-                        request.setAttribute("listAvailableExperts", list);
-                    }
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        boolean myTeam = false;
+        boolean isCaptain = false;
+        boolean isTeamHasExpert = false;
+        if (ConsultationsLogic.isJoinedInTeamByUserId(userId)) {
+            myTeam = true;
+            int teamId = ConsultationsLogic.findTeamIdByUserId(userId);
+            if (ConsultationsLogic.isUserCaptainByUserId(userId)) {
+                isCaptain = true;
+                if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
+                    isTeamHasExpert = true;
+                    ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
+                    int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
+                    List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+                    request.setAttribute(ConfigurationManager.getProperty("IS_QUESTIONS_ANSWERS_FLAG.CONST"), list);
+                    request.setAttribute(ConfigurationManager.getProperty("EXPERTS_STATISTICS_DTO.CONST"), expertsStatisticsDTO);
                 } else {
-                    if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
-                        isTeamHasExpert = true;
-                        ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
-                        int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
-                        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
-                        request.setAttribute("questionsAnswers", list);
-                        request.setAttribute("expertsStatisticsDTO", expertsStatisticsDTO);
-                    }
+                    List<ExpertsStatisticsDTO> list = new ArrayList<>();
+                    list = ConsultationsLogic.findListAvailableExperts();
+                    request.setAttribute(ConfigurationManager.getProperty("LIST_AVAILABLE_EXPERTS.CONST"), list);
+                }
+            } else {
+                if (ConsultationsLogic.isTeamHasExpertByTeamId(teamId)) {
+                    isTeamHasExpert = true;
+                    ExpertsStatisticsDTO expertsStatisticsDTO = ConsultationsLogic.findTeamExpertByTeamId(teamId);
+                    int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
+                    List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+                    request.setAttribute(ConfigurationManager.getProperty("IS_QUESTIONS_ANSWERS_FLAG.CONST"), list);
+                    request.setAttribute(ConfigurationManager.getProperty("EXPERTS_STATISTICS_DTO.CONST"), expertsStatisticsDTO);
                 }
             }
-            request.setAttribute("myTeam", myTeam);
-            request.setAttribute("isTeamHasExpert", isTeamHasExpert);
-            request.setAttribute("isCaptain", isCaptain);
-            return new Page(ConfigurationManager.getProperty("USER.CONSULTATIONS.PAGE"), ConfigurationManager.getProperty("USER.CONSULTATIONS.URL"), DirectTypesEnum.FORWARD, CommandEnum.CONSULTATIONS);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        request.setAttribute(ConfigurationManager.getProperty("MY_TEAM.CONST"), myTeam);
+        request.setAttribute(ConfigurationManager.getProperty("IS_TEAM_HAS_EXPERT_FLAG.CONST"), isTeamHasExpert);
+        request.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_FLAG.CONST"), isCaptain);
+        return new Page(ConfigurationManager.getProperty("USER.CONSULTATIONS.PAGE"), ConfigurationManager.getProperty("USER.CONSULTATIONS.URL"), DirectTypesEnum.FORWARD, CommandEnum.CONSULTATIONS);
     }
 }

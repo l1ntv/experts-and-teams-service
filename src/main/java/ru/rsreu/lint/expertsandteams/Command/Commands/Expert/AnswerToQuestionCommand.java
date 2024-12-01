@@ -18,16 +18,13 @@ public class AnswerToQuestionCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
-            String question = request.getParameter(ConfigurationManager.getProperty("QUESTION.CONST"));
-            String answer = request.getParameter(ConfigurationManager.getProperty("ANSWER.CONST"));
-            AnswerToQuestionLogic.setAnswerToQuestion(answer, question);
-            int consultationId = Integer.parseInt(request.getParameter(ConfigurationManager.getProperty("CONSULTATION_ID.CONST")));
-            List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
-            request.setAttribute(ConfigurationManager.getProperty("QUESTIONS_ANSWERS.CONST"), list);
-            return new Page(ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.PAGE"), ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.DO_CONSULTATION);
-        }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        String question = request.getParameter(ConfigurationManager.getProperty("QUESTION.CONST"));
+        String answer = request.getParameter(ConfigurationManager.getProperty("ANSWER.CONST"));
+        AnswerToQuestionLogic.setAnswerToQuestion(answer, question);
+        int consultationId = Integer.parseInt(request.getParameter(ConfigurationManager.getProperty("CONSULTATION_ID.CONST")));
+        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+        request.setAttribute(ConfigurationManager.getProperty("QUESTIONS_ANSWERS.CONST"), list);
+        return new Page(ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.PAGE"), ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.DO_CONSULTATION);
     }
 }

@@ -16,11 +16,9 @@ public class LogoutCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
-            LogoutLogic.setOfflineStatusByUserId(userId);
-            session.invalidate();
-        }
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        LogoutLogic.setOfflineStatusByUserId(userId);
+        session.invalidate();
         return new Page(ConfigurationManager.getProperty("REGISTRATION.PAGE"), ConfigurationManager.getProperty("REGISTRATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGOUT);
     }
 }

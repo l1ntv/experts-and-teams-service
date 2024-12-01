@@ -9,21 +9,16 @@ import ru.rsreu.lint.expertsandteams.Logic.Moderator.MessagesUsersLogic;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
 public class MessagesUsersCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            List<ConsultationMessageDTO> messagesByExperts = MessagesUsersLogic.findConsultationMessagesByExperts();
-            List<ConsultationMessageDTO> messagesByUsers = MessagesUsersLogic.findConsultationMessagesByUsers();
-            request.setAttribute(ConfigurationManager.getProperty("MESSAGES_BY_EXPERTS"), messagesByExperts);
-            request.setAttribute(ConfigurationManager.getProperty("MESSAGES_BY_USERS"), messagesByUsers);
-            return new Page(ConfigurationManager.getProperty("MODERATOR.MESSAGES.USERS.PAGE"), ConfigurationManager.getProperty("MODERATOR.MESSAGES.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.MESSAGES_USERS);
-        }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
+        List<ConsultationMessageDTO> messagesByExperts = MessagesUsersLogic.findConsultationMessagesByExperts();
+        List<ConsultationMessageDTO> messagesByUsers = MessagesUsersLogic.findConsultationMessagesByUsers();
+        request.setAttribute(ConfigurationManager.getProperty("MESSAGES_BY_EXPERTS"), messagesByExperts);
+        request.setAttribute(ConfigurationManager.getProperty("MESSAGES_BY_USERS"), messagesByUsers);
+        return new Page(ConfigurationManager.getProperty("MODERATOR.MESSAGES.USERS.PAGE"), ConfigurationManager.getProperty("MODERATOR.MESSAGES.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.MESSAGES_USERS);
     }
 }

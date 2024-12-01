@@ -15,20 +15,17 @@ public class LeaveTeamCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int userId = (int) session.getAttribute("userId");
-            boolean isCaptainLeaving = false;
-            if (LeaveTeamLogic.isUserCaptainByUserId(userId)) {
-                isCaptainLeaving = true;
-            } else {
-                int teamId = LeaveTeamLogic.findTeamIdByUserId(userId);
-                LeaveTeamLogic.deleteUserFromTeamMembersTableByUserId(userId);
-                LeaveTeamLogic.decreaseCountMembersFromTeamsTableByTeamId(teamId);
-                LeaveTeamLogic.updateTeamIdFromUserDataTableByUserId(userId);
-            }
-            session.setAttribute("isCaptainLeaving", isCaptainLeaving);
-            return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        boolean isCaptainLeaving = false;
+        if (LeaveTeamLogic.isUserCaptainByUserId(userId)) {
+            isCaptainLeaving = true;
+        } else {
+            int teamId = LeaveTeamLogic.findTeamIdByUserId(userId);
+            LeaveTeamLogic.deleteUserFromTeamMembersTableByUserId(userId);
+            LeaveTeamLogic.decreaseCountMembersFromTeamsTableByTeamId(teamId);
+            LeaveTeamLogic.updateTeamIdFromUserDataTableByUserId(userId);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        session.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_LEAVING_FLAG.CONST"), isCaptainLeaving);
+        return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
     }
 }

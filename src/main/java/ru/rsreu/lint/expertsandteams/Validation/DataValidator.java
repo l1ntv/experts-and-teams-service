@@ -13,10 +13,10 @@ public class DataValidator {
         boolean isValid;
         StringBuilder errorMessage = new StringBuilder("");
         if (!DataValidator.validateLogin(login)) {
-            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_LOGIN.CONST"));
+            errorMessage.append("логина. ");
         }
         if (!DataValidator.validatePassword(password)) {
-            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_PASSWORD.CONST"));
+            errorMessage.append("пароля. ");
         }
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }
@@ -25,7 +25,7 @@ public class DataValidator {
         boolean isValid;
         StringBuilder errorMessage = new StringBuilder("");
         if (!DataValidator.validateLogin(login)) {
-            errorMessage.append(ConfigurationManager.getProperty("ERROR_MESSAGE_LOGIN.CONST"));
+            errorMessage.append(ConfigurationManager.getProperty("логина. "));
         }
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }

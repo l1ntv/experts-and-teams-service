@@ -9,19 +9,14 @@ import ru.rsreu.lint.expertsandteams.Logic.Administrator.AuthUsersLogic;
 import ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
 public class AuthUsersModeratorCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            List<UserDTO> list = AuthUsersLogic.getAuthUsersList();
-            request.setAttribute(ConfigurationManager.getProperty("AUTH.USERS.CONST"), list);
-            return new Page(ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.PAGE"), ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.AUTH_USERS);
-        }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
+        List<UserDTO> list = AuthUsersLogic.getAuthUsersList();
+        request.setAttribute(ConfigurationManager.getProperty("AUTH.USERS.CONST"), list);
+        return new Page(ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.PAGE"), ConfigurationManager.getProperty("MODERATOR.AUTH.USERS.URL"), DirectTypesEnum.FORWARD, CommandEnum.AUTH_USERS);
     }
 }

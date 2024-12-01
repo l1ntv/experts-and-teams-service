@@ -15,20 +15,17 @@ public class RequestConsultationCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            String expertLogin = (String) request.getParameter("expertLogin");
-            int userId = (int) session.getAttribute("userId");
-            int expertId = RequestConsultationLogic.findExpertIdByLogin(expertLogin);
-            int teamId = RequestConsultationLogic.findTeamIdByUserId(userId);
-            boolean isTeamAlreadySentRequest = false;
-            if (RequestConsultationLogic.isTeamSentRequestToExpertByTeamIdAndExpertId(teamId, expertId)) {
-                isTeamAlreadySentRequest = true;
-            } else {
-                RequestConsultationLogic.createNewRequestConsultation(teamId, expertId);
-            }
-            session.setAttribute("isTeamAlreadySentRequest", isTeamAlreadySentRequest);
-            return new Page(ConfigurationManager.getProperty("USER.CONSULTATIONS.PAGE"), ConfigurationManager.getProperty("USER.CONSULTATIONS.URL"), DirectTypesEnum.REDIRECT, CommandEnum.CONSULTATIONS);
+        String expertLogin = (String) request.getParameter(ConfigurationManager.getProperty("EXPERT_LOGIN.CONST"));
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        int expertId = RequestConsultationLogic.findExpertIdByLogin(expertLogin);
+        int teamId = RequestConsultationLogic.findTeamIdByUserId(userId);
+        boolean isTeamAlreadySentRequest = false;
+        if (RequestConsultationLogic.isTeamSentRequestToExpertByTeamIdAndExpertId(teamId, expertId)) {
+            isTeamAlreadySentRequest = true;
+        } else {
+            RequestConsultationLogic.createNewRequestConsultation(teamId, expertId);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        session.setAttribute(ConfigurationManager.getProperty("IS_TEAM_ALREADY_SENT_REQUEST_FLAG.CONST"), isTeamAlreadySentRequest);
+        return new Page(ConfigurationManager.getProperty("USER.CONSULTATIONS.PAGE"), ConfigurationManager.getProperty("USER.CONSULTATIONS.URL"), DirectTypesEnum.REDIRECT, CommandEnum.CONSULTATIONS);
     }
 }

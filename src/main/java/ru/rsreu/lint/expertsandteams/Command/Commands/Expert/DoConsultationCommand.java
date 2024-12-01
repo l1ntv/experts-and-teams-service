@@ -18,14 +18,11 @@ public class DoConsultationCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
-            int teamId = Integer.parseInt(request.getParameter(ConfigurationManager.getProperty("CONSULTATION_TEAM.CONST")));
-            int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
-            List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
-            request.setAttribute(ConfigurationManager.getProperty("QUESTIONS_ANSWERS.CONST"), list);
-            return new Page(ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.PAGE"), ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.DO_CONSULTATION); ////EXPERT.DO.CONSULTATION.PAGE=
-        }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
+        int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        int teamId = Integer.parseInt(request.getParameter(ConfigurationManager.getProperty("CONSULTATION_TEAM.CONST")));
+        int consultationId = AskQuestionLogic.findConsultationIdByTeamId(teamId);
+        List<QuestionAnswerDTO> list = ConsultationsLogic.findQuestionsAndAnswersByConsultationId(consultationId);
+        request.setAttribute(ConfigurationManager.getProperty("QUESTIONS_ANSWERS.CONST"), list);
+        return new Page(ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.PAGE"), ConfigurationManager.getProperty("EXPERT.DO.CONSULTATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.DO_CONSULTATION); ////EXPERT.DO.CONSULTATION.PAGE=
     }
 }

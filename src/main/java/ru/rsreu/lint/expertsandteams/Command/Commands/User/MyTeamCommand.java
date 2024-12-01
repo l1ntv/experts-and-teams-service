@@ -18,17 +18,14 @@ public class MyTeamCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("userId") != null) {
-            int userId = (int) session.getAttribute("userId");
-            if (MainLogic.isJoinedInTeamByUserId(userId)) {
-                int teamId = MainLogic.findTeamIdByUserId(userId);
-                MyTeamDTO myTeamDTO = MyTeamLogic.createMyTeamDTOByTeamId(teamId);
-                request.setAttribute("myTeam", myTeamDTO);
-            } else {
-                request.setAttribute("myTeam", null);
-            }
-            return new Page(ConfigurationManager.getProperty("USER.MY-TEAM.PAGE"), ConfigurationManager.getProperty("USER.MY-TEAM.URL"), DirectTypesEnum.FORWARD, CommandEnum.MY_TEAM);
+        int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+        if (MainLogic.isJoinedInTeamByUserId(userId)) {
+            int teamId = MainLogic.findTeamIdByUserId(userId);
+            MyTeamDTO myTeamDTO = MyTeamLogic.createMyTeamDTOByTeamId(teamId);
+            request.setAttribute(ConfigurationManager.getProperty("MY_TEAM.CONST"), myTeamDTO);
+        } else {
+            request.setAttribute(ConfigurationManager.getProperty("MY_TEAM.CONST"), null);
         }
-        return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.LOGIN);
+        return new Page(ConfigurationManager.getProperty("USER.MY-TEAM.PAGE"), ConfigurationManager.getProperty("USER.MY-TEAM.URL"), DirectTypesEnum.FORWARD, CommandEnum.MY_TEAM);
     }
 }

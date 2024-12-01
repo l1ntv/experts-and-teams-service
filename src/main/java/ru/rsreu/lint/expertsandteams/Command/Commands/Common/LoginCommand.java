@@ -34,7 +34,7 @@ public class LoginCommand implements ActionCommand {
                     session.setAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"), groupTypeId);
                     session.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_FLAG.CONST"), isCaptain);
                     String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
-                    return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+                    return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
                 } else {
                     request.setAttribute(ConfigurationManager.getProperty("IS_BANNED_FLAG.CONST"), true);
                     return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);

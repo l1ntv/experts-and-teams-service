@@ -21,36 +21,33 @@ public class MainCommand implements ActionCommand {
     @Override
     public Page execute(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null) {
-            int groupTypeId = (int) session.getAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"));
-            String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
-            switch (groupTypeId) {
-                case 0:
-                    int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
-                    List<TeamDTO> list = MainLogic.getListTeams();
-                    boolean teamFlag = false;
-                    if (MainLogic.isJoinedInTeamByUserId(userId)) {
-                        int teamId = MainLogic.findTeamIdByUserId(userId);
-                        String name = MainLogic.findTeamNameByTeamId(teamId);
-                        list = MainLogic.swapTeamsInList(list, name);
-                        teamFlag = true;
-                    }
-                    request.setAttribute(ConfigurationManager.getProperty("TEAM_FLAG.CONST"), teamFlag);
-                    request.setAttribute(ConfigurationManager.getProperty("TEAMS.CONST"), list);
-                    break;
-                case 1:
-                    int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
-                    List<ConsultingTeamDTO> listExpert = new ArrayList<>();
-                    listExpert = MainLogic.findListConsultingTeamsDTOByExpertId(expertId);
-                    request.setAttribute(ConfigurationManager.getProperty("LIST_EXPERT.CONST"), listExpert);
-                    int countTeams = ConsultationsRequestsLogic.findCountTeamsByExpertId(expertId);
-                    int maxCountTeams = ConsultationsRequestsLogic.findMaxCountTeamsByExpertId(expertId);
-                    request.setAttribute(ConfigurationManager.getProperty("COUNT_TEAMS.CONST"), countTeams);
-                    request.setAttribute(ConfigurationManager.getProperty("MAX_COUNT_TEAMS.CONST"), maxCountTeams);
-                    break;
-            }
-            return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
-        } else
-            return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.REDIRECT, CommandEnum.REDIRECT_TO_LOGIN);
+        int groupTypeId = (int) session.getAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"));
+        String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
+        switch (groupTypeId) {
+            case 0:
+                int userId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+                List<TeamDTO> list = MainLogic.getListTeams();
+                boolean teamFlag = false;
+                if (MainLogic.isJoinedInTeamByUserId(userId)) {
+                    int teamId = MainLogic.findTeamIdByUserId(userId);
+                    String name = MainLogic.findTeamNameByTeamId(teamId);
+                    list = MainLogic.swapTeamsInList(list, name);
+                    teamFlag = true;
+                }
+                request.setAttribute(ConfigurationManager.getProperty("TEAM_FLAG.CONST"), teamFlag);
+                request.setAttribute(ConfigurationManager.getProperty("TEAMS.CONST"), list);
+                break;
+            case 1:
+                int expertId = (int) session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));
+                List<ConsultingTeamDTO> listExpert = new ArrayList<>();
+                listExpert = MainLogic.findListConsultingTeamsDTOByExpertId(expertId);
+                request.setAttribute(ConfigurationManager.getProperty("LIST_EXPERT.CONST"), listExpert);
+                int countTeams = ConsultationsRequestsLogic.findCountTeamsByExpertId(expertId);
+                int maxCountTeams = ConsultationsRequestsLogic.findMaxCountTeamsByExpertId(expertId);
+                request.setAttribute(ConfigurationManager.getProperty("COUNT_TEAMS.CONST"), countTeams);
+                request.setAttribute(ConfigurationManager.getProperty("MAX_COUNT_TEAMS.CONST"), maxCountTeams);
+                break;
+        }
+        return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
     }
 }
