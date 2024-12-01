@@ -26,4 +26,7 @@ public abstract class DAOFactory {
 	public abstract AskQuestionTeamDataDAO getAskQuestionTeamDataDAO();
 	public abstract AnswerToQuestionDataDAO getAnswerToQuestionDataDAO();
 	public abstract BannedUsersDataDAO getBannedUsersDataDAO();
+	public abstract MessagesUsersDataDAO getMessagesUsersDataDAO();
+	public abstract BanUserDataDAO getBanUserDataDAO();
+	public abstract UnbanUserDataDAO getUnbanUserDataDAO();
 }

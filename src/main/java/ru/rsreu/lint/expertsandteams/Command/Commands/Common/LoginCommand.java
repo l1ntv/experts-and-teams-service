@@ -22,18 +22,23 @@ public class LoginCommand implements ActionCommand {
         ValidationData validationData = DataValidator.validateAuthenticationData(login, password);
         if (validationData.getIsCorrectData()) {
             if (LoginLogic.isCorrectUserData(login, password)) {
-                int userId = LoginLogic.getUserIdByLogin(login);
-                int groupTypeId = LoginLogic.getUserGroupTypeIdByUserId(userId);
-                boolean isCaptain = LoginLogic.isCaptainByUserId(userId);
-                LoginLogic.setOnlineStatusByUserId(userId);
-                HttpSession session = request.getSession(true);
-                session.setMaxInactiveInterval(600);
-                session.setAttribute("userId", userId);
-                session.setAttribute("userLogin", login);
-                session.setAttribute("groupTypeId", groupTypeId);
-                session.setAttribute("isCaptain", isCaptain);
-                String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
-                return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+                if (!LoginLogic.isBannedUser(login)) {
+                    int userId = LoginLogic.getUserIdByLogin(login);
+                    int groupTypeId = LoginLogic.getUserGroupTypeIdByUserId(userId);
+                    boolean isCaptain = LoginLogic.isCaptainByUserId(userId);
+                    LoginLogic.setOnlineStatusByUserId(userId);
+                    HttpSession session = request.getSession(true);
+                    session.setMaxInactiveInterval(600);
+                    session.setAttribute("userId", userId);
+                    session.setAttribute("userLogin", login);
+                    session.setAttribute("groupTypeId", groupTypeId);
+                    session.setAttribute("isCaptain", isCaptain);
+                    String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
+                    return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
+                } else {
+                    request.setAttribute("isBanned", true);
+                    return new Page(ConfigurationManager.getProperty("AUTHENTICATION.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
+                }
             }
             return new Page(ConfigurationManager.getProperty("AUTHENTICATION.ERROR.USER.PAGE"), ConfigurationManager.getProperty("AUTHENTICATION.URL"), DirectTypesEnum.FORWARD, CommandEnum.LOGIN);
         }

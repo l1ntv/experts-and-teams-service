@@ -1,6 +1,10 @@
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.UserDTO" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Moderator.ConsultationMessageDTO" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -46,6 +50,56 @@
       <th>Действие</th>
     </tr>
     </thead>
+    <tbody>
+      <% if (request.getAttribute("messagesByExperts") != null) { %>
+        <% List<ConsultationMessageDTO> messagesByExperts = (ArrayList) request.getAttribute("messagesByExperts");%>
+        <% for (int i = 0; i < messagesByExperts.size(); i++) { %>
+          <% if (!messagesByExperts.get(i).getMessage().equals(" ") && !messagesByExperts.get(i).getMessage().equals("<hidden by moderator>")) {%>
+            <tr>
+              <td><%= messagesByExperts.get(i).getAuthorLogin() %></td>
+                <td><%= messagesByExperts.get(i).getMessage() %></td>
+                <td>
+                  <form action="controller?command=hide_message" method="GET" accept-charset="UTF-8">
+                    <%
+                      request.setCharacterEncoding("UTF-8");
+                    %>
+                    <input type="hidden" name="userId" value="<%= messagesByExperts.get(i).getAuthorId() %>">
+                    <input type="hidden" name="consultationId" value="<%= messagesByExperts.get(i).getConsultationId() %>">
+                    <input type="hidden" name="login" value="<%= messagesByExperts.get(i).getAuthorLogin() %>">
+                    <input type="hidden" name="message" value="<%= messagesByExperts.get(i).getMessage() %>">
+                    <input type="hidden" name="command" value="hide_message">
+                    <button type="submit" class="leave-button">Скрыть сообщение</button>
+                  </form>
+                </td>
+            </tr>
+          <% } %>
+        <% } %>
+      <% } %>
+      <% if (request.getAttribute("messagesByUsers") != null) { %>
+        <% List<ConsultationMessageDTO> messagesByUsers = (ArrayList) request.getAttribute("messagesByUsers");%>
+        <% for (int i = 0; i < messagesByUsers.size(); i++) { %>
+            <% if (!messagesByUsers.get(i).getMessage().trim().equals(" ") && !messagesByUsers.get(i).getMessage().equals("<hidden by moderator>")) { %>
+              <tr>
+                <td><%= messagesByUsers.get(i).getAuthorLogin() %></td>
+                <td><%= messagesByUsers.get(i).getMessage() %></td>
+                <td>
+                  <form action="controller?command=hide_message" method="GET" accept-charset="UTF-8">
+                    <%
+                      request.setCharacterEncoding("UTF-8");
+                    %>
+                    <input type="hidden" name="userId" value="<%= messagesByUsers.get(i).getAuthorId() %>">
+                    <input type="hidden" name="consultationId" value="<%= messagesByUsers.get(i).getConsultationId() %>">
+                    <input type="hidden" name="login" value="<%= messagesByUsers.get(i).getAuthorLogin() %>">
+                    <input type="hidden" name="message" value="<%= messagesByUsers.get(i).getMessage() %>">
+                    <input type="hidden" name="command" value="hide_message">
+                    <button type="submit" class="leave-button">Скрыть сообщение</button>
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+        <% } %>
+      <% } %>
+    </tbody>
   </table>
 </div>
 </body>

@@ -155,18 +155,15 @@
         </div>
     </div>
 </form>
-
 <div class="new-form-group new-button-group">
-    <form action="controller?command=create_user" method="GET">
-        <!-- Скрытое поле для передачи логина -->
+    <form action="controller?command=ban_user" method="GET">
         <input type="hidden" name="login" id="hidden-login-create">
-        <input type="hidden" name="command" value="create_user">
+        <input type="hidden" name="command" value="ban_user">
         <button type="submit" class="button login-button rounded-button">Заблокировать</button>
     </form>
-    <form action="controller?command=delete_user" method="GET">
-        <!-- Скрытое поле для передачи логина -->
+    <form action="controller?command=unban_user" method="GET">
         <input type="hidden" name="login" id="hidden-login-delete">
-        <input type="hidden" name="command" value="delete_user">
+        <input type="hidden" name="command" value="unban_user">
         <button type="submit" class="button login-button rounded-button">Разблокировать</button>
     </form>
 </div>
@@ -201,16 +198,14 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const loginInput = document.getElementById('login');
-        const hiddenLogins = [
-            document.getElementById('hidden-login-role'),
-            document.getElementById('hidden-login-create'),
-            document.getElementById('hidden-login-delete')
-        ];
+        const hiddenLoginCreate = document.getElementById('hidden-login-create');
+        const hiddenLoginDelete = document.getElementById('hidden-login-delete');
 
+        // Обновляем скрытые поля при вводе логина
         loginInput.addEventListener('input', function() {
-            hiddenLogins.forEach(hiddenLogin => {
-                hiddenLogin.value = loginInput.value;
-            });
+            const loginValue = loginInput.value;
+            hiddenLoginCreate.value = loginValue;
+            hiddenLoginDelete.value = loginValue; // Если нужно передать в обе формы
         });
     });
 </script>

@@ -29,11 +29,18 @@ public class DeleteUserCommand implements ActionCommand {
                         case USER:
                             if (DeleteUserLogic.isUserJoinedInTeamByLogin(login)) {
                                 if (DeleteUserLogic.isUserCaptainInTeamByLogin(login)) {
-                                    //
+                                    DeleteUserLogic.decreaseTeamCountsForExpert(login);
+                                    DeleteUserLogic.deleteTeamForOtherMembers(login);
+                                    DeleteUserLogic.deleteCaptainDataByLogin(login);
+                                    DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
+                                    DeleteUserLogic.deleteUserFromUserDataByLogin(login);
+                                    // ДОБАВИТЬ ЛОГИКУ УДАЛЕНИЯ ИЗ TEAM_MEMBERS других участников
+
                                 } else {
                                     DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
                                     DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                                 }
+
                             } else {
                                 DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                             }
@@ -50,7 +57,7 @@ public class DeleteUserCommand implements ActionCommand {
                             break;
                     }
                 }
-                request.setAttribute("isExists", Boolean.TRUE);
+                request.setAttribute("isExists", Boolean.FALSE);
                 return new Page(ConfigurationManager.getProperty("ADMINISTRATOR.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
             }
             request.setAttribute("errorMessage", validationData.getErrorMessage());

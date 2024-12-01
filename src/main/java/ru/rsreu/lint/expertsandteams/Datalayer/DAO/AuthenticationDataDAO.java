@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 
 public interface AuthenticationDataDAO {
+	boolean isBannedUser(String login) throws SQLException;
 	
 	boolean isCorrectUserDataByLoginAndPassword(UserDataDTO userDataDTO) throws SQLException;
 

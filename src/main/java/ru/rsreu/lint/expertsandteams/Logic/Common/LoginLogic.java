@@ -11,6 +11,13 @@ import java.sql.SQLException;
 
 public class LoginLogic {
 
+    public static boolean isBannedUser(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AuthenticationDataDAO authenticationDataDAO = factory.getAuthenticationDataDAO();
+        return authenticationDataDAO.isBannedUser(login);
+    }
+
+
     public static boolean isCorrectUserData(String login, String password) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AuthenticationDataDAO authenticationDataDAO = factory.getAuthenticationDataDAO();

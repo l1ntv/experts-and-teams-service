@@ -7,8 +7,47 @@
     <title>Авторизация</title>
     <link href="styles/registration/registration-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">
+    <style>
+        .modal {
+            display: block;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .modal-button {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
+<% if (request.getAttribute("isBanned") != null) { %>
+    <% Boolean isBanned = (Boolean) request.getAttribute("isBanned"); %>
+    <% if (isBanned) { %>
+    <div class="modal">
+        <div class="modal-content">
+            <h3>Ошибка</h3>
+            <p>Ваш аккаунт был заблокирован</p>
+            <button class="button modal-button rounded-button"
+                    onclick="closeModal()">OK</button>
+        </div>
+    </div>
+    <% } %>
+<% } %>
 <div class="container">
     <p class="centered title">Веб-сервис "Эксперты и команды"</p>
     <form action="controller?command=login" method="GET">
@@ -41,5 +80,11 @@
     </form>
 </div>
 </body>
+<script>
+    function closeModal() {
+        var modal = document.querySelector(".modal");
+        modal.style.display = "none";
+    }
+</script>
 </html>
 

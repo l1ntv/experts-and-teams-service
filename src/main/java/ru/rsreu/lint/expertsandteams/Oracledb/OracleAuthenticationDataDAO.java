@@ -19,6 +19,20 @@ public class OracleAuthenticationDataDAO implements AuthenticationDataDAO {
     }
 
     @Override
+    public boolean isBannedUser(String login) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AuthenticationDataDAO.IS_BANNED_USER.SQL.QUERY"));
+        preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
+        if (resultSet.next()) {
+            result = resultSet.getInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST"))) > Integer.parseInt(SQLQueryManager.getProperty("GENERAL.EMPTY_RESULT_SET.SQL.CONST"));
+        }
+        resultSet.close();
+        preparedStatement.close();
+        return result;
+    }
+
+    @Override
     public boolean isCorrectUserDataByLoginAndPassword(UserDataDTO authenticationData) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AuthenticationDataDAO.EXISTS_BY_LOGIN_AND_PASSWORD.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), authenticationData.getLogin());

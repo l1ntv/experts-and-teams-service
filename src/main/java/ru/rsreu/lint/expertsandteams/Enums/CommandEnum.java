@@ -4,11 +4,8 @@ import ru.rsreu.lint.expertsandteams.Command.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Common.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Expert.*;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.AuthUsersModeratorCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.BannedUsersCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.MessagesUsersCommand;
+import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.*;
 import ru.rsreu.lint.expertsandteams.Command.Commands.Administrator.SearchUserByAdminCommand;
-import ru.rsreu.lint.expertsandteams.Command.Commands.Moderator.SearchUserByModeratorCommand;
 import ru.rsreu.lint.expertsandteams.Command.Commands.User.*;
 
 public enum CommandEnum {
@@ -160,6 +157,21 @@ public enum CommandEnum {
     SEARCH_USER_BY_MODERATOR {
         {
             this.command = new SearchUserByModeratorCommand();
+        }
+    },
+    HIDE_MESSAGE {
+        {
+            this.command = new HideMessageCommand();
+        }
+    },
+    BAN_USER {
+        {
+            this.command = new BanUserCommand();
+        }
+    },
+    UNBAN_USER {
+        {
+            this.command = new UnbanUserCommand();
         }
     },
     LOGOUT {

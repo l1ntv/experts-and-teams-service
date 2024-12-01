@@ -13,8 +13,56 @@
   <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
   <link href="styles/main/authUsers.css" rel="stylesheet" type="text/css"> <!-- Подключаем новый CSS файл -->
   <link rel="icon" href="D:\tournament.png" type="image/png">
+  <style>
+    .modal {
+      display: block;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+    }
+
+    .modal-button {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
+<% Boolean isUserBanned = (Boolean) request.getAttribute("isUserBanned"); %>
+<% if ((isUserBanned != null) && (isUserBanned)) { %>
+<div class="modal">
+  <div class="modal-content">
+    <h3>Информация</h3>
+    <p>Пользователь заблокирован</p>
+    <button class="button modal-button rounded-button"
+            onclick="closeModal()">OK</button>
+  </div>
+</div>
+<% } %>
+<% Boolean isUserUnbanned = (Boolean) request.getAttribute("isUserUnbanned"); %>
+<% if ((isUserUnbanned != null) && (isUserUnbanned)) { %>
+<div class="modal">
+  <div class="modal-content">
+    <h3>Информация</h3>
+    <p>Пользователь разблокирован</p>
+    <button class="button modal-button rounded-button"
+            onclick="closeModal()">OK</button>
+  </div>
+</div>
+<% } %>
 <div class="header">
   <form action="controller?command=main" method="GET">
     <input type="hidden" name="command" value="main">
@@ -59,5 +107,11 @@
     </tbody>
   </table>
 </div>
+<script>
+  function closeModal() {
+    var modal = document.querySelector(".modal");
+    modal.style.display = "none";
+  }
+</script>
 </body>
 </html>

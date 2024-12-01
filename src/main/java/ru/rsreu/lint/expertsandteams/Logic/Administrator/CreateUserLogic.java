@@ -13,9 +13,16 @@ public class CreateUserLogic {
         return administratorDataDAO.isUserExistsByLogin(login);
     }
 
-    public static boolean createUserByLogin(String login) throws SQLException {
+    public static boolean createUserByLogin(String login, int roleId) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
-        return administratorDataDAO.createUserByLogin(login);
+        return administratorDataDAO.createUserByLogin(login, roleId);
+    }
+
+    public static void createExpertByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int userId = administratorDataDAO.findUserIdByLogin(login);
+        administratorDataDAO.createExpertById(userId);
     }
 }

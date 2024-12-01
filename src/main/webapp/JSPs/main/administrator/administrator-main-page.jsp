@@ -121,6 +121,19 @@
         </div>
     </div>
 <% } %>
+<% if (request.getAttribute("isCreated") != null) { %>
+<% Boolean isCreated = (Boolean) request.getAttribute("isCreated"); %>
+<% if ((isCreated != null) && (isCreated)) { %>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Информация</h3>
+        <p>Пользователь создан</p>
+        <button class="button modal-button rounded-button"
+                onclick="closeModal()">OK</button>
+    </div>
+</div>
+<% } %>
+<% } %>
 <div class="header">
     <form action="controller?command=main" method="GET">
         <input type="hidden" name="command" value="main">
@@ -157,28 +170,22 @@
 </form>
 
 <div class="new-form-group">
-    <label for="role-select" class="form-label">Новая роль:</label>
+    <label for="role-select" class="form-label">Роль нового пользователя:</label>
     <select id="role-select" name="role" class="form-input rounded">
-        <option value="">Выберите роль</option>
         <option value="user">Пользователь</option>
         <option value="expert">Эксперт</option>
         <option value="moderator">Модератор</option>
         <option value="administrator">Администратор</option>
     </select>
-    <div class="new-button-group">
-        <input type="hidden" name="login" id="hidden-login-role">
-        <input type="hidden" name="command" value="change_role">
-        <button type="submit" class="button login-button rounded-button">Изменить роль</button>
-    </div>
 </div>
 
 <div class="new-form-group new-button-group">
-    <form action="controller?command=create_user" method="GET">
-        <!-- Скрытое поле для передачи логина -->
-        <input type="hidden" name="login" id="hidden-login-create">
-        <input type="hidden" name="command" value="create_user">
-        <button type="submit" class="button login-button rounded-button">Создать</button>
-    </form>
+        <form action="controller?command=create_user" method="GET" id="create-user-form">
+            <input type="hidden" name="login" id="hidden-login-create">
+            <input type="hidden" name="command" value="create_user">
+            <input type="hidden" name="role" id="hidden-role-create"> <!-- Скрытое поле для роли -->
+            <button type="submit" class="button login-button rounded-button">Создать</button>
+        </form>
     <form action="controller?command=delete_user" method="GET">
         <!-- Скрытое поле для передачи логина -->
         <input type="hidden" name="login" id="hidden-login-delete">
@@ -217,16 +224,30 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const loginInput = document.getElementById('login');
-        const hiddenLogins = [
-            document.getElementById('hidden-login-role'),
-            document.getElementById('hidden-login-create'),
-            document.getElementById('hidden-login-delete')
-        ];
+        const hiddenLoginCreate = document.getElementById('hidden-login-create');
+        const hiddenLoginDelete = document.getElementById('hidden-login-delete');
 
+        // Обновляем скрытые поля при вводе логина
         loginInput.addEventListener('input', function() {
-            hiddenLogins.forEach(hiddenLogin => {
-                hiddenLogin.value = loginInput.value;
-            });
+            const loginValue = loginInput.value;
+            hiddenLoginCreate.value = loginValue;
+            hiddenLoginDelete.value = loginValue; // Если нужно передать в обе формы
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const roleSelect = document.getElementById('role-select');
+        const hiddenRoleCreate = document.getElementById('hidden-role-create');
+        const createUserForm = document.getElementById('create-user-form');
+
+        // Обновляем скрытое поле при изменении выбора роли
+        roleSelect.addEventListener('change', function() {
+            hiddenRoleCreate.value = roleSelect.value;
+        });
+
+        // Убедитесь, что скрытое поле обновляется перед отправкой формы
+        createUserForm.addEventListener('submit', function() {
+            hiddenRoleCreate.value = roleSelect.value; // Обновляем значение еще раз перед отправкой
         });
     });
 </script>

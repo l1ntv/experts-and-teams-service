@@ -11,6 +11,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteUserLogic {
+    public static void decreaseTeamCountsForExpert(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int userId = administratorDataDAO.findUserIdByLogin(login);
+        int teamId = administratorDataDAO.findTeamIdByCaptainId(userId);
+        int expertId = administratorDataDAO.findExpertIdByTeamId(teamId);
+        administratorDataDAO.decreaseCountTeamsForExpert(expertId);
+    }
+
+    public static void deleteTeamForOtherMembers(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int userId = administratorDataDAO.findUserIdByLogin(login);
+        int teamId = administratorDataDAO.findTeamIdByCaptainId(userId);
+        administratorDataDAO.deleteTeamForOtherMembers(teamId);
+    }
+    public static int findConsultationIdByExpertId(int expertId) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        return administratorDataDAO.findConsultationIdByExpertId(expertId);
+    }
     public static boolean isUserExistsByLogin(String login) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
@@ -41,8 +62,27 @@ public class DeleteUserLogic {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
         int expertId = administratorDataDAO.findUserIdByLogin(login);
+        int consultationId = DeleteUserLogic.findConsultationIdByExpertId(expertId);
         administratorDataDAO.deleteExpertUserFromConsultationsTableById(expertId);
         administratorDataDAO.deleteExpertUserFromExpertsTableById(expertId);
+        administratorDataDAO.deleteUserFromQuestionAnswerTableByConsultationId(consultationId);
+        administratorDataDAO.deleteUserFromConsultationRequestsTableByExpertId(expertId);
+    }
+
+    public static void deleteCaptainDataByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int userId = administratorDataDAO.findUserIdByLogin(login);
+        int teamId = administratorDataDAO.findTeamIdByCaptainId(userId);
+        int consultationId = administratorDataDAO.findConsultationIdByTeamId(teamId);
+        administratorDataDAO.deleteUserFromQuestionAnswerTableByConsultationId(consultationId);
+        administratorDataDAO.deleteExpertUserFromConsultationsTableByTeamId(teamId);
+        administratorDataDAO.deleteUserFromConsultationRequestsTableByTeamId(teamId);
+        administratorDataDAO.deleteTeamFromTeamsTableByTeamId(teamId);
+    }
+
+    public static void deleteOthersMembersFromDeletedTeam(int teamId) {
+        // 1. Получить список user_id тех кто в команде
     }
 
     public static boolean isUserJoinedInTeamByLogin(String login) throws SQLException {
@@ -57,6 +97,12 @@ public class DeleteUserLogic {
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
         int id = administratorDataDAO.findUserIdByLogin(login);
         return administratorDataDAO.isUserCaptainInTeamByUserId(id);
+    }
+
+    public static int findUserIdByLogin(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        return administratorDataDAO.findUserIdByLogin(login);
     }
 
     private static AccountsTypesEnum convertResultSetToAccountType(ResultSet resultSet) throws SQLException {

@@ -28,7 +28,7 @@ public class OracleDBDAOFactory extends DAOFactory {
 
     private void connected() throws ClassNotFoundException, SQLException {
         Locale.setDefault(Locale.ENGLISH);
-        String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+        String url = "jdbc:oracle:thin:@localhost:1521/xepdb1?useUnicode=true&characterEncoding=utf8";
         String username = "lint";
         String password = "16042004";
         connection = DriverManager.getConnection(url, username, password);
@@ -113,9 +113,19 @@ public class OracleDBDAOFactory extends DAOFactory {
     public AnswerToQuestionDataDAO getAnswerToQuestionDataDAO() {
         return new OracleAnswerToQuestionDataDAO(connection);
     }
-
     @Override
     public BannedUsersDataDAO getBannedUsersDataDAO() {
         return new OracleBannedUsersDataDAO(connection);
     }
+
+    @Override
+    public MessagesUsersDataDAO getMessagesUsersDataDAO() {
+        return new OracleMessagesUsersDataDAO(connection);
+    }
+
+    @Override
+    public BanUserDataDAO getBanUserDataDAO() { return new OracleBanUserDataDAO(connection); }
+
+    @Override
+    public UnbanUserDataDAO getUnbanUserDataDAO() {return new OracleUnbanUserDataDAO(connection); }
 }
