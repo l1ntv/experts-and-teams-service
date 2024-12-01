@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Создание команды</title>
     <link href="styles/registration/registration-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">

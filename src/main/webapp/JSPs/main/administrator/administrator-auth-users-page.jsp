@@ -6,11 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Авторизованные пользователи</title>
     <link href="styles/authentication/authentication-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/administrator-auth-user-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
-    <link href="styles/main/authUsers.css" rel="stylesheet" type="text/css"> <!-- Подключаем новый CSS файл -->
+    <link href="styles/main/authUsers.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">
 </head>
 <body>
@@ -49,8 +49,10 @@
         <tbody>
         <% for (int i = 0; i < list.size(); i++) { %>
         <tr>
-            <td><%= list.get(i).getLogin() %></td>
-            <td><%= list.get(i).getAccountType().toString() %></td>
+            <td><%= list.get(i).getLogin() %>
+            </td>
+            <td><%= list.get(i).getAccountType().toString() %>
+            </td>
         </tr>
         <% } %>
         </tbody>
@@ -58,4 +60,3 @@
 </div>
 </body>
 </html>
-

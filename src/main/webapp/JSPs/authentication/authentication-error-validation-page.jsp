@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +19,8 @@
         <p>Некорректный ввод:</p>
         <ul>
             <% for (String msg : errorMessages) { %>
-            <li><%= msg.trim() %></li>
+            <li><%= msg.trim() %>
+            </li>
             <% } %>
         </ul>
         <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
@@ -65,8 +66,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-

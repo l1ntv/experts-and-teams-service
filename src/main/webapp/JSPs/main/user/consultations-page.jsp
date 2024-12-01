@@ -1,7 +1,4 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.QuestionAnswerDTO" %>
@@ -12,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Консультация</title>
 
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/administrator-auth-user-styles.css" rel="stylesheet" type="text/css">
@@ -23,7 +20,7 @@
             font-weight: bold;
             margin-top: 30px;
             margin-bottom: 30px;
-            text-align: center; /* Выравнивание текста по центру */
+            text-align: center;
         }
 
         .new-header {
@@ -49,9 +46,9 @@
         }
 
         .button-container {
-            display: flex; /* Используем flexbox */
-            justify-content: center; /* Центрируем кнопки по горизонтали */
-            gap: 10px; /* Задаем расстояние между кнопками */
+            display: flex;
+            justify-content: center;
+            gap: 10px;
             padding-top: 30px;
         }
 
@@ -60,23 +57,23 @@
             font-weight: normal;
             margin-top: 30px;
             margin-bottom: 0px;
-            text-align: left; /* Выравнивание текста по центру */
+            text-align: left;
             margin-left: 50px;
         }
 
         .textarea-container {
-            margin-top: 20px; /* Отступ сверху для текстового поля */
-            text-align: center; /* Центрируем текстовое поле */
+            margin-top: 20px;
+            text-align: center;
         }
 
         textarea {
-            width: 80%; /* Ширина текстового поля */
-            height: 100px; /* Высота текстового поля */
-            padding: 10px; /* Отступ внутри текстового поля */
-            border-radius: 5px; /* Скругление углов */
-            border: 1px solid #ccc; /* Граница текстового поля */
-            resize: none; /* Запрет на изменение размера текстового поля */
-            font-size: 20px; /* Увеличенный размер шрифта */
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 20px;
         }
 
         .modal {
@@ -160,135 +157,139 @@
 <%boolean myTeam = (boolean) request.getAttribute("myTeam");%>
 <div class="new-title">Консультации</div>
 <% if (myTeam) { %>
-    <%boolean isCaptain = (boolean) request.getAttribute("isCaptain");%>
-    <%boolean isTeamHasExpert = (boolean) request.getAttribute("isTeamHasExpert");%>
-    <% if (isCaptain) { %>
-        <% if (isTeamHasExpert) { %>
-            <%ExpertsStatisticsDTO expertsStatisticsDTO = (ExpertsStatisticsDTO) request.getAttribute("expertsStatisticsDTO"); %>
-            <div class="new-title">Эксперт команды</div>
-            <% if (expertsStatisticsDTO != null) { %>
-            <div class="expert-info">
-                Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
-            </div>
-            <div class="expert-info">
-                Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
-            </div>
-            <div class="expert-info">
-                Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
-            </div>
-            <div class="textarea-container">
-                <textarea id="questionInput" placeholder="Введите ваш вопрос..."></textarea>
-            </div>
-            <div class="button-container">
-                <div class="form-input-wrapper">
-                    <form id="questionForm" action="controller?command=ask_question" method="GET">
-                        <input type="hidden" name="command" value="ask_question">
-                        <input type="hidden" name="question" id="hiddenQuestion" value="">
-                        <button type="submit" class="button login-button rounded-button" id="submit">Задать вопрос</button>
-                    </form>
-                </div>
-                <div class="form-input-wrapper">
-                    <form action="controller?command=user_cancel_consultation" method="GET">
-                        <input type="hidden" name="command" value="user_cancel_consultation">
-                        <button type="submit" class="button login-button rounded-button">Отказаться от эксперта</button>
-                    </form>
-                </div>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Вопрос команды</th>
-                        <th>Ответ эксперта</th>
-                    </tr>
-                    </thead>
-                    <% if (request.getAttribute("questionsAnswers") != null) { %>
-                        <tbody>
-                        <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
-                        <% for (int i = 0; i < list.size(); i++) { %>
-                            <tr>
-                                <td><%= list.get(i).getQuestion() %></td>
-                                <td><%= list.get(i).getAnswer() %></td>
-                            </tr>
-                        <% } %>
-                        </tbody>
-                    <% } %>
-                </table>
-            </div>
-            <% } %>
-        <% } else { %>
-            <%List<ExpertsStatisticsDTO> list = (ArrayList) request.getAttribute("listAvailableExperts"); %>
-            <div class="table-container">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Логин</th>
-                        <th>Количество команд</th>
-                        <th>Макс. количество команд</th>
-                        <th>Запрос консультации</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% for (int i = 0; i < list.size(); i++) { %>
-                    <tr>
-                        <td><%= list.get(i).getLogin() %>
-                        </td>
-                        <td><%= list.get(i).getTeamCount() %>
-                        </td>
-                        <td><%= list.get(i).getMaxTeamCount() %>
-                        </td>
-                        <td>
-                            <form action="controller?command=request_consultation" method="GET">
-                                <input type="hidden" name="expertLogin" value="<%= list.get(i).getLogin() %>">
-                                <input type="hidden" name="command" value="request_consultation">
-                                <button type="submit" class="leave-button">Запросить</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <% } %>
-                    </tbody>
-                </table>
-            </div>
+<%boolean isCaptain = (boolean) request.getAttribute("isCaptain");%>
+<%boolean isTeamHasExpert = (boolean) request.getAttribute("isTeamHasExpert");%>
+<% if (isCaptain) { %>
+<% if (isTeamHasExpert) { %>
+<%ExpertsStatisticsDTO expertsStatisticsDTO = (ExpertsStatisticsDTO) request.getAttribute("expertsStatisticsDTO"); %>
+<div class="new-title">Эксперт команды</div>
+<% if (expertsStatisticsDTO != null) { %>
+<div class="expert-info">
+    Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
+</div>
+<div class="expert-info">
+    Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
+</div>
+<div class="expert-info">
+    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
+</div>
+<div class="textarea-container">
+    <textarea id="questionInput" placeholder="Введите ваш вопрос..."></textarea>
+</div>
+<div class="button-container">
+    <div class="form-input-wrapper">
+        <form id="questionForm" action="controller?command=ask_question" method="GET">
+            <input type="hidden" name="command" value="ask_question">
+            <input type="hidden" name="question" id="hiddenQuestion" value="">
+            <button type="submit" class="button login-button rounded-button" id="submit">Задать вопрос</button>
+        </form>
+    </div>
+    <div class="form-input-wrapper">
+        <form action="controller?command=user_cancel_consultation" method="GET">
+            <input type="hidden" name="command" value="user_cancel_consultation">
+            <button type="submit" class="button login-button rounded-button">Отказаться от эксперта</button>
+        </form>
+    </div>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Вопрос команды</th>
+            <th>Ответ эксперта</th>
+        </tr>
+        </thead>
+        <% if (request.getAttribute("questionsAnswers") != null) { %>
+        <tbody>
+        <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
+        <% for (int i = 0; i < list.size(); i++) { %>
+        <tr>
+            <td><%= list.get(i).getQuestion() %>
+            </td>
+            <td><%= list.get(i).getAnswer() %>
+            </td>
+        </tr>
         <% } %>
-    <% } else { %>
-        <% if (isTeamHasExpert) { %>
-            <%ExpertsStatisticsDTO expertsStatisticsDTO = (ExpertsStatisticsDTO) request.getAttribute("expertsStatisticsDTO"); %>
-            <% if (expertsStatisticsDTO != null) { %>
-            <div class="expert-info">
-                Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
-            </div>
-            <div class="expert-info">
-                Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
-            </div>
-            <div class="expert-info">
-                Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Вопрос команды</th>
-                        <th>Ответ эксперта</th>
-                    </tr>
-                    </thead>
-                    <% if (request.getAttribute("questionsAnswers") != null) { %>
-                    <tbody>
-                    <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
-                    <% for (int i = 0; i < list.size(); i++) { %>
-                    <tr>
-                        <td><%= list.get(i).getQuestion() %></td>
-                        <td><%= list.get(i).getAnswer() %></td>
-                    </tr>
-                    <% } %>
-                    </tbody>
-                    <% } %>
-                </table>
-            </div>
-            <% } %>
-        <% } else { %>
-            <div class="title">У вашей команды нет эксперта, дождитесь пока ваш капитан выберет его</div>
+        </tbody>
         <% } %>
-    <% } %>
+    </table>
+</div>
+<% } %>
+<% } else { %>
+<%List<ExpertsStatisticsDTO> list = (ArrayList) request.getAttribute("listAvailableExperts"); %>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Логин</th>
+            <th>Количество команд</th>
+            <th>Макс. количество команд</th>
+            <th>Запрос консультации</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (int i = 0; i < list.size(); i++) { %>
+        <tr>
+            <td><%= list.get(i).getLogin() %>
+            </td>
+            <td><%= list.get(i).getTeamCount() %>
+            </td>
+            <td><%= list.get(i).getMaxTeamCount() %>
+            </td>
+            <td>
+                <form action="controller?command=request_consultation" method="GET">
+                    <input type="hidden" name="expertLogin" value="<%= list.get(i).getLogin() %>">
+                    <input type="hidden" name="command" value="request_consultation">
+                    <button type="submit" class="leave-button">Запросить</button>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+<% } %>
+<% } else { %>
+<% if (isTeamHasExpert) { %>
+<%ExpertsStatisticsDTO expertsStatisticsDTO = (ExpertsStatisticsDTO) request.getAttribute("expertsStatisticsDTO"); %>
+<% if (expertsStatisticsDTO != null) { %>
+<div class="expert-info">
+    Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
+</div>
+<div class="expert-info">
+    Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
+</div>
+<div class="expert-info">
+    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Вопрос команды</th>
+            <th>Ответ эксперта</th>
+        </tr>
+        </thead>
+        <% if (request.getAttribute("questionsAnswers") != null) { %>
+        <tbody>
+        <% List<QuestionAnswerDTO> list = (ArrayList) request.getAttribute("questionsAnswers");%>
+        <% for (int i = 0; i < list.size(); i++) { %>
+        <tr>
+            <td><%= list.get(i).getQuestion() %>
+            </td>
+            <td><%= list.get(i).getAnswer() %>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+        <% } %>
+    </table>
+</div>
+<% } %>
+<% } else { %>
+<div class="title">У вашей команды нет эксперта, дождитесь пока ваш капитан выберет его</div>
+<% } %>
+<% } %>
 <% } else { %>
 <div class="title">У вас нет команды</div>
 <div class="button-container">
@@ -311,7 +312,8 @@
         var modal = document.querySelector(".modal");
         modal.style.display = "none";
     }
-    document.getElementById("questionForm").addEventListener("submit", function(event) {
+
+    document.getElementById("questionForm").addEventListener("submit", function (event) {
         var question = document.getElementById("questionInput").value;
         document.getElementById("hiddenQuestion").value = question;
         if (!question) {

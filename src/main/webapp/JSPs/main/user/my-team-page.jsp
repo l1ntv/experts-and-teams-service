@@ -1,5 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Моя команда</title>
 
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/administrator-auth-user-styles.css" rel="stylesheet" type="text/css">
@@ -20,7 +18,7 @@
             font-weight: bold;
             margin-top: 30px;
             margin-bottom: 30px;
-            text-align: center; /* Выравнивание текста по центру */
+            text-align: center;
         }
 
         .team-info {
@@ -28,7 +26,7 @@
             font-weight: normal;
             margin-top: 30px;
             margin-bottom: 0px;
-            text-align: left; /* Выравнивание текста по центру */
+            text-align: left;
             margin-left: 50px;
         }
 
@@ -55,9 +53,9 @@
         }
 
         .button-container {
-            display: flex; /* Используем flexbox */
-            justify-content: center; /* Центрируем кнопки по горизонтали */
-            gap: 10px; /* Задаем расстояние между кнопками */
+            display: flex;
+            justify-content: center;
+            gap: 10px;
             padding-top: 30px;
         }
     </style>

@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Консультируемые команды</title>
+    <title>Главная</title>
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">
     <style>
@@ -41,40 +41,16 @@
             background-color: #45a049;
         }
 
-        .modal {
-            display: block;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%;
-        }
-
-        .modal-button {
-            display: block;
-            margin: 0 auto;
-        }
 
         .table-container {
-            max-height: 750px; /* Максимальная высота контейнера */
-            overflow-y: auto; /* Прокрутка по вертикали */
-            margin: 0 auto; /* Центрируем контейнер по горизонтали */
-            width: 75%; /* Ограничиваем ширину контейнера */
+            max-height: 750px;
+            overflow-y: auto;
+            margin: 0 auto;
+            width: 75%;
         }
 
         table {
-            width: 100%; /* Устанавливаем ширину таблицы в 100% относительно контейнера */
+            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -96,7 +72,7 @@
             font-weight: normal;
             margin-top: 30px;
             margin-bottom: 0px;
-            text-align: left; /* Выравнивание текста по центру */
+            text-align: left;
             margin-left: 50px;
         }
     </style>
@@ -120,9 +96,11 @@
 
 <div class="new-title">Список консультируемых команд</div>
 <% if ((request.getAttribute("countTeams") != null) && (request.getAttribute("maxCountTeams") != null)) { %>
-<% if (((int)request.getAttribute("countTeams") != -1) && ((int)request.getAttribute("maxCountTeams") != -1)) { %>
-<div class="title-info">Количество консультируемых команд: <%= (int) request.getAttribute("countTeams") %></div>
-<div class="title-info">Макс. количество консультируемых команд: <%= (int) request.getAttribute("maxCountTeams") %></div>
+<% if (((int) request.getAttribute("countTeams") != -1) && ((int) request.getAttribute("maxCountTeams") != -1)) { %>
+<div class="title-info">Количество консультируемых команд: <%= (int) request.getAttribute("countTeams") %>
+</div>
+<div class="title-info">Макс. количество консультируемых команд: <%= (int) request.getAttribute("maxCountTeams") %>
+</div>
 <% } %>
 <% } %>
 <%List<ConsultingTeamDTO> list = (ArrayList) request.getAttribute("listExpert"); %>
@@ -172,7 +150,5 @@
 <% } else { %>
 <div class="title-info">У вас нет консультируемых команд</div>
 <% } %>
-
-
 </body>
 </html>

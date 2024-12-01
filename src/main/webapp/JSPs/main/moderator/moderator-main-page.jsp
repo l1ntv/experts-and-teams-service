@@ -1,4 +1,3 @@
-<%@ page import="ru.rsreu.lint.expertsandteams.Logic.Administrator.SearchUserLogic" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.SearchedUserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -6,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Главная</title>
     <link href="styles/authentication/authentication-styles.css" rel="stylesheet" type="text/css">
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:tournament.png" type="image/png">
@@ -20,36 +19,40 @@
             flex-direction: column;
             align-items: center;
         }
+
         .header {
             display: flex;
             justify-content: space-around;
             width: 100%;
             margin-bottom: 20px;
         }
+
         .title {
             font-size: 24px;
             font-weight: bold;
             margin-top: 20px;
-            text-align: center; /* Центрирование заголовка */
+            text-align: center;
         }
+
         .new-form-group {
-            margin-bottom: 15px; /* Уменьшаем отступ между формами */
+            margin-bottom: 15px;
         }
+
         .new-button-group {
             margin-top: 30px;
-            display: flex; /* Используем Flexbox для расположения кнопок в ряд */
-            gap: 10px; /* Промежуток между кнопками */
+            display: flex;
+            gap: 10px;
         }
 
         .table-container {
-            max-height: 750px; /* Максимальная высота контейнера */
-            overflow-y: auto; /* Прокрутка по вертикали */
-            margin: 0 auto; /* Центрируем контейнер по горизонтали */
-            width: 75%; /* Ограничиваем ширину контейнера */
+            max-height: 750px;
+            overflow-y: auto;
+            margin: 0 auto;
+            width: 75%;
         }
 
         table {
-            width: 100%; /* Устанавливаем ширину таблицы в 100% относительно контейнера */
+            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -103,7 +106,8 @@
         <p>Некорректный ввод:</p>
         <ul>
             <% for (String msg : errorMessages) { %>
-            <li><%= msg.trim() %></li>
+            <li><%= msg.trim() %>
+            </li>
             <% } %>
         </ul>
         <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
@@ -112,14 +116,15 @@
 <% } %>
 <% Boolean isExists = (Boolean) request.getAttribute("isExists"); %>
 <% if ((isExists != null) && (isExists)) { %>
-    <div class="modal">
-        <div class="modal-content">
-            <h3>Ошибка</h3>
-            <p>Пользователь с таким логином уже существует.</p>
-            <button class="button modal-button rounded-button"
-                    onclick="closeModal()">OK</button>
-        </div>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Ошибка</h3>
+        <p>Пользователь с таким логином уже существует.</p>
+        <button class="button modal-button rounded-button"
+                onclick="closeModal()">OK
+        </button>
     </div>
+</div>
 <% } %>
 <div class="header">
     <form action="controller?command=main" method="GET">
@@ -168,27 +173,29 @@
     </form>
 </div>
 <div class="table-container">
-<table>
-    <thead>
-    <tr>
-        <th>Логин</th>
-        <th>Роль</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% if ((searchedUserDTO != null) && (searchedUserDTO.getAccountType() != null)) { %>
-    <tr>
-        <td><%= searchedUserDTO.getLogin() %></td>
-        <td><%= searchedUserDTO.getAccountType().toString() %></td>
-    </tr>
-    <% } else { %>
+    <table>
+        <thead>
+        <tr>
+            <th>Логин</th>
+            <th>Роль</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if ((searchedUserDTO != null) && (searchedUserDTO.getAccountType() != null)) { %>
+        <tr>
+            <td><%= searchedUserDTO.getLogin() %>
+            </td>
+            <td><%= searchedUserDTO.getAccountType().toString() %>
+            </td>
+        </tr>
+        <% } else { %>
         <tr>
             <td>Не найдено</td>
             <td>Не найдено</td>
         </tr>
-    <% } %>
-    </tbody>
-</table>
+        <% } %>
+        </tbody>
+    </table>
 </div>
 <script>
     function closeModal() {
@@ -196,16 +203,15 @@
         modal.style.display = "none";
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const loginInput = document.getElementById('login');
         const hiddenLoginCreate = document.getElementById('hidden-login-create');
         const hiddenLoginDelete = document.getElementById('hidden-login-delete');
 
-        // Обновляем скрытые поля при вводе логина
-        loginInput.addEventListener('input', function() {
+        loginInput.addEventListener('input', function () {
             const loginValue = loginInput.value;
             hiddenLoginCreate.value = loginValue;
-            hiddenLoginDelete.value = loginValue; // Если нужно передать в обе формы
+            hiddenLoginDelete.value = loginValue;
         });
     });
 </script>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,17 +36,18 @@
 </head>
 <body>
 <% if (request.getAttribute("isBanned") != null) { %>
-    <% Boolean isBanned = (Boolean) request.getAttribute("isBanned"); %>
-    <% if (isBanned) { %>
-    <div class="modal">
-        <div class="modal-content">
-            <h3>Ошибка</h3>
-            <p>Ваш аккаунт был заблокирован</p>
-            <button class="button modal-button rounded-button"
-                    onclick="closeModal()">OK</button>
-        </div>
+<% Boolean isBanned = (Boolean) request.getAttribute("isBanned"); %>
+<% if (isBanned) { %>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Ошибка</h3>
+        <p>Ваш аккаунт был заблокирован</p>
+        <button class="button modal-button rounded-button"
+                onclick="closeModal()">OK
+        </button>
     </div>
-    <% } %>
+</div>
+<% } %>
 <% } %>
 <div class="container">
     <p class="centered title">Веб-сервис "Эксперты и команды"</p>

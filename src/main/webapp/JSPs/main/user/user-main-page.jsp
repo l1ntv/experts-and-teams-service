@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команды</title>
+    <title>Главная</title>
     <link href="styles/main/user-main-styles.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="D:\tournament.png" type="image/png">
     <style>
@@ -16,7 +16,7 @@
             font-weight: bold;
             margin-top: 30px;
             margin-bottom: 30px;
-            text-align: center; /* Выравнивание текста по центру */
+            text-align: center;
         }
 
         .new-header {
@@ -136,6 +136,7 @@
 <div class="new-title">Список команд</div>
 <% ArrayList<TeamDTO> list = (ArrayList) request.getAttribute("teams"); %>
 <ul>
+    <% if (request.getAttribute("teamFlag") != null) { %>
     <% boolean flag = (boolean) request.getAttribute("teamFlag"); %>
     <% if (flag) { %>
     <div class="container">
@@ -158,6 +159,7 @@
         </div>
     </div>
     <% } %>
+
 
     <% int iterator = (flag ? 1 : 0); %>
     <% for (int i = iterator; i < list.size(); i++) { %>
@@ -188,6 +190,7 @@
             <% } %>
         </div>
     </div>
+    <% } %>
     <% } %>
 </ul>
 <script>
