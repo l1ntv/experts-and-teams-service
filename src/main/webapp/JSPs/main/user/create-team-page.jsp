@@ -64,6 +64,27 @@
             display: block;
             margin: 0 auto;
         }
+
+        .new-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Изменено на flex-start для размещения элементов сверху */
+            height: auto; /* Изменено на auto, чтобы контейнер не занимал всю высоту экрана */
+            padding-top: 20px; /* Добавлено отступ сверху для размещения ниже шапки */
+        }
+
+        .new-form-group {
+            margin-bottom: 20px;
+            width: 300px; /* Ширина формы остается прежней */
+        }
+
+        .new-button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px; /* Отступ сверху для размещения кнопки ниже формы */
+        }
+
     </style>
 </head>
 <body>
@@ -112,13 +133,13 @@
     Создание команды
 </div>
 <form action="controller?command=create_new_team" method="GET">
-    <div class="container">
-        <div class="form-group">
+    <div class="new-container">
+        <div class="new-form-group">
             <label for="name" class="form-label">Название:</label>
             <div class="form-input-wrapper">
                 <input type="text" id="name" name="name" required class="form-input rounded">
             </div>
-            <div class="button-group">
+            <div class="new-button-group">
                 <input type="hidden" name="command" value="create_new_team">
                 <button type="submit" class="button register-button rounded-button">Создать</button>
             </div>
