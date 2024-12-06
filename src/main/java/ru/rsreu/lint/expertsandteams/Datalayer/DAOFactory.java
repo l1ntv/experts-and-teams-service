@@ -4,6 +4,7 @@ import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Administrator.AdministratorDa
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.AuthenticationDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.LogoutDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.SessionFilterDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AcceptTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AnswerToQuestionDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.CancelConsultationDataDAO;
@@ -59,4 +60,5 @@ public abstract class DAOFactory {
     public abstract BanUserDataDAO getBanUserDataDAO();
 
     public abstract UnbanUserDataDAO getUnbanUserDataDAO();
+    public abstract SessionFilterDataDAO getSessionFilterDataDAO();
 }

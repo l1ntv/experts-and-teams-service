@@ -97,6 +97,14 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
     }
 
     @Override
+    public void deleteConsultationByTeamId(int teamId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DELETE_CONSULTATION_BY_TEAM_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
+        preparedStatement.execute();
+        preparedStatement.close();
+    }
+
+    @Override
     public List<UserDTO> getAuthUsersList() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(SQLQueryManager.getProperty("AdministratorDataDAO.GET_AUTH_USERS_LIST"));

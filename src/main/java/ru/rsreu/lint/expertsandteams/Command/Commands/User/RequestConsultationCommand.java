@@ -26,6 +26,7 @@ public class RequestConsultationCommand implements ActionCommand {
             RequestConsultationLogic.createNewRequestConsultation(teamId, expertId);
         }
         session.setAttribute(ConfigurationManager.getProperty("IS_TEAM_ALREADY_SENT_REQUEST_FLAG.CONST"), isTeamAlreadySentRequest);
+        request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")));
         return new Page(ConfigurationManager.getProperty("USER.CONSULTATIONS.PAGE"), ConfigurationManager.getProperty("USER.CONSULTATIONS.URL"), DirectTypesEnum.REDIRECT, CommandEnum.CONSULTATIONS);
     }
 }

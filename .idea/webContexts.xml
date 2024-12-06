@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/JSPs/authentication/authentication-error-validation-page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/JSPs/authentication" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/JSPs/main/administrator-main-page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/JSPs/main" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/JSPs/main/user/consultations-page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/JSPs/main/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/JSPs/main/user/create-team-page.jsp" value="file://$PROJECT_DIR$/src/main/webapp/JSPs/main/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/JSPs/registration/registration.jsp" value="file://$PROJECT_DIR$/src/main/webapp/JSPs/registration" />
       </map>

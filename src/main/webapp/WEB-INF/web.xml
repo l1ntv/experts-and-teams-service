@@ -7,6 +7,15 @@
     <welcome-file-list>
         <welcome-file>/JSPs/registration/registration-page.jsp</welcome-file>
     </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/JSPs/registration/registration-page.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/JSPs/registration/registration-page.jsp</location>
+    </error-page>
     
     <servlet>
         <servlet-name>FrontController</servlet-name>
@@ -17,6 +26,10 @@
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>ru.rsreu.lint.expertsandteams.Listener.SessionListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>SessionFilter</filter-name>

@@ -5,6 +5,7 @@ import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Administrator.AdministratorDa
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.AuthenticationDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.LogoutDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.RegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Common.SessionFilterDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AcceptTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.AnswerToQuestionDataDAO;
 import ru.rsreu.lint.expertsandteams.Datalayer.DAO.Expert.CancelConsultationDataDAO;
@@ -18,6 +19,7 @@ import ru.rsreu.lint.expertsandteams.Oracledb.Administrator.OracleAdministratorD
 import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleAuthenticationDataDAO;
 import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleLogoutDataDAO;
 import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleRegistrationDataDAO;
+import ru.rsreu.lint.expertsandteams.Oracledb.Common.OracleSessionFilterDataDAO;
 import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleAcceptTeamDataDAO;
 import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleAnswerToQuestionDataDAO;
 import ru.rsreu.lint.expertsandteams.Oracledb.Expert.OracleCancelConsultationDataDAO;
@@ -158,5 +160,10 @@ public class OracleDBDAOFactory extends DAOFactory {
     @Override
     public UnbanUserDataDAO getUnbanUserDataDAO() {
         return new OracleUnbanUserDataDAO(connection);
+    }
+
+    @Override
+    public SessionFilterDataDAO getSessionFilterDataDAO() {
+        return new OracleSessionFilterDataDAO(connection);
     }
 }

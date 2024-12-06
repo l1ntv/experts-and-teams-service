@@ -1,5 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.TeamDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -71,22 +73,27 @@
 <div class="new-header">
     <form action="controller?command=main" method="GET">
         <input type="hidden" name="command" value="main">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Cписок команд</button>
     </form>
     <form action="controller?command=my_team" method="GET">
         <input type="hidden" name="command" value="my_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Моя команда</button>
     </form>
     <form action="controller?command=create_team" method="GET">
         <input type="hidden" name="command" value="create_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Создать команду</button>
     </form>
     <form action="controller?command=consultations" method="GET">
         <input type="hidden" name="command" value="consultations">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Консультация</button>
     </form>
     <form action="controller?command=logout" method="GET">
         <input type="hidden" name="command" value="logout">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Выйти</button>
     </form>
 </div>
@@ -105,93 +112,90 @@
 <% }
 } %>
 
-<% if (session.getAttribute("isUserInTeam") != null) {
-    boolean isUserInTeam = (boolean) session.getAttribute("isUserInTeam");
-    if (isUserInTeam) { %>
-<div class="modal">
-    <div class="modal-content">
-        <h3>Ошибка</h3>
-        <p>Вы уже находитесь в команде</p>
-        <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
-    </div>
-</div>
-<% session.setAttribute("isUserInTeam", false); %>
-<% }
-} %>
+<c:if test="${not empty sessionScope.isUserInTeam}">
+    <c:set var="isUserInTeam" value="${sessionScope.isUserInTeam}" />
+    <c:if test="${isUserInTeam}">
+        <div class="modal">
+            <div class="modal-content">
+                <h3>Ошибка</h3>
+                <p>Вы уже находитесь в команде</p>
+                <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+        <c:set value="false" var="isUserInTeam" />
+        <c:set value="${isUserInTeam}" var="sessionScope.isUserInTeam" />
+    </c:if>
+</c:if>
 
-<% if (session.getAttribute("noPlaces") != null) {
-    boolean noPlaces = (boolean) session.getAttribute("noPlaces");
-    if (noPlaces) { %>
-<div class="modal">
-    <div class="modal-content">
-        <h3>Ошибка</h3>
-        <p>В команде нет мест</p>
-        <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
-    </div>
-</div>
-<% session.setAttribute("noPlaces", false); %>
-<% }
-} %>
+<c:if test="${not empty sessionScope.noPlaces}">
+    <c:set var="noPlaces" value="${sessionScope.noPlaces}" />
+    <c:if test="${noPlaces}">
+        <div class="modal">
+            <div class="modal-content">
+                <h3>Ошибка</h3>
+                <p>В команде нет мест</p>
+                <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+        <c:set value="false" var="sessionScope.noPlaces" />
+    </c:if>
+</c:if>
 
 <div class="new-title">Список команд</div>
-<% ArrayList<TeamDTO> list = (ArrayList) request.getAttribute("teams"); %>
+<c:set var="list" value="${requestScope.teams}" />
+
 <ul>
-    <% if (request.getAttribute("teamFlag") != null) { %>
-    <% boolean flag = (boolean) request.getAttribute("teamFlag"); %>
-    <% if (flag) { %>
-    <div class="container">
-        <div class="team-card">
-            <div>
-                <h2>Название: <%= list.get(0).getTeamName() %>
-                </h2>
-                <p>Капитан: <%= list.get(0).getCaptainName() %>
-                </p>
-                <p>Эксперт: <%= list.get(0).getExpertName() %>
-                </p>
-                <p>Участников: <%= list.get(0).getMembersCount() %> / <%= list.get(0).getMaxMembersCount() %>
-                </p>
+    <c:if test="${not empty requestScope.teamFlag}">
+        <c:set var="flag" value="${requestScope.teamFlag}" />
+        <c:if test="${flag}">
+            <div class="container">
+                <div class="team-card">
+                    <div>
+                        <h2>Название: ${list[0].teamName}</h2>
+                        <p>Капитан: ${list[0].captainName}</p>
+                        <p>Эксперт: ${list[0].expertName}</p>
+                        <p>Участников: ${list[0].membersCount} / ${list[0].maxMembersCount}</p>
+                    </div>
+                    <form action="controller?command=leave_team" method="GET">
+                        <input type="hidden" name="teamName" value="${list[0].teamName}">
+                        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                        <input type="hidden" name="command" value="leave_team">
+                        <button type="submit" class="leave-button">Выйти</button>
+                    </form>
+                </div>
             </div>
-            <form action="controller?command=leave_team" method="GET">
-                <input type="hidden" name="teamName" value="<%= list.get(0).getTeamName() %>">
-                <input type="hidden" name="command" value="leave_team">
-                <button type="submit" class="leave-button">Выйти</button>
-            </form>
-        </div>
-    </div>
-    <% } %>
+        </c:if>
 
+        <c:set var="iterator" value="${flag ? 1 : 0}" />
+        <c:forEach var="team" items="${list}" begin="${iterator}">
+            <div class="container">
+                <div class="team-card">
+                    <div>
+                        <h2>Название: ${team.teamName}</h2>
+                        <p>Капитан: ${team.captainName}</p>
+                        <p>Эксперт: ${team.expertName}</p>
+                        <p>Участников: ${team.membersCount} / ${team.maxMembersCount}</p>
+                    </div>
 
-    <% int iterator = (flag ? 1 : 0); %>
-    <% for (int i = iterator; i < list.size(); i++) { %>
-    <div class="container">
-        <div class="team-card">
-            <div>
-                <h2>Название: <%= list.get(i).getTeamName() %>
-                </h2>
-                <p>Капитан: <%= list.get(i).getCaptainName() %>
-                </p>
-                <p>Эксперт: <%= list.get(i).getExpertName() %>
-                </p>
-                <p>Участников: <%= list.get(i).getMembersCount() %> / <%= list.get(i).getMaxMembersCount() %>
-                </p>
+                    <c:if test="${team.membersCount == team.maxMembersCount}">
+                        <form action="controller?command=no_places" method="GET">
+                            <input type="hidden" name="command" value="no_places">
+                            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                            <button type="submit" class="leave-button">Мест нет</button>
+                        </form>
+                    </c:if>
+                    <c:if test="${team.membersCount < team.maxMembersCount}">
+                        <form action="controller?command=join_team" method="GET">
+                            <input type="hidden" name="teamName" value="${team.teamName}">
+                            <input type="hidden" name="command" value="join_team">
+                            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                            <button type="submit" class="join-button">Войти</button>
+                        </form>
+                    </c:if>
+                </div>
             </div>
-
-            <% if (list.get(i).getMembersCount() == list.get(i).getMaxMembersCount()) { %>
-            <form action="controller?command=no_places" method="GET">
-                <input type="hidden" name="command" value="no_places">
-                <button type="submit" class="leave-button">Мест нет</button>
-            </form>
-            <% } else { %>
-            <form action="controller?command=join_team" method="GET">
-                <input type="hidden" name="teamName" value="<%= list.get(i).getTeamName() %>">
-                <input type="hidden" name="command" value="join_team">
-                <button type="submit" class="join-button">Войти</button>
-            </form>
-            <% } %>
-        </div>
-    </div>
-    <% } %>
-    <% } %>
+        </c:forEach>
+    </c:if>
 </ul>
 <script>
     function closeModal() {

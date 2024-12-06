@@ -34,6 +34,7 @@ public class RegistrationCommand implements ActionCommand {
                 session.setAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"), login);
                 session.setAttribute(ConfigurationManager.getProperty("GROUP_TYPE_ID.CONST"), groupTypeId);
                 session.setAttribute(ConfigurationManager.getProperty("IS_CAPTAIN_FLAG.CONST"), isCaptain);
+                request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), userId);
                 String jsp = ViewContentDefiner.defineCorrectJspPageByGroupTypeId(groupTypeId);
                 return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
             }

@@ -52,9 +52,9 @@
         <tr>
             <td><%= list.get(i).getLogin() %>
             </td>
-            <td><%= list.get(i).getTeamCount() %>
+            <td><%= list.get(i).getConsultingTeamCount() %>
             </td>
-            <td><%= list.get(i).getMaxTeamCount() %>
+            <td><%= list.get(i).getMaxConsultingTeamCount() %>
             </td>
         </tr>
         <% } %>

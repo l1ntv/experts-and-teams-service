@@ -48,6 +48,7 @@ public class MainCommand implements ActionCommand {
                 request.setAttribute(ConfigurationManager.getProperty("MAX_COUNT_TEAMS.CONST"), maxCountTeams);
                 break;
         }
+        request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")));
         return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
     }
 }

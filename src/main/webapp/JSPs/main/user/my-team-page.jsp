@@ -1,5 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.MyTeamDTO" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Enums.TeamRoleEnum" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -64,73 +66,81 @@
 <div class="new-header">
     <form action="controller?command=main" method="GET">
         <input type="hidden" name="command" value="main">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Cписок команд</button>
     </form>
     <form action="controller?command=my_team" method="GET">
         <input type="hidden" name="command" value="my_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Моя команда</button>
     </form>
     <form action="controller?command=create_team" method="GET">
         <input type="hidden" name="command" value="create_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Создать команду</button>
     </form>
     <form action="controller?command=consultations" method="GET">
         <input type="hidden" name="command" value="consultations">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Консультация</button>
     </form>
     <form action="controller?command=logout" method="GET">
         <input type="hidden" name="command" value="logout">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Выйти</button>
     </form>
 </div>
-<%MyTeamDTO myTeamDTO = (MyTeamDTO) request.getAttribute("myTeam");%>
+<c:set var="myTeamDTO" value="${requestScope.myTeam}" />
+
 <div class="new-title">Моя команда</div>
-<% if (myTeamDTO != null) { %>
-<div class="team-info">
-    Название команды: <%= myTeamDTO.getName() %>
-</div>
-<div class="team-info">
-    Количество участников: <%= myTeamDTO.getCountMembers() %> / <%= myTeamDTO.getMaxCountMembers() %>
-</div>
-<div class="table-container">
-    <table>
-        <thead>
-        <tr>
-            <th>Логин</th>
-            <th>Роль</th>
-            <th>Онлайн</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for (int i = 0; i < myTeamDTO.getTeamMembers().size(); i++) { %>
-        <tr>
-            <td><%= myTeamDTO.getTeamMembers().get(i).getLogin() %>
-            </td>
-            <td><%= (myTeamDTO.getTeamMembers().get(i).getRole().equals(TeamRoleEnum.MEMBER) ? "Участник" : "Капитан") %>
-            </td>
-            <td><%= (myTeamDTO.getTeamMembers().get(i).getIsOnline()) ? "☑" : "☒" %>
-            </td>
-        </tr>
-        <% } %>
-        </tbody>
-    </table>
-</div>
-<% } else { %>
-<div class="title">У вас нет команды</div>
-<div class="button-container">
-    <div class="form-input-wrapper">
-        <form action="controller?command=main" method="GET">
-            <input type="hidden" name="command" value="main">
-            <button type="submit" class="button login-button rounded-button">Найти</button>
-        </form>
+
+<c:if test="${not empty myTeamDTO}">
+    <div class="team-info">
+        Название команды: ${myTeamDTO.name}
     </div>
-    <div class="form-input-wrapper">
-        <form action="controller?command=create_team" method="GET">
-            <input type="hidden" name="command" value="create_team">
-            <button type="submit" class="button login-button rounded-button">Создать</button>
-        </form>
+    <div class="team-info">
+        Количество участников: ${myTeamDTO.countMembers} / ${myTeamDTO.maxCountMembers}
     </div>
-</div>
-<% } %>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Логин</th>
+                <th>Роль</th>
+                <th>Онлайн</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="member" items="${myTeamDTO.teamMembers}">
+                <tr>
+                    <td>${member.login}</td>
+                    <td>${member.role == 'MEMBER' ? 'Участник' : 'Капитан'}</td>
+                    <td>${member.isOnline ? '☑️' : '☒'}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</c:if>
+
+<c:if test="${empty myTeamDTO}">
+    <div class="title">У вас нет команды</div>
+    <div class="button-container">
+        <div class="form-input-wrapper">
+            <form action="controller?command=main" method="GET">
+                <input type="hidden" name="command" value="main">
+                <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                <button type="submit" class="button login-button rounded-button">Найти</button>
+            </form>
+        </div>
+        <div class="form-input-wrapper">
+            <form action="controller?command=create_team" method="GET">
+                <input type="hidden" name="command" value="create_team">
+                <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                <button type="submit" class="button login-button rounded-button">Создать</button>
+            </form>
+        </div>
+    </div>
+</c:if>
 </body>
 </html>

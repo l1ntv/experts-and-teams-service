@@ -1,3 +1,5 @@
+<%@ page import="ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -91,66 +93,70 @@
 <div class="new-header">
     <form action="controller?command=main" method="GET">
         <input type="hidden" name="command" value="main">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Cписок команд</button>
     </form>
     <form action="controller?command=my_team" method="GET">
         <input type="hidden" name="command" value="my_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Моя команда</button>
     </form>
     <form action="controller?command=create_team" method="GET">
         <input type="hidden" name="command" value="create_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Создать команду</button>
     </form>
     <form action="controller?command=consultations" method="GET">
         <input type="hidden" name="command" value="consultations">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Консультация</button>
     </form>
     <form action="controller?command=logout" method="GET">
         <input type="hidden" name="command" value="logout">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Выйти</button>
     </form>
 </div>
 
-<% boolean flag = (boolean) request.getAttribute("isJoinedFlag");
-    boolean isExists = false;
-    if (request.getAttribute("flagExists") != null) {
-        isExists = (boolean) request.getAttribute("flagExists");
-    }
-%>
+<c:set var="flag" value="${requestScope.isJoinedFlag}" />
+<c:set var="isExists" value="${not empty requestScope.flagExists ? requestScope.flagExists : false}" />
 
-<% if (isExists) { %>
-<div class="modal">
-    <div class="modal-content">
-        <h3>Ошибка</h3>
-        <p>Команда с таким названием существует</p>
-        <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
-    </div>
-</div>
-<% } %>
-
-<% if (!flag) { %>
-<div class="new-title">
-    Создание команды
-</div>
-<form action="controller?command=create_new_team" method="GET">
-    <div class="new-container">
-        <div class="new-form-group">
-            <label for="name" class="form-label">Название:</label>
-            <div class="form-input-wrapper">
-                <input type="text" id="name" name="name" required class="form-input rounded">
-            </div>
-            <div class="new-button-group">
-                <input type="hidden" name="command" value="create_new_team">
-                <button type="submit" class="button register-button rounded-button">Создать</button>
-            </div>
+<c:if test="${isExists}">
+    <div class="modal">
+        <div class="modal-content">
+            <h3>Ошибка</h3>
+            <p>Команда с таким названием существует</p>
+            <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
         </div>
     </div>
-</form>
-<% } else { %>
-<div class="new-title">
-    У вас уже есть команда. Покиньте её, если хотите создать новую.
-</div>
-<% } %>
+</c:if>
+
+<c:if test="${not flag}">
+    <div class="new-title">
+        Создание команды
+    </div>
+    <form action="controller?command=create_new_team" method="GET">
+        <div class="new-container">
+            <div class="new-form-group">
+                <label for="name" class="form-label">Название:</label>
+                <div class="form-input-wrapper">
+                    <input type="text" id="name" name="name" required class="form-input rounded">
+                </div>
+                <div class="new-button-group">
+                    <input type="hidden" name="command" value="create_new_team">
+                    <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+                    <button type="submit" class="button register-button rounded-button">Создать</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</c:if>
+
+<c:if test="${flag}">
+    <div class="new-title">
+        У вас уже есть команда. Покиньте её, если хотите создать новую.
+    </div>
+</c:if>
 <script>
     function closeModal() {
         var modal = document.querySelector(".modal");

@@ -80,6 +80,7 @@ public class DeleteUserLogic {
         administratorDataDAO.deleteExpertUserFromConsultationsTableByTeamId(teamId);
         administratorDataDAO.deleteUserFromConsultationRequestsTableByTeamId(teamId);
         administratorDataDAO.deleteTeamFromTeamsTableByTeamId(teamId);
+        administratorDataDAO.deleteConsultationByTeamId(teamId);
     }
 
     public static boolean isUserJoinedInTeamByLogin(String login) throws SQLException {

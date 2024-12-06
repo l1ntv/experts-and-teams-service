@@ -21,12 +21,20 @@ public class ContentFilter implements Filter {
         String command = httpRequest.getParameter("command");
         Set<String> allowedCommands = new HashSet<>(Arrays.asList("login", "registration", "redirect_to_login", "redirect_to_registration"));
         if (allowedCommands.contains(command)) {
-            chain.doFilter(request, response);
-            return;
+            if (session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) == null) {
+                chain.doFilter(request, response);
+                return;
+            } else {
+                if (!httpResponse.isCommitted()) {
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/controller?command=main");
+                    return;
+                }
+            }
+
         }
         if (session == null || session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) == null) {
             if (!httpResponse.isCommitted()) {
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/controller?command=login");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/controller?command=redirect_to_login");
                 return;
             }
         } else {
@@ -48,13 +56,13 @@ public class ContentFilter implements Filter {
         Set<String> commands = new HashSet<>();
         switch (groupTypeId) {
             case 0:
-                commands.addAll(Arrays.asList("ask_question", "cancel_consultation", "consultations", "create_new_team", "create_team", "join_team", "leave_team", "my_team", "no_places", "request_consultation", "main", "logout"));
+                commands.addAll(Arrays.asList("ask_question", "user_cancel_consultation", "consultations", "create_new_team", "create_team", "join_team", "leave_team", "my_team", "no_places", "request_consultation", "main", "logout"));
                 break;
             case 1:
-                commands.addAll(Arrays.asList("accept_team", "answer_to_question", "cancel_consultation", "consultations_requests", "do_consultation", "main", "logout"));
+                commands.addAll(Arrays.asList("accept_consultation", "answer_to_question", "cancel_consultation", "consultations_requests", "do_consultation", "main", "logout"));
                 break;
             case 2:
-                commands.addAll(Arrays.asList("auth_users", "banned_users", "ban_user", "hide_message", "messages_users", "search_user_by_moderator", "unban_user", "main", "logout"));
+                commands.addAll(Arrays.asList("auth_users", "auth_users_moderator", "banned_users", "ban_user", "hide_message", "messages_users", "search_user_by_moderator", "unban_user", "main", "logout"));
                 break;
             case 3:
                 commands.addAll(Arrays.asList("auth_users", "create_user", "delete_user", "experts_statistics", "search_user", "teams_statistics", "main", "logout"));

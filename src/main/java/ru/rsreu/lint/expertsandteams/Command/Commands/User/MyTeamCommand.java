@@ -26,6 +26,7 @@ public class MyTeamCommand implements ActionCommand {
         } else {
             request.setAttribute(ConfigurationManager.getProperty("MY_TEAM.CONST"), null);
         }
+        request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")));
         return new Page(ConfigurationManager.getProperty("USER.MY-TEAM.PAGE"), ConfigurationManager.getProperty("USER.MY-TEAM.URL"), DirectTypesEnum.FORWARD, CommandEnum.MY_TEAM);
     }
 }

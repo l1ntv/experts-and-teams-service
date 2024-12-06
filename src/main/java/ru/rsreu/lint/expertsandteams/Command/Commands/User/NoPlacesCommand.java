@@ -17,6 +17,7 @@ public class NoPlacesCommand implements ActionCommand {
         HttpSession session = request.getSession(false);
         boolean noPlaces = true;
         session.setAttribute(ConfigurationManager.getProperty("NO_PLACES.CONST"), noPlaces);
+        request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")));
         return new Page(ConfigurationManager.getProperty("USER.MAIN.PAGE"), ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.REDIRECT, CommandEnum.MAIN);
     }
 }

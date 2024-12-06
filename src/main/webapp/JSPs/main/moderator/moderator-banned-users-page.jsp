@@ -41,6 +41,7 @@
     </style>
 </head>
 <body>
+<% if (request.getAttribute("isUserBanned") != null) { %>
 <% Boolean isUserBanned = (Boolean) request.getAttribute("isUserBanned"); %>
 <% if ((isUserBanned != null) && (isUserBanned)) { %>
 <div class="modal">
@@ -52,7 +53,19 @@
         </button>
     </div>
 </div>
+<% } else { %>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Ошибка</h3>
+        <p>Пользователя не существует</p>
+        <button class="button modal-button rounded-button"
+                onclick="closeModal()">OK
+        </button>
+    </div>
+</div>
 <% } %>
+<% } %>
+<% if (request.getAttribute("isUserUnbanned") != null) { %>
 <% Boolean isUserUnbanned = (Boolean) request.getAttribute("isUserUnbanned"); %>
 <% if ((isUserUnbanned != null) && (isUserUnbanned)) { %>
 <div class="modal">
@@ -64,6 +77,17 @@
         </button>
     </div>
 </div>
+<% } else { %>
+<div class="modal">
+    <div class="modal-content">
+        <h3>Ошибка</h3>
+        <p>Пользователя не существует</p>
+        <button class="button modal-button rounded-button"
+                onclick="closeModal()">OK
+        </button>
+    </div>
+</div>
+<% } %>
 <% } %>
 <div class="header">
     <form action="controller?command=main" method="GET">

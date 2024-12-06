@@ -2,6 +2,7 @@
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Administrator.ExpertsStatisticsDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.User.QuestionAnswerDTO" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -103,25 +104,31 @@
     </style>
 </head>
 <body>
+<% int userId = (int) request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST"));%>
 <div class="new-header">
     <form action="controller?command=main" method="GET">
         <input type="hidden" name="command" value="main">
-        <button type="submit" class="button login-button rounded-button">Cписок команд</button>
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
+        <button type="submit" class="button login-button rounded-button">Список команд</button>
     </form>
     <form action="controller?command=my_team" method="GET">
         <input type="hidden" name="command" value="my_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Моя команда</button>
     </form>
     <form action="controller?command=create_team" method="GET">
         <input type="hidden" name="command" value="create_team">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Создать команду</button>
     </form>
     <form action="controller?command=consultations" method="GET">
         <input type="hidden" name="command" value="consultations">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Консультация</button>
     </form>
     <form action="controller?command=logout" method="GET">
         <input type="hidden" name="command" value="logout">
+        <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
         <button type="submit" class="button login-button rounded-button">Выйти</button>
     </form>
 </div>
@@ -168,10 +175,10 @@
     Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
 </div>
 <div class="expert-info">
-    Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
+    Количество консультируемых команд: <%= expertsStatisticsDTO.getConsultingTeamCount() %>
 </div>
 <div class="expert-info">
-    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
+    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxConsultingTeamCount() %>
 </div>
 <div class="textarea-container">
     <textarea id="questionInput" placeholder="Введите ваш вопрос..."></textarea>
@@ -181,12 +188,14 @@
         <form id="questionForm" action="controller?command=ask_question" method="GET">
             <input type="hidden" name="command" value="ask_question">
             <input type="hidden" name="question" id="hiddenQuestion" value="">
+            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
             <button type="submit" class="button login-button rounded-button" id="submit">Задать вопрос</button>
         </form>
     </div>
     <div class="form-input-wrapper">
         <form action="controller?command=user_cancel_consultation" method="GET">
             <input type="hidden" name="command" value="user_cancel_consultation">
+            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
             <button type="submit" class="button login-button rounded-button">Отказаться от эксперта</button>
         </form>
     </div>
@@ -232,14 +241,15 @@
         <tr>
             <td><%= list.get(i).getLogin() %>
             </td>
-            <td><%= list.get(i).getTeamCount() %>
+            <td><%= list.get(i).getConsultingTeamCount() %>
             </td>
-            <td><%= list.get(i).getMaxTeamCount() %>
+            <td><%= list.get(i).getMaxConsultingTeamCount() %>
             </td>
             <td>
                 <form action="controller?command=request_consultation" method="GET">
                     <input type="hidden" name="expertLogin" value="<%= list.get(i).getLogin() %>">
                     <input type="hidden" name="command" value="request_consultation">
+                    <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
                     <button type="submit" class="leave-button">Запросить</button>
                 </form>
             </td>
@@ -257,10 +267,10 @@
     Логин эксперта: <%= expertsStatisticsDTO.getLogin() %>
 </div>
 <div class="expert-info">
-    Количество консультируемых команд: <%= expertsStatisticsDTO.getTeamCount() %>
+    Количество консультируемых команд: <%= expertsStatisticsDTO.getConsultingTeamCount() %>
 </div>
 <div class="expert-info">
-    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxTeamCount() %>
+    Максимальное количество консультируемых команд: <%= expertsStatisticsDTO.getMaxConsultingTeamCount() %>
 </div>
 <div class="table-container">
     <table>
@@ -296,12 +306,14 @@
     <div class="form-input-wrapper">
         <form action="controller?command=main" method="GET">
             <input type="hidden" name="command" value="main">
+            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
             <button type="submit" class="button login-button rounded-button">Найти</button>
         </form>
     </div>
     <div class="form-input-wrapper">
         <form action="controller?command=create_team" method="GET">
             <input type="hidden" name="command" value="create_team">
+            <input type="hidden" name="userId" value="<%= request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) != null ? request.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")) : "" %>">
             <button type="submit" class="button login-button rounded-button">Создать</button>
         </form>
     </div>

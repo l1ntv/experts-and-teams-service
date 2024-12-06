@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -9,23 +10,23 @@
     <link rel="icon" href="D:\tournament.png" type="image/png">
 </head>
 <body>
-<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
-<% if (errorMessage != null && !errorMessage.isEmpty()) {
-    String[] errorMessages = errorMessage.split("\\. ");
-%>
-<div class="modal">
-    <div class="modal-content">
-        <h3>Ошибка</h3>
-        <p>Некорректный ввод:</p>
-        <ul>
-            <% for (String msg : errorMessages) { %>
-            <li><%= msg.trim() %>
-            </li>
-            <% } %>
-        </ul>
-        <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
+<% if (request.getAttribute("errorMessage") != null) { %>
+<c:set var="errorMessage" value="${requestScope.errorMessage}"/>
+<c:if test="${not empty errorMessage}">
+    <c:set var="errorMessages" value="${fn:split(errorMessage, '\. ')}"/>
+    <div class="modal">
+        <div class="modal-content">
+            <h3>Ошибка</h3>
+            <p>Некорректный ввод:</p>
+            <ul>
+                <c:forEach var="msg" items="${errorMessages}">
+                    <li>${fn:trim(msg)}</li>
+                </c:forEach>
+            </ul>
+            <button class="button modal-button rounded-button" onclick="closeModal()">OK</button>
+        </div>
     </div>
-</div>
+</c:if>
 <% } %>
 <div class="container">
     <p class="centered title">Веб-сервис "Эксперты и команды"</p>
