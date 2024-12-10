@@ -25,7 +25,7 @@ public class DataValidator {
         boolean isValid;
         StringBuilder errorMessage = new StringBuilder("");
         if (!DataValidator.validateLogin(login)) {
-            errorMessage.append(ConfigurationManager.getProperty("логина. "));
+            errorMessage.append("логина. ");
         }
         return new ValidationData(isValid = errorMessage.length() == 0 ? true : false, errorMessage.toString().trim());
     }

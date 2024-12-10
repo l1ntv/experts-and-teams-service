@@ -55,7 +55,7 @@ public class OracleMyTeamDataDAO implements MyTeamDataDAO {
         List<TeamMemberDTO> list = new ArrayList<>();
         while (resultSet.next()) {
             String login = resultSet.getString(SQLQueryManager.getProperty("GENERAL.LOGIN.SQL.CONST"));
-            boolean isOnline = resultSet.getInt(SQLQueryManager.getProperty("GENERAL.STATUS_ID.SQL.CONST")) == 0 ? false : true;
+            boolean isOnline = resultSet.getInt(SQLQueryManager.getProperty("GENERAL.STATUS_ID.SQL.CONST")) == 1 ? true : false;
             TeamRoleEnum role = resultSet.getInt(SQLQueryManager.getProperty("GENERAL.TEAM_ROLE_ID.SQL.CONST")) == 0 ? TeamRoleEnum.MEMBER : TeamRoleEnum.CAPTAIN;
             TeamMemberDTO teamMemberDTO = new TeamMemberDTO(login, isOnline, role);
             list.add(teamMemberDTO);

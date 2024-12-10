@@ -1,6 +1,7 @@
 <%@ page import="ru.rsreu.lint.expertsandteams.Datalayer.DTO.Expert.ConsultingTeamDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ru.rsreu.lint.expertsandteams.Resource.ConfigurationManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -93,8 +94,12 @@
     </form>
 </div>
 
-
 <div class="new-title">Список консультируемых команд</div>
+<% if (request.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST")) != null) {
+    String login = (String) request.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"));
+%>
+<div class="title-info">Ваш логин: <%= login %></div>
+<% } %>
 <% if ((request.getAttribute("countTeams") != null) && (request.getAttribute("maxCountTeams") != null)) { %>
 <% if (((int) request.getAttribute("countTeams") != -1) && ((int) request.getAttribute("maxCountTeams") != -1)) { %>
 <div class="title-info">Количество консультируемых команд: <%= (int) request.getAttribute("countTeams") %>

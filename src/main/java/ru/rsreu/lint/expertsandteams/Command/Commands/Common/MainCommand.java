@@ -49,6 +49,7 @@ public class MainCommand implements ActionCommand {
                 break;
         }
         request.setAttribute(ConfigurationManager.getProperty("USER_ID.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_ID.CONST")));
+        request.setAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"), session.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST")));
         return new Page(jsp, ConfigurationManager.getProperty("MAIN.URL"), DirectTypesEnum.FORWARD, CommandEnum.MAIN);
     }
 }

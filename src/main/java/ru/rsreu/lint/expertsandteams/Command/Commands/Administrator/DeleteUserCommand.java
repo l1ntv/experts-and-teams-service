@@ -34,6 +34,7 @@ public class DeleteUserCommand implements ActionCommand {
                                 DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
                                 DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                             } else {
+                                DeleteUserLogic.decreaseCountMembers(login);
                                 DeleteUserLogic.deleteUserFromTeamMembersByLogin(login);
                                 DeleteUserLogic.deleteUserFromUserDataByLogin(login);
                             }

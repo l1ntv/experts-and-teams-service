@@ -10,6 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteUserLogic {
+    public static void decreaseCountMembers(String login) throws SQLException {
+        DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
+        AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();
+        int userId = administratorDataDAO.findUserIdByLogin(login);
+        int teamId = administratorDataDAO.findTeamIdByUserId(userId);
+        administratorDataDAO.decreaseCountMembers(teamId);
+    }
     public static void decreaseTeamCountsForExpert(String login) throws SQLException {
         DAOFactory factory = DAOFactory.getInstance(DBType.ORACLE);
         AdministratorDataDAO administratorDataDAO = factory.getAdministratorDataDAO();

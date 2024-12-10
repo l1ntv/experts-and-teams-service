@@ -178,6 +178,14 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
     }
 
     @Override
+    public void decreaseCountMembers(int teamId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.DECREASE_COUNT_MEMBERS_BY_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), teamId);
+        preparedStatement.execute();
+        preparedStatement.close();
+    }
+
+    @Override
     public boolean createUserByLogin(String login, int roleId) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.CREATE_USER_BY_LOGIN.SQL.QUERY"));
         preparedStatement.setString(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), login);
@@ -292,6 +300,21 @@ public class OracleAdministratorDataDAO implements AdministratorDataDAO {
         preparedStatement.close();
         return result;
     }
+
+    @Override
+    public int findTeamIdByUserId(int userId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQueryManager.getProperty("AdministratorDataDAO.FIND_TEAM_ID_BY_USER_ID.SQL.QUERY"));
+        preparedStatement.setInt(Integer.parseInt(SQLQueryManager.getProperty("GENERAL.FIRST_COLUMN_INDEX.SQL.CONST")), userId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        int result = -1;
+        while (resultSet.next()) {
+            result = resultSet.getInt(SQLQueryManager.getProperty("GENERAL.TEAM_ID.SQL.CONST"));
+        }
+        resultSet.close();
+        preparedStatement.close();
+        return result;
+    }
+
 
     @Override
     public int findConsultationIdByTeamId(int teamId) throws SQLException {

@@ -10,11 +10,11 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/JSPs/registration/registration-page.jsp</location>
+        <location>/JSPs/main/404-exception-page.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
-        <location>/JSPs/registration/registration-page.jsp</location>
+        <location>/JSPs/main/404-exception-page.jsp</location>
     </error-page>
     
     <servlet>

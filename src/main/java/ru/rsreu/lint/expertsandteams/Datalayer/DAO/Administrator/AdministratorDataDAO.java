@@ -76,6 +76,8 @@ public interface AdministratorDataDAO {
      */
     void createExpertById(int id) throws SQLException;
 
+    void decreaseCountMembers(int teamId) throws SQLException;
+
     /**
      * Searches for the role of a user by their login.
      *
@@ -217,6 +219,8 @@ public interface AdministratorDataDAO {
      * @throws SQLException If a database access error occurs.
      */
     int findTeamIdByCaptainId(int captainId) throws SQLException;
+
+    int findTeamIdByUserId(int userId) throws SQLException;
 
     /**
      * Finds the consultation ID associated with a given team ID.

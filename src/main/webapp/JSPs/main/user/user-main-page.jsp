@@ -67,6 +67,15 @@
             display: block;
             margin: 0 auto;
         }
+
+        .title-info {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 30px;
+            margin-bottom: 0px;
+            text-align: left;
+            margin-left: 50px;
+        }
     </style>
 </head>
 <body>
@@ -142,6 +151,11 @@
 </c:if>
 
 <div class="new-title">Список команд</div>
+<% if (request.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST")) != null) {
+    String login = (String) request.getAttribute(ConfigurationManager.getProperty("USER_LOGIN.CONST"));
+%>
+<div class="title-info">Ваш логин: <%= login %></div>
+<% } %>
 <c:set var="list" value="${requestScope.teams}" />
 
 <ul>
